@@ -1,0 +1,8 @@
+{
+  "mysql-host": "mog.garden",
+  "mysql-db" : "dspdb",
+  "mysql-user" : "darkstar",
+  "mysql-password" : "password",
+  "push" : true,
+  "pull" : true
+}
