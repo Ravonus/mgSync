@@ -1,7 +1,5 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../sequelize');
-const moment = require('moment');
-var Duration = require("duration");
+const Sequelize = require('sequelize'),
+sequelize = require('../controllers/sequelize');
 
 const Chars = sequelize.define('chars', {
     
@@ -85,68 +83,7 @@ const Chars = sequelize.define('chars', {
   module.exports = {
 
     Chars,
-  
-    char: (accid, charname, _cb) => {
-
-        Chars.findAll({
-            where: {
-              accid,
-              charname
-            }
-          }).then(char => {
-            if(char.length > 0) return _cb(null, char);
-            return _cb({err:'Cheeko character not found.'});
-            }).catch(err => {
-                _cb(err);
-            });
-    },
-    get: (accid , _cb) => {
-
-      Chars.findAll({
-          where: {
-            accid
-          }
-        }).then(char => {
-          console.log(char);
-          if(char.length > 0) return _cb(null, char);
-          return _cb({err:'Cheeko character not found.'});
-          }).catch(err => {
-              _cb(err);
-          });
-  },
-
-    updateChar: (id, update) => 
-    {
-     
-     
-      var dates = update.playTime.match(/[0-9]+/g);
-      var days = dates[0] * 24 * 3600;
-      var hours = dates[1] * 3600;
-      var minutes = dates[2] * 60;
-      var seconds = parseInt(dates[3]);
-
-      dates = days + hours + minutes + seconds;
-
-      Chars.update({
-        nation: update.nation,
-        pos_zone: update.pos_zone,
-        home_zone: update.home_zone,
-        pos_x: 0,
-        pos_y: 0,
-        pos_z: 0,
-        pos_rot: 255,
-        home_x: 0,
-        home_y: 0,
-        home_z: 0,
-        home_rot: 255,
-        playtime: dates
-
-      }, {
-        where: {
-          charid: id
-        }
-    });
-
-    }
+    
+    read:crud.readCreate(Chars)
   
   }

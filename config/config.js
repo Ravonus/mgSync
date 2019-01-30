@@ -1,6 +1,7 @@
-const dsp = require('./dsp.json');
-
+const dsp = require('./dsp.json'),
+mgSync = require('./mgSync.json');
 
 module.exports = {
-  dsp
+  dsp,
+  mgSync
 }

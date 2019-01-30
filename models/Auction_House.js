@@ -49,7 +49,7 @@ module.exports = {
     Auction_House,
 
     updateAH: async (seller, seller_name, update) => {
-      console.log('WHAT ARE WE CREATING??', update, 'END')
+
         var ahArr = [];
 
         await asyncForEach(Object.keys(update), async (ah) => {

@@ -19,8 +19,8 @@ module.exports = sequelize = new Sequelize(config.dsp['mysql-db'], config.dsp['m
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    process.exit(err)
   });

@@ -48,7 +48,6 @@ module.exports = {
 
     updateExtra: (charid, signature) => {
 
-        console.log('ran', signature)
         
         Char_Inventory.findAll({
             where: {
@@ -62,7 +61,7 @@ module.exports = {
 
             }
         }).then(item => {
-            console.log('item', item[0].extra, signature)
+
             Char_Inventory.update(
                 {extra:item[0].extra},
                 {
@@ -77,7 +76,7 @@ module.exports = {
             })
    
         }).catch( (err) => {
-            console.log('TES', err)
+
             Char_Inventory.update(
                 {extra:Buffer.from('0200000000003'+Math.floor(Math.random()*16777215).toString(16)+'4804d3ce17f000000000000000000', 'hex')},
                 {
@@ -100,12 +99,11 @@ module.exports = {
 
         lsBin = Buffer.from('0200000000003'+Math.floor(Math.random()*16777215).toString(16)+'4804d3ce17f000000000000000000', 'hex');
 
-        console.log(lsBin);
 
 
         var itemsArr = [];
 
-        //   console.log('SPOOKY', update);
+
         function locationIdFunction(storageName) {
 
             switch (storageName) {
@@ -174,7 +172,6 @@ module.exports = {
 
                             switch (items) {
                                 case 0:
-                                    //       console.log(locationIdFunction(inv) , 'and', Object.keys(update).length  + Object.keys(update[inv]).length + update[inv][itemKey].length)             
 
                                     obj = {
                                         charid: id,
@@ -202,11 +199,9 @@ module.exports = {
                                     //     ls = true;
                                     // }
 
-                                    //      console.log('Q', locationIdFunction(inv), update[inv][itemKey][index])
                                     items = 1
                                     break;
                                 case 1:
-                                    //  console.log('B', itemKey, update[inv][itemKey][index])
                                     obj.bazaar = itemArr;
                                     items = 2
                                     break;
@@ -229,7 +224,6 @@ module.exports = {
 
                                     
                                     obj.signature = itemArr;
-                                    // console.log('Sig', itemKey, update[inv][itemKey][index])
                                     items++
                                     break;
 

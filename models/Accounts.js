@@ -1,10 +1,6 @@
-
-console.log(__dirname)
-
 const Sequelize = require('sequelize'),
 
 sequelize = require('../controllers/sequelize'),
-crud = require('../controllers/crud'),
 { promisify } = require('util');
 
 
