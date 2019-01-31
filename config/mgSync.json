@@ -1,5 +1,7 @@
 {
-    "server": "https://71.205.29.58:3003",
-    "token" : "5c515d8bfbd17428f81c08a3"
+    "server": "http://server.mog.garden:3002",
+    "secure": false,
+    "token" : "5c515d8bfbd17428f81c08a3",
+    "timeout": "10000"
 
 }

@@ -1,5 +1,5 @@
 {
-  "mysql-host": "192.168.0.200",
+  "mysql-host": "server.mog.garden",
   "mysql-db" : "dspdb",
   "mysql-user" : "darkstar",
   "mysql-password" : "password",

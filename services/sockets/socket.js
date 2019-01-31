@@ -8,20 +8,29 @@ if(port) {
     var url = config.mgSync.server.replace(/^(?:https?:\/\/)?/g,'');
 }
 
-console.log(url);
-console.log(port);
 
-sslCertificate.get(url, 1000, port).then(function (certificate) {
+
+if(config.mgSync.secure) sslCertificate.get(url, 10000, port).then(function (certificate) {
  
-    console.log(certificate.subject)
+        if(certificate && certificate.subject && certificate.subject.CN !== url) {
+    
+        console.log(certificate)
+      console.log(certificate.subject.CN, url)
+
+      console.log('Certificate does not match')
+      
+      process.exit('Certifcate does not match');
+
+    }
+
 
 }).catch( (e) => {
     console.log(e)
     process.exit('Token incorrect.');
 
-})
+});
 
-const socket = require("socket.io-client")(config.mgSync.server, {query: `token=${config.mgSync.token}`, secure: true});
+const socket = require("socket.io-client")(config.mgSync.server, {query: `token=${config.mgSync.token}`});
 
 global.socket = socket;
 
