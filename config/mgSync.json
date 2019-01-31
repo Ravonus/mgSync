@@ -1,6 +1,6 @@
 {
-    "server": "http://server.mog.garden:3002",
-    "secure": false,
-    "token" : "5c528abf5c4a141f75b767cd",
+    "server": "https://mog.garden",
+    "secure": true,
+    "token" : "TOKEN_ID",
     "timeout": "10000"
 }

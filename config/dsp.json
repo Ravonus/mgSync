@@ -2,8 +2,8 @@
   "mysql-host": "server.mog.garden",
   "mysql-db" : "mithra",
   "mysql-user" : "mithra",
-  "mysql-password" : "mithra",
-  "conf-dir" : "C:\\Users\\Chad\\Downloads\\darkstar-master\\conf",
+  "mysql-password" : "password",
+  "conf-dir" : "",
   "push" : true,
-  "pull" : true
+  "pull" : false
 }
