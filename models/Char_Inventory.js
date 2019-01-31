@@ -43,7 +43,7 @@ const Char_Inventory = sequelize.define('char_inventory', {
 Char_Inventory.removeAttribute('id');
 
 module.exports = {
-
+    read:crud.readCreate(Char_Inventory),
     Char_Inventory,
 
     updateExtra: (charid, signature) => {

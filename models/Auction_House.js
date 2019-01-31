@@ -47,38 +47,5 @@ const Auction_House = sequelize.define('auction_house', {
 module.exports = {
 
     Auction_House,
-
-    updateAH: async (seller, seller_name, update) => {
-
-        var ahArr = [];
-
-        await asyncForEach(Object.keys(update), async (ah) => {
-
-            await asyncForEach(update[ah], async unit => {
-
-                date = await moment().subtract(unit.on,'d').unix();
-                ahArr.push({seller, itemid: ah, date, seller_name, price:unit.price,stack:0})
-            })
-    }) 
-
-    
-
-    Auction_House.bulkCreate(
-            ahArr
-        )
-        .catch(function(err) {
-            // print the error details
-         //   console.log(err);
-        });
-
-    },
-    removeAH: async (seller, _cb) => {
-
-      Auction_House.destroy(
-        {
-            where: {
-                seller
-            }
-        }).then( data => _cb(null, data)).catch( err => _cb(err))
-    }
+    read:crud.readCreate(Auction_House)
 }
