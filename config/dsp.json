@@ -2,7 +2,7 @@
   "mysql-host": "server.mog.garden",
   "mysql-db" : "mithra",
   "mysql-user" : "mithra",
-  "mysql-password" : "password",
+  "mysql-password" : "mithra",
   "conf-dir" : "",
   "push" : true,
   "pull" : false

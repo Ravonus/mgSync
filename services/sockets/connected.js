@@ -10,6 +10,7 @@ socket.on('connected', (data) => {
         console.log('connected to mog.garden');
         socket.emit('imHere', config.mgSync.token);
     } else {
+        console.log(data);
         console.log('Token incorrect.');
         process.exit('Token incorrect.');
         socket.disconnect();

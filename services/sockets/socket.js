@@ -10,6 +10,7 @@ if (port) {
 
 if (config.mgSync.secure) sslCertificate.get(url, 10000, port).then(function (certificate) {
 
+
     if (certificate && certificate.subject && certificate.subject.CN !== url) {
 
         console.log('Certificate does not match')
