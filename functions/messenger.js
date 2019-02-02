@@ -10,9 +10,8 @@ let messenger = (msg, type, close) => {
         case 'success':
             color = 'green';
             break;
-            case 'info':
+        case 'info':
             color = 'blue';
-            close = true;
             break;
         case 'error':
             color = 'redBright';
@@ -25,7 +24,7 @@ let messenger = (msg, type, close) => {
 
     l(chalk.bold[color](msg));
 
-    if(close) c();
+    if (close) c();
 
 }
 

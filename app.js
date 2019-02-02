@@ -1,22 +1,8 @@
 global.config = require('./config/config');
 global.crud = require('./controllers/crud')
-require('./services/sockets/socketFunctions');
-global.functionsDone = false;
-function _cb() {
 
-    if (global.functionsDone === false) {
-        setTimeout(function(){ _cb(); },0);
-        
-    } else {
-        moveOn()
-    }
-}
-
-_cb()
-
-function moveOn() {
-
-    global.log = Functions.messenger;
+require('./services/sockets/socketFunctions').then(function(result) {
+   log(result, 'info');
     if (config.dsp['conf-dir']) {
         let confFiles = require('./config/conf');
         Promise.all(confFiles).then(function (data) {
@@ -25,8 +11,10 @@ function moveOn() {
         });
     }
 
+  });
+
   //  log('ERRRRROR', 'error');
-}
+
 
 require('./services/sockets/socket');
 
