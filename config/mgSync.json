@@ -1,6 +1,6 @@
 {
     "server": "https://mog.garden",
     "secure": false,
-    "token" : "Server Token Here",
+    "token" : "TOKEN-KEY",
     "timeout": "10000"
 }

@@ -1,0 +1,6 @@
+*.log
+.log
+/logs/
+/logs/*
+logs/*
+logs/

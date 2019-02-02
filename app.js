@@ -1,21 +1,15 @@
-global.config = require('./config/config');
+global.config = require('./config/scripts/config');
 global.crud = require('./controllers/crud')
 
-require('./services/sockets/socketFunctions').then(function(result) {
-   log(result, 'info');
+require('./services/sockets/socketFunctions').then(r => {
     if (config.dsp['conf-dir']) {
-        let confFiles = require('./config/conf');
+        let confFiles = require('./config/scripts/dspConf');
         Promise.all(confFiles).then(function (data) {
+            global.dspConfFiles = data;
         }).catch(obj => {
-            log('A dsp conf file was not found.')
+            log('dpsConfNotFound');
         });
     }
-
-  });
-
-  //  log('ERRRRROR', 'error');
-
+});
 
 require('./services/sockets/socket');
-
-//global.log('ERRRRROR', 'error')

@@ -13,12 +13,12 @@ if (config.mgSync.secure) sslCertificate.get(url, 10000, port).then(function (ce
 
     if (certificate && certificate.subject && certificate.subject.CN !== url) {
 
-        log('Certificate does not match', 'error')
+        log('certMatch')
 
     }
 
 }).catch((e) => {
-    log('It looks like you may be connecting to a non-secure server', 'error')
+    log('nonSecure')
 });
 
 const socket = require("socket.io-client")(config.mgSync.server, { query: `token=${config.mgSync.token}` });

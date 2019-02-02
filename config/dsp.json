@@ -1,9 +1,9 @@
 {
-  "mysql-host": "localhost",
+  "mysql-host": "server.mog.garden",
   "mysql-db" : "dspdb",
   "mysql-user" : "mithra",
   "mysql-password" : "password",
-  "conf-dir" : "",
+  "conf-dir" : "C:\\User\\Documents\\darkstar-master\\conf",
   "push" : true,
   "pull" : false
 }

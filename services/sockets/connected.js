@@ -1,13 +1,13 @@
 socket._connectTimer = setTimeout(function () {
-    log('Could not make communication to mog.garden', 'error');
+    log('serverUnreachable');
 }, config.mgSync.timeout);
 
 socket.on('connected', (data) => {
     if (typeof data === 'object' && data.authenticated === true) {
         clearTimeout(socket._connectTimer);
-        log('connected to mog.garden','success');
+        log(`connectTo`);
         socket.emit('imHere', config.mgSync.token);
     } else {
-        log('Token incorrect.', 'error');
+        log('wrongToken');
     }
 });
