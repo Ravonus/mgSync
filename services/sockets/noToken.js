@@ -1,4 +1,4 @@
 socket.on('noToken', (data) => {
-      console.log(data);
+      log('No token', 'error');
       socket.disconnect();
 });

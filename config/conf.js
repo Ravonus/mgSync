@@ -1,12 +1,14 @@
 const fs = require('fs');
+const { promisify } = require('util');
 
 global.dspConf = {}
 
 let promises = [];
 let found = {};
 
+//fs.readDirSync = promisify(fs.readdir);
+try {
 var files = fs.readdirSync(config.dsp['conf-dir']);
-
 files.forEach((file, index) => {
 
     promises.push(new Promise(function (resolve, reject) {
@@ -23,7 +25,7 @@ files.forEach((file, index) => {
         var x;
 
         if (index === files.length - 1) {
-            if (Object.keys(found).includes('login_darkstar.conf')
+            if ( Object.keys(found).includes('login_darkstar.conf')
                 && Object.keys(found).includes('map_darkstar.conf')
                 && Object.keys(found).includes('server_message.conf')
                 && Object.keys(found).includes('maint.conf')) {
@@ -38,5 +40,8 @@ files.forEach((file, index) => {
     }))
 
 });
+} catch (e) {
+    log(e, 'warning');
+}
 
 module.exports = promises;

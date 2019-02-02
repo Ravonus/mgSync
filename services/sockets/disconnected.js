@@ -1,3 +1,3 @@
 socket.on('disconnect', function(data){
-    console.log(data);
+    log('Application disconnected from mog.garden', 'warning');
 });

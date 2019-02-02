@@ -1,8 +1,8 @@
 {
-  "mysql-host": "server.mog.garden",
-  "mysql-db" : "mithra",
+  "mysql-host": "localhost",
+  "mysql-db" : "dspdb",
   "mysql-user" : "mithra",
-  "mysql-password" : "mithra",
+  "mysql-password" : "password",
   "conf-dir" : "",
   "push" : true,
   "pull" : false

@@ -23,5 +23,6 @@ sequelize
   })
   .catch(err => {
     console.log(err)
-    process.exit(err)
+    if(err.original.sqlMessage) log(err.original.sqlMessage, 'error')
+    log(`Could not reach your mysql server (${err.original.hostname})`, 'error')
   });
