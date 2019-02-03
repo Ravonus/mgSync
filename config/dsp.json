@@ -3,12 +3,10 @@
   "mysql-db" : "dspdb",
   "mysql-user" : "darkstar",
   "mysql-password" : "password",
-  "conf-dir" : "C:/Users/Name/Downloads/darkstar-master/conf",
-  "DS-conf": "C:/Users/Name/Documents/Darkstar/",
-  "DSConnect": "DSConnect-server.exe",
-  "DSGame": "DSGame-server.exe",
-  "DSSearch": "DSSearch-server.exe",
-  "restartTime" : 12500,
+  "conf-dir" : "C:/Users/Chad/Downloads/darkstar-master/conf",
+  "executables" : ["DSConnect-server", "DSGame-server", "DSSearch-server"],
+  "DS-conf": "C:/Users/Chad/Documents/Darkstar/",
+  "processPollingTime" : false,
   "push" : true,
   "pull" : false
 }
