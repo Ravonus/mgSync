@@ -1,9 +1,14 @@
 {
   "mysql-host": "server.mog.garden",
   "mysql-db" : "dspdb",
-  "mysql-user" : "mithra",
+  "mysql-user" : "darkstar",
   "mysql-password" : "password",
-  "conf-dir" : "C:\\User\\Documents\\darkstar-master\\conf",
+  "conf-dir" : "C:/Users/Chad/Downloads/darkstar-master/conf",
+  "DS-conf": "C:/Users/Chad/Documents/Darkstar/",
+  "DSConnect": "DSConnect-server.exe",
+  "DSGame": "DSGame-server.exe",
+  "DSSearch": "DSSearch-server.exe",
+  "restartTime" : 12500,
   "push" : true,
   "pull" : false
 }

@@ -3,9 +3,9 @@ const sequelize = require('../sequelize');
 
 async function asyncForEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
+        await callback(array[index], index, array);
     }
-  }
+}
 
 const Delivery_Box = sequelize.define('delivery_box', {
 
@@ -49,30 +49,24 @@ module.exports = {
 
     Delivery_Box,
 
-    
-
-    updateDB:  (update) => {
-
-   //    console.log(update, 'dey see mey updating');
+    updateDB: (update) => {
 
         Delivery_Box.bulkCreate(
             update
         )
-        .catch(function(err) {
-            // print the error details
-         //   console.log(err)
-     
-        });
+            .catch(function (err) {
+                // print the error details
+
+            });
 
     },
     removeDB: async (charid, _cb) => {
 
         Delivery_Box.destroy(
-          {
-              where: {
-                  charid
-              }
-          }).then( data => _cb(null, data)).catch( err => _cb(err))
-      }
-
+            {
+                where: {
+                    charid
+                }
+            }).then(data => _cb(null, data)).catch(err => _cb(err))
+    }
 }

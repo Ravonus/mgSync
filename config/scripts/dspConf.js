@@ -41,7 +41,7 @@ files.forEach((file, index) => {
 
 });
 } catch (e) {
-    log({msg:'dspConfNotFound',type:'warning'});
+    log('dspConfNotFound');
 }
 
 module.exports = promises;

@@ -234,10 +234,6 @@ module.exports = {
                                     itemsArr.push(obj);
                                     obj = {};
 
-
-
-
-                                    //  console.log('Position', itemKey, update[inv][itemKey][index])
                                     items = 0;
                                     break;
                             }
@@ -252,14 +248,13 @@ module.exports = {
                                 )
                                     .catch(function (err) {
                                         // print the error details
-                                        //   console.log(err);
+
                                     });
 
                                 // });
 
                             }
 
-                            //     console.log(itemKey, itemArr);
                         });
 
                         isDone++;

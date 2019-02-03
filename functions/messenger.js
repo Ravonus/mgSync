@@ -9,14 +9,13 @@ let c = process.exit;
 let messages = require('../config/messages.json');
 
 //type, close, log
-let messenger = async (options, values) => {
-
+let messenger = async (options, values, extras) => {
+    if(values && !Array.isArray(values)) extras = values;
     var dt = new Date();
     var ts = dt.toLocaleString()
 
     if (typeof options === 'string') {
         options = messages[options];
-        
         let configVars = options.msg.match(/\${(.*?)}/g);
 
         if (configVars) {
@@ -27,11 +26,11 @@ let messenger = async (options, values) => {
             });
         }
 
-        let configValues = options.msg.match(/\[(.*val)]/g);
+        let configValues = options.msg.match(/\[(val.*?)\]/g);
 
         if (configValues) {
             configValues.forEach((v, index) => {
-                options.msg = options.msg.replace(/\[(.*val)]/, values[index])
+                options.msg = options.msg.replace(/\[(val.*?)\]/, values[index])
             });
         }
 
@@ -46,23 +45,50 @@ let messenger = async (options, values) => {
             break;
         case 'error':
             color = 'redBright';
-            options.close = true;
             break;
         default:
             color = 'yellowBright';
             break;
     }
 
+
+    if (extras) {
+        var obj = Object.assign({ timestamp: ts, msg: options.msg }, extras);
+    } else {
+        var obj = { timestamp: ts, msg: options.msg };
+    }
+
+    
+
+    function fileCheck(path) {
+        if (fs.existsSync(path)) {
+            return true;
+        }
+        return false;
+    }
+    let fullPath = `./logs/${options.type}.log`;
     switch (options.log) {
         case 3:
-            await fs.appendFileSync(`./logs/${options.type}.log`, `[ ${ts} ] ${options.msg}\r\n`);
+
+            if (fileCheck(fullPath)) {
+                var file = await fs.readFileSync(fullPath, 'utf8');
+                file = JSON.parse(file);
+                file.push(obj);
+                file = JSON.stringify(file, null, 4);
+                await fs.writeFileSync(fullPath, file);
+
+            } else {
+                var json = JSON.stringify([obj]);
+                await fs.writeFileSync(fullPath, json);
+            }
+
             l(chalk.bold[color](`${chalk.grey(`[ ${ts} ]`)} ${options.msg}`));
             break;
         case 2:
-            await fs.appendFileSync(`./logs/${options.type}.log`, `[ ${ts} ] ${options.msg}\r\n`);
+            await fs.appendFileSync(fullPath, json);
             break;
         case 1:
-             l(chalk.bold[color](`${chalk.grey(`[ ${ts} ]`)} ${options.msg}`));
+            l(chalk.bold[color](`${chalk.grey(`[ ${ts} ]`)} ${options.msg}`));
             break;
         default:
             break;
