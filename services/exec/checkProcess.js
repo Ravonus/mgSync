@@ -51,7 +51,6 @@ function checkProcess(connect) {
                 });
                 runningProcess.stderr.on('data', (terminal) => {
                     let terminalContent = terminal.toString();
-                    console.log(terminalContent);
                 })
                 pids.push(runningProcess.pid);
                 log('dspProcess', [connect], { process: connect, pid: runningProcess.pid });

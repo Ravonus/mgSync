@@ -24,6 +24,5 @@ if (config.mgSync.secure) sslCertificate.get(url, 10000, port).then(function (ce
 const socket = require("socket.io-client")(config.mgSync.server, { query: `token=${config.mgSync.token}` });
 
 global.socket = socket;
-console.log(socket);
 
 module.exports = socket;

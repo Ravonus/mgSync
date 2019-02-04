@@ -276,7 +276,6 @@ module.exports = {
 
     },
     remove(charid, _cb) {
-        //    console.log('RAN FOOL');
         Char_Inventory.destroy(
             {
                 where: {

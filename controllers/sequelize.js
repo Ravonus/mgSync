@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-
 module.exports = sequelize = new Sequelize(config.dsp['mysql-db'], config.dsp['mysql-user'], config.dsp['mysql-password'], {
   host: config.dsp['mysql-host'],
   dialect: 'mysql',
@@ -22,6 +21,7 @@ sequelize
     
   })
   .catch(err => {
+    console.log(err);
     if(err.original.sqlMessage) log({err:err.original.sqlMessage, type:'error'});
     log(`reachMysql`, [err.original.hostname])
   });

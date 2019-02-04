@@ -22,7 +22,7 @@ let mgSync = new Promise(async (resolve) => {
     fs.writeFileSync('./config/mgSync.json', JSON.stringify(mgSync));
   } else {
     mgSync = require('../mgSync.json');
-    console.log(mgSync);
+
   }
   resolve(mgSync);
 });
