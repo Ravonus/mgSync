@@ -1,7 +1,0 @@
-{
-    "server": "https://mog.garden",
-    "secure": true,
-    "token" : "5c528abf5c4a141f75b767cd",
-    "timeout": "15000",
-    "disabled" : true
-}
