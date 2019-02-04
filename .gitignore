@@ -4,7 +4,5 @@
 /logs/*
 logs/*
 logs/
-dsp.json
-logs/dsp.json
-mgSync.json
-logs/mgSync.json
+config/dsp.json
+config/mgSync.json
