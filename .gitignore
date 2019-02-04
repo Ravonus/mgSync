@@ -1,0 +1,10 @@
+*.log
+.log
+/logs/
+/logs/*
+logs/*
+logs/
+dsp.json
+logs/dsp.json
+mgSync.json
+logs/mgSync.json
