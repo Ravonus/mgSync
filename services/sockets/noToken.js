@@ -1,0 +1,1 @@
+socket.on('noToken', (data) => {log('Notoken');});

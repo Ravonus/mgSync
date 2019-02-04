@@ -1,0 +1,9 @@
+*.log
+.log
+/logs/
+/logs/*
+logs/*
+logs/
+config/dsp.json
+config/mgSync.json
+node_modules/
