@@ -1,13 +1,14 @@
 const find = require('find-process');
-var pidusage = require('pidusage');
-var pids = [];
-var intervalId;
+let pidusage = require('pidusage');
+let pids = [];
+let intervalId;
 function checkProcess(connect) {
+    let isWin = process.platform === "win32";
+    if(!isWin) connect = `${config.dsp['DS-conf']}${connect}`
     find('name', connect, true)
         .then(function (process) {
             if (process.length === 0) {
                 var spawn = require('child_process').execFile;
-                console.log(config.dsp['DS-conf'])
                 var runningProcess = spawn(connect, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
                    
                     var index = pids.indexOf(runningProcess.pid);
