@@ -19,12 +19,13 @@ function checkProcess(connect) {
                 var runningProcess = spawn(application, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
                     if(err) {
                         err = err.toString();
-                    }
+                    
                     if (err.includes('[SQL]')) {
                         let string = err.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')
                             log({ msg: string, type: 'error', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
                     }
+                }
                    
                     var index = pids.indexOf(runningProcess.pid);
                     if (index > -1) {
