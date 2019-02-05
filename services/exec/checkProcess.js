@@ -17,7 +17,9 @@ function checkProcess(connect) {
             if (process.length === 0) {
                 var spawn = require('child_process').execFile;
                 var runningProcess = spawn(application, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
-                    if(err) err = err.toString();
+                    if(err) {
+                        err = err.toString();
+                    }
                     if (err.includes('[SQL]')) {
                         let string = err.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')
