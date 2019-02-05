@@ -2,9 +2,11 @@ const find = require('find-process');
 let pidusage = require('pidusage');
 let pids = [];
 let intervalId;
+let runOnce = false;
+let isWin = process.platform === "win32";
 function checkProcess(connect) {
-    let isWin = process.platform === "win32";
-    if(!isWin) connect = `${config.dsp['DS-conf']}${connect}`
+    
+    if(!isWin && !runOnce) connect = `${config.dsp['DS-conf']}${connect}`; runOnce = true;
     find('name', connect, true)
         .then(function (process) {
             if (process.length === 0) {
