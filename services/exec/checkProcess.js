@@ -5,13 +5,24 @@ let intervalId;
 let runOnce = false;
 let isWin = process.platform === "win32";
 function checkProcess(connect) {
-    
-    if(!isWin && !runOnce) connect = `${config.dsp['DS-conf']}${connect}`; runOnce = true;
+    let application;
+
+    if(!isWin){
+     application = `${config.dsp['DS-conf']}${connect}`; 
+    } else {
+        application = connect; 
+    }
     find('name', connect, true)
         .then(function (process) {
             if (process.length === 0) {
                 var spawn = require('child_process').execFile;
-                var runningProcess = spawn(connect, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
+                var runningProcess = spawn(application, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
+                    if(err) err = err.toString();
+                    if (err.includes('[SQL]')) {
+                        let string = err.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
+                        if (string !== '')
+                            log({ msg: string, type: 'error', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                    }
                    
                     var index = pids.indexOf(runningProcess.pid);
                     if (index > -1) {
@@ -24,7 +35,6 @@ function checkProcess(connect) {
                 });
                 runningProcess.stdout.on('data', (terminal) => {
                     let terminalContent = terminal.toString();
-
                     if (terminalContent.includes('[Debug]')) {
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')

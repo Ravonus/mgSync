@@ -8,7 +8,7 @@ require('./config/scripts/config').dsp.then(function (dsp) {
     global.config.dsp = dsp;
     var checkProcess = require('./services/exec/checkProcess');
     if (config.dsp.executables && config.dsp['DS-conf']) {
-        config.dsp.executables.forEach(executable => {
+        config.dsp.executables.forEach(executable => { 
             checkProcess(executable);
         });
     }
