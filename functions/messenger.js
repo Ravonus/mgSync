@@ -87,7 +87,7 @@ let messenger = async (options, values, extras) => {
 
             if (fileCheck(fullPath)) {
                 console.log('MY FULL PATH', fullPath)
-                var file = await fs.readFileSync(fullPath, 'utf8');
+                var file = await fs.readFileSync(fullPath, 'utf8').catch(e => console.log(e));
                 console.log('MY FILE', file.length)
                 file = JSON.parse(file);
                 if (file[Object.keys(obj)]) {
