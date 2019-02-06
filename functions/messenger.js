@@ -79,7 +79,9 @@ let messenger = async (options, values, extras) => {
         fullPath = `${options.path}${options.type}.log`;
     } else {
         let dir = await fs.readdir('./logs').catch(e => { });
-        if (!dir) await fs.mkdir('./logs');
+        if (!dir) {
+            await fs.mkdir('./logs');
+        }
         fullPath = `./logs/${options.type}.log`;
     }
 
@@ -89,7 +91,7 @@ let messenger = async (options, values, extras) => {
             if (fileCheck(fullPath)) {
                 console.log('MY FULL PATH', fullPath)
                 var file = await fs.readFile(fullPath, 'utf8').catch(e => console.log(e));
-                console.log('MY FILE', file.length)
+                console.log('MY FILE', file.length, fullPath)
                 file = JSON.parse(file);
                 if (file[Object.keys(obj)]) {
                     file[Object.keys(obj)].push(obj[Object.keys(obj)]);
