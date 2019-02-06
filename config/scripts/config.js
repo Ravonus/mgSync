@@ -30,7 +30,7 @@ let mgSync = new Promise(async (resolve) => {
 // files.forEach( (file) => {
 
 //   if(file !== 'messages.json' && file !== 'scripts') {
-//     console.log('ad',file);
+
 //   }
 
 // });
@@ -52,7 +52,7 @@ let mgSync = new Promise(async (resolve) => {
 
 
 let functionDir = fs.readdir('./functions/');
-
+let functionsDone = new Promise(async (resolve) => {
 functionDir.then((functions) => {
 
   functions.forEach(async (func, index) => {
@@ -63,14 +63,18 @@ functionDir.then((functions) => {
     }
 
     if (index === functions.length - 1) {
+      resolve(true);
       functionsDone = true;
     }
 
   });
 }).catch(err => console.log(err));
-
+});
+let doneArray = [dsp,mgSync,functionsDone];
 module.exports = {
   dsp,
-  mgSync
+  mgSync,
+  functionsDone,
+  doneArray 
 }
 

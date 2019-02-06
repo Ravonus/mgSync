@@ -1,6 +1,7 @@
 const find = require('find-process');
 let pidusage = require('pidusage');
 let pids = [];
+global.dspExec = [];
 let intervalId;
 let runOnce = false;
 let isWin = process.platform === "win32";
@@ -29,6 +30,7 @@ function checkProcess(connect) {
                    
                     var index = pids.indexOf(runningProcess.pid);
                     if (index > -1) {
+                        dspExec.splice(index, 1);
                         pids.splice(index, 1);
                     }
                     log('dspProcessClose', [connect], { process: connect, pid: runningProcess.pid });
@@ -36,6 +38,9 @@ function checkProcess(connect) {
                     checkProcess(connect);
 
                 });
+
+                
+
                 runningProcess.stdout.on('data', (terminal) => {
                     let terminalContent = terminal.toString();
                     if (terminalContent.includes('[Debug]')) {
@@ -70,12 +75,13 @@ function checkProcess(connect) {
                 runningProcess.stderr.on('data', (terminal) => {
                     let terminalContent = terminal.toString();
                 })
+                dspExec.push(runningProcess)
                 pids.push(runningProcess.pid);
                 log('dspProcess', [connect], { process: connect, pid: runningProcess.pid });
                 if (config.dsp.processPollingTime && pids.length === config.dsp.executables.length) {
                     intervalId = setInterval(function () {
                         pidusage(pids, function (err, stats) {
-                            //        console.log(stats)
+                                    //console.log(stats)
                             if (err) {
                                 clearInterval(intervalId);
                                 return;

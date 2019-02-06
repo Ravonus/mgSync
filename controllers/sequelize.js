@@ -21,7 +21,6 @@ sequelize
     
   })
   .catch(err => {
-    console.log(err);
     if(err.original.sqlMessage) log({err:err.original.sqlMessage, type:'error'});
     log(`reachMysql`, [err.original.hostname])
   });
