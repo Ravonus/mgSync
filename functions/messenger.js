@@ -1,5 +1,4 @@
 const chalk = require('chalk'),
-    dJSON = require('dirty-json');
     objClone = require('./objClone'),
     fs = require('fs'),
     { promisify } = require('util'),
@@ -18,8 +17,6 @@ fs.writeFile = promisify(fs.writeFile);
 let messenger = async (options, values, extras) => {
 
     logWrite = new Promise( async (resolve) => {
-
-    
 
     if (values && !Array.isArray(values)) extras = values;
     var dt = new Date();

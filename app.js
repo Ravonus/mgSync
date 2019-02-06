@@ -1,8 +1,10 @@
-global.log = require('./functions/messenger')
+global.log = require('./functions/messenger');
 
 global.config = require('./config/scripts/config');
 
+
 Promise.all(require('./config/scripts/config').doneArray).then((data) => {
+
 
     global.config.dsp = data[0];
     var checkProcess = require('./services/exec/checkProcess');
@@ -28,7 +30,7 @@ Promise.all(require('./config/scripts/config').doneArray).then((data) => {
         }
 
     });
-    
+    require('./services/express/server');
     Functions.Cleanup();
 
 });
