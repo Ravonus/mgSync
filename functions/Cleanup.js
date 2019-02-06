@@ -9,15 +9,21 @@ function Cleanup(callback) {
   process.on('cleanup',callback);
   // do app specific cleaning before exiting
   process.on('exit', function () {
-    dspExec.forEach(exec => {
-      exec.kill();
+    logWrite.then( () => {
+       dspExec.forEach(exec => {
+        exec.kill();
+      })
+      process.emit('cleanup');
+
+
     })
-    process.emit('cleanup');
   });
 
   // catch ctrl+c event and exit normally
   process.on('SIGINT', function () {
-    process.exit(2);
+    logWrite.then(() => {
+         process.exit(2);
+    });
   });
 
   //catch uncaught exceptions, trace, then exit normally

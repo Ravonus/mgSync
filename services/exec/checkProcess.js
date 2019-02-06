@@ -8,26 +8,26 @@ let isWin = process.platform === "win32";
 function checkProcess(connect) {
     let application;
 
-    if(!isWin){
-     application = `${config.dsp['DS-conf']}${connect}`; 
+    if (!isWin) {
+        application = `${config.dsp['DS-conf']}${connect}`;
     } else {
-        application = connect; 
+        application = connect;
     }
     find('name', connect, true)
         .then(function (process) {
             if (process.length === 0) {
                 var spawn = require('child_process').execFile;
                 var runningProcess = spawn(application, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
-                    if(err) {
+                    if (err) {
                         err = err.toString();
-                    
-                    if (err.includes('[SQL]')) {
-                        let string = err.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
-                        if (string !== '')
-                            log({ msg: string, type: 'error', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+
+                        if (err.includes('[SQL]')) {
+                            let string = err.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
+                            if (string !== '')
+                                log({ msg: string, type: 'error', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                        }
                     }
-                }
-                   
+
                     var index = pids.indexOf(runningProcess.pid);
                     if (index > -1) {
                         dspExec.splice(index, 1);
@@ -38,8 +38,6 @@ function checkProcess(connect) {
                     checkProcess(connect);
 
                 });
-
-                
 
                 runningProcess.stdout.on('data', (terminal) => {
                     let terminalContent = terminal.toString();
@@ -54,7 +52,7 @@ function checkProcess(connect) {
                             log({ msg: string, type: 'warning', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
                     }
                     if (terminalContent.includes('[Status]')) {
-                        
+
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(\r\n|\n|\r)/gm, '').trim();
                         if (string !== '')
                             log({ msg: string, type: 'success', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
@@ -66,9 +64,9 @@ function checkProcess(connect) {
                             log({ msg: string, type: 'info', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
                     }
                     if (terminalContent.includes('[Info]')) {
-                            let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
-                            if (string !== '')
-                        log({ msg: string, type: 'info', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                        let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
+                        if (string !== '')
+                            log({ msg: string, type: 'info', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
                     }
 
                 });
@@ -81,7 +79,7 @@ function checkProcess(connect) {
                 if (config.dsp.processPollingTime && pids.length === config.dsp.executables.length) {
                     intervalId = setInterval(function () {
                         pidusage(pids, function (err, stats) {
-                                    //console.log(stats)
+                            //console.log(stats)
                             if (err) {
                                 clearInterval(intervalId);
                                 return;

@@ -1,4 +1,5 @@
 const chalk = require('chalk'),
+    dJSON = require('dirty-json');
     objClone = require('./objClone'),
     fs = require('fs'),
     { promisify } = require('util'),
@@ -11,9 +12,14 @@ let color,
 
 fs.mkdir = promisify(fs.mkdir);
 fs.readFile = promisify(fs.readFile);
+fs.writeFile = promisify(fs.writeFile);
 
 //type, close, log
 let messenger = async (options, values, extras) => {
+
+    logWrite = new Promise( async (resolve) => {
+
+    
 
     if (values && !Array.isArray(values)) extras = values;
     var dt = new Date();
@@ -66,10 +72,8 @@ let messenger = async (options, values, extras) => {
     }
 
     function fileCheck(path) {
-        if (fs.existsSync(path)) {
-            return true;
-        }
-        return false;
+        if (fs.existsSync(path))  return true;
+            return false;    
     }
     let fullPath;
 
@@ -89,26 +93,40 @@ let messenger = async (options, values, extras) => {
         case 3:
 
             if (fileCheck(fullPath)) {
-                console.log('MY FULL PATH', fullPath)
                 var file = await fs.readFile(fullPath, 'utf8').catch(e => console.log(e));
-                console.log('MY FILE', file.length, fullPath)
+
                 file = JSON.parse(file);
-                if (file[Object.keys(obj)]) {
-                    file[Object.keys(obj)].push(obj[Object.keys(obj)]);
-                } else {
-                    file[Object.keys(obj)[0]] = [obj[Object.keys(obj)]]
-                }
+                
+                    file = Object.assign(file, obj);
+                
                 file = JSON.stringify(file, null, 4);
                 await fs.writeFileSync(fullPath, file);
+                resolve(true)
             } else {
-                var json = JSON.stringify(obj);
+                var json = JSON.stringify(obj, null, 4);
                 await fs.writeFileSync(fullPath, json);
+                resolve(true)
             }
 
             l(chalk.bold[color](`${chalk.grey(`[ ${ts} ]`)} ${options.msg}`));
             break;
         case 2:
-            await fs.appendFileSync(fullPath, json);
+            
+        if (fileCheck(fullPath)) {
+            var file = await fs.readFile(fullPath, 'utf8').catch(e => console.log(e));
+
+            file = JSON.parse(file);
+            
+                file[Object.keys(obj)[0]] = obj[Object.keys(obj)]
+            
+            file = JSON.stringify(file, null, 4);
+            await fs.writeFileSync(fullPath, file);
+            resolve(true)
+        } else {
+            var json = JSON.stringify(obj, null, 4);
+            await fs.writeFileSync(fullPath, json);
+            resolve(true)
+        }
             break;
         case 1:
             l(chalk.bold[color](`${chalk.grey(`[ ${ts} ]`)} ${options.msg}`));
@@ -118,7 +136,7 @@ let messenger = async (options, values, extras) => {
     }
 
     if (options.close) c();
-
+})
 }
 
 module.exports = messenger;
