@@ -1,5 +1,5 @@
-var app = new Vue({
-    el: '#app',
+var head = new Vue({
+    el: '#head',
     data:{
       
     },

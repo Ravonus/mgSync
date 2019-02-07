@@ -18,11 +18,9 @@ fs.readFile = promisify(fs.readFile);
 
 var checkVue = fs.readdirSync(dir + '/vue');
 var vueFiles = [];
-// var tests = fs.readFileSync(`${dir}/vue/2-vueApp.js`, 'utf8');
-
-// tests = tests.replace(/data: {([^}]+)}|data:{([^}]+)}/,'data:{test:true}')
-// console.log(tests);
+let push = {};
 Functions.asyncForEach(checkVue, async (vueFile, index) => {
+    
 
     if (vueFile.substr(-3) === '.js') {
 
@@ -31,76 +29,77 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
     if (index === checkVue.length - 1) {
         if (vueFiles.length !== 0) {
-            if (vueFiles.length > 1) {
 
-            } else {
-                let files = fs.readdirSync(`${dir}/vue/data`, 'utf8');
-                let push = "";
-                let first = false;
-                await Functions.asyncForEach(files, async (file, index) => {
+                vueFiles.forEach(async (file, index) => {
+                   
+                    async function vueUpdate(files, directory, type) {
+                        
+                        
+                        await Functions.asyncForEach(files, async (fileSecond, index) => {
+                        
+                            let contents = await fs.readFile(`${dir}/vue/${type}/${directory}/${fileSecond}`, 'utf8');
 
-                    let contents = await fs.readFile(`${dir}/vue/data/${file}`, 'utf8');
-                    let objects = contents.match(/{([^]+)/);
-  
-                            // obj = obj.replace(/(\r\n|\n|\r)/gm,"");
-                            if(index !== files.length - 1) {
-                                push += objects[0].substr(1).slice(0,-1)+',';
+                            let objects = contents.match(/{([^]+)/);
+
+                            if (index !== files.length - 1) {
+                                push[directory][type] += objects[0].substr(1).slice(0, -1) + ',';
                             } else {
-                                push += objects[0].substr(1).slice(0,-1);
-                            }     
- 
-                });
+                                push[directory][type] += objects[0].substr(1).slice(0, -1);
+                            }
+
+                        });
+
+                        
+                  
+                        ///right here everything is working besides the writefilesync is overwriting because its the entire object both loops (So last one over writes prev)
+
+                            
+                            var regex = new RegExp(`${type}: {([^}]+)}|${type}:{([^}]+)}`, '');
+                            var contents = fs.readFileSync(`${dir}/vue/${file}`, 'utf8');
+                         
+                            contents = await contents.replace(regex, `${type}: { ${push[directory][type]} }`);
+                            console.log(type, contents)
+                            await fs.writeFileSync(`${dir}/js/${file}`, contents);
+
+                        
+
+                    }
+
+                    var directory = file.substring(0, file.length - 3);
+
+                    let first = false;
+                  
+                   
+                            var files = fs.readdirSync(`${dir}/vue/data/${directory}`, 'utf8');
                 
-                var contents = fs.readFileSync(`${dir}/vue/${vueFiles[0]}`, 'utf8');
-                contents = contents.replace(/data: {([^}]+)}|data:{([^}]+)}/, `data: { ${push} }`);
-                await fs.writeFileSync(`${dir}/js/${vueFiles[0]}`, contents);
-            }
+                            push[directory] = { 
+                                data: '',
+                                methods: '',
+                            }
+                            if (files.length > 0) vueUpdate(files, directory, 'data');
+  
+                            
+                            var files = fs.readdirSync(`${dir}/vue/methods/${directory}`, 'utf8');
+                   
+                            push[directory] = { 
+                                data: '',
+                                methods: '',
+                            }
+                            if (files.length > 0) vueUpdate(files, directory, 'methods');
+                
+                    
+
+                });
+
+            
         }
-        awaitArray();
+        //   awaitArray();
+        require('./cssLoad');
+        require('./javascriptLoad');
     }
 
 });
 
-//load javascript files
-
-let javascriptFiles = fs.readdirSync(`${dir}/js`),
-    compressor = require('node-minify'),
-    contents = fs.readFileSync(`${dir}/views/partials/scripts.ejs`, 'utf8'),
-    topContent = contents.replace(/\<!-- Don't Edit below this line -->(.|[\r\n])+/, ''),
-    writecontent = '';
-
-async function awaitArray() {
-    await Functions.asyncForEach(javascriptFiles, async (file) => {
-        let filePath = `${dir}/js/${file}`,
-            contents = await fs.readFile(filePath, 'utf8'),
-            newFile = file.replace(/\d+-/, ''),
-            newFilePath = `${dir}/public/js/${newFile}`;
-
-        if (config.mgSync.minify) {
-            var promise = compressor.minify({
-                compressor: config.mgSync.minify,
-                input: filePath,
-                output: newFilePath
-            });
-
-            promise.then(function (min) { });
-
-        } else {
-
-            fs.writeFile(newFilePath, contents);
-
-        }
-
-
-        writecontent += `<script src="js/${newFile}"></script>\n`
-
-    });
-
-    fs.writeFile(`${dir}/views/partials/scripts.ejs`, `${topContent}<!-- Don't Edit below this line -->\n${writecontent}`);
-
-}
-
-awaitArray();
 
 app.listen(config.mgSync.port, () => {
     log('express-started', [ip.address(), config.mgSync.port]);
