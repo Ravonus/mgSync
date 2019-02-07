@@ -13,6 +13,7 @@ fs.mkdir = promisify(fs.mkdir);
 fs.readFile = promisify(fs.readFile);
 fs.writeFile = promisify(fs.writeFile);
 
+
 //type, close, log
 let messenger = async (options, values, extras) => {
 
@@ -92,12 +93,14 @@ let messenger = async (options, values, extras) => {
             if (fileCheck(fullPath)) {
                 var file = await fs.readFile(fullPath, 'utf8').catch(e => console.log(e));
 
-                file = JSON.parse(file);
+                try{
+                file = JSON.parse(file.trim());
                 
                     file = Object.assign(file, obj);
                 
                 file = JSON.stringify(file, null, 4);
                 await fs.writeFileSync(fullPath, file);
+                }catch(e) {}
                 resolve(true)
             } else {
                 var json = JSON.stringify(obj, null, 4);

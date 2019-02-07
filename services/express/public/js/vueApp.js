@@ -1,0 +1,1 @@
+var app=new Vue({el:"#app",data:{fook:!0,hrrm:{dude:1,yeah:2,dook:"yeah"},book:!1,dood:{good:"Yeah"},test:"Test"},watch:{},methods:{}});
