@@ -1,7 +1,5 @@
 global.log = require('./functions/messenger');
-
 global.config = require('./config/scripts/config');
-
 
 Promise.all(require('./config/scripts/config').doneArray).then((data) => {
 

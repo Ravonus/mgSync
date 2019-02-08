@@ -1,16 +1,17 @@
 var app = new Vue({
     el: '#app',
     data: { 
-    logs: {}
+    logs: {},
+    logList: []
 ,
     page: 'home'
  },
     watch: {
     },
     methods: { 
-    pageChange: function(page) {
-        console.log(page)
-    }
+  logSelect: function(log) {
+      lGet('/logs?type='+log.target.value);
+  }
  },
     end: {
       

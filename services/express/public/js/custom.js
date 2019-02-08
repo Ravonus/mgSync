@@ -39,11 +39,12 @@ function lLGet(url) {
 
         data.forEach(function (log) {
             if(log.includes('dsp-')){
-                console.log('DSP', log)
+                app.logList.push({folder:'dsp/'+log.slice(4, -4), name:log.slice(0, -4)});
             } else {
-                console.log('notDSP', log)
+                app.logList.push({folder:log.slice(0, -4), name:log.slice(0, -4)});
             }
         });
+
 
 
 

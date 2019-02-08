@@ -1,8 +1,6 @@
 var head = new Vue({
     el: '#head',
     data: { 
-    main:true
-,
     page: 'home'
  },
     watch: {
