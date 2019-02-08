@@ -53,7 +53,7 @@
         "log": 3
     },
     "dspConfNotFound": {
-        "msg": "A dsp conf file was not found. Although not criticle to running application. Can help with management. If you want this warning to go away. Remove or fix conf-dir within dps.json file.",
+        "msg": "A dsp conf file was not found. Although not criticle to running application. Can help with management. If you want this warning to go away. Remove or fix conf-dir within dsp.json file.",
         "type": "warning",
         "log": 3
     },

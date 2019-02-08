@@ -1,1 +1,1 @@
-var head=new Vue({el:"#head",data:{main:!0,page:"home"},watch:{},methods:{}});
+var head=new Vue({el:"#head",data:{main:!0,page:"home"},watch:{},methods:{pageChange:function(e){this.page=e,app.page=e,"logs"===e&&(lLGet("/logList"),lGet("/logs?type=success"))}},end:{}});

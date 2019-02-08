@@ -6,5 +6,8 @@ var app = new Vue({
     watch: {
     },
     methods: {
+    },
+    end: {
+      
     }
   })

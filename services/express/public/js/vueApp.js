@@ -1,1 +1,1 @@
-var app=new Vue({el:"#app",data:{main:!0,page:"home"},watch:{},methods:{}});
+var app=new Vue({el:"#app",data:{logs:{},page:"home"},watch:{},methods:{pageChange:function(e){console.log(e)}},end:{}});

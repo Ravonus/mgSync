@@ -1,8 +1,17 @@
 <!-- views/partials/header.ejs -->
 <ul id="head" class="nav md-tabs nav-justified indigo lighten-2 mx-0 mb-0 mt-1">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-            aria-expanded="false">Dropdown</a>
+    <li class="nav-item" @click="pageChange('home')">
+        <a class="nav-link waves-effect waves-light" href="#!">Main</a>
+    </li>
+    <li class="nav-item" @click="pageChange('logs')">
+        <a class="nav-link waves-effect waves-light" href="#!">Logs</a>
+    </li>
+    <li class="nav-item" @click="pageChange('statistics')">
+        <a class="nav-link waves-effect waves-light" href="#!">Statistics</a>
+    </li>
+    <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">DSP</a>
         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
@@ -10,18 +19,5 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Separated link</a>
         </div>
-    </li>
-
-    <li class="nav-item" @click="pageChange('home')">
-        <a class="nav-link" href="#!">Active</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#!">Link 1</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#!">Link 2</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#!">Link 3</a>
     </li>
 </ul>

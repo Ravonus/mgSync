@@ -6,5 +6,8 @@ var head = new Vue({
     watch: {
     },
     methods: {
+    },
+    end: {
+      
     }
   })

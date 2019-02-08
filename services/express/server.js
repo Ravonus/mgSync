@@ -19,8 +19,9 @@ fs.readFile = promisify(fs.readFile);
 var checkVue = fs.readdirSync(dir + '/vue');
 var vueFiles = [];
 let push = {};
+let firstRun = {}
+let myContents = {}
 Functions.asyncForEach(checkVue, async (vueFile, index) => {
-    
 
     if (vueFile.substr(-3) === '.js') {
 
@@ -30,68 +31,59 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
     if (index === checkVue.length - 1) {
         if (vueFiles.length !== 0) {
 
-                vueFiles.forEach(async (file, index) => {
-                   
-                    async function vueUpdate(files, directory, type) {
-                        
-                        
-                        await Functions.asyncForEach(files, async (fileSecond, index) => {
-                        
-                            let contents = await fs.readFile(`${dir}/vue/${type}/${directory}/${fileSecond}`, 'utf8');
+            vueFiles.forEach(async (file, index) => {
 
-                            let objects = contents.match(/{([^]+)/);
+                async function vueUpdate(files, directory, type) {
 
-                            if (index !== files.length - 1) {
-                                push[directory][type] += objects[0].substr(1).slice(0, -1) + ',';
-                            } else {
-                                push[directory][type] += objects[0].substr(1).slice(0, -1);
-                            }
+                    await Functions.asyncForEach(files, async (fileSecond, index) => {
 
-                        });
+                        let contents = await fs.readFile(`${dir}/vue/${type}/${directory}/${fileSecond}`, 'utf8');
 
-                        
-                  
-                        ///right here everything is working besides the writefilesync is overwriting because its the entire object both loops (So last one over writes prev)
+                        let objects = contents.match(/{([^]+)/);
 
-                            
-                            var regex = new RegExp(`${type}: {([^}]+)}|${type}:{([^}]+)}`, '');
-                            var contents = fs.readFileSync(`${dir}/vue/${file}`, 'utf8');
-                         
-                            contents = await contents.replace(regex, `${type}: { ${push[directory][type]} }`);
-                            console.log(type, contents)
-                            await fs.writeFileSync(`${dir}/js/${file}`, contents);
+                        if (index !== files.length - 1) {
+                            push[directory][type] += objects[0].substr(1).slice(0, -1) + ',';
+                        } else {
+                            push[directory][type] += objects[0].substr(1).slice(0, -1);
+                        }
 
-                        
+                    });
 
+                    var regex = new RegExp(`${type}: {([^}][^,]+)|${type}:{([^}][^,]+)`, '');
+                    if (firstRun[directory]) {
+                        firstRun[directory] = false;
+                        myContents[directory] = fs.readFileSync(`${dir}/vue/${file}`, 'utf8');
                     }
 
-                    var directory = file.substring(0, file.length - 3);
+                    myContents[directory] = await myContents[directory].replace(regex, `${type}: { ${push[directory][type]} }`);
+                    await fs.writeFileSync(`${dir}/js/${file}`, myContents[directory]);
 
-                    let first = false;
-                  
-                   
-                            var files = fs.readdirSync(`${dir}/vue/data/${directory}`, 'utf8');
-                
-                            push[directory] = { 
-                                data: '',
-                                methods: '',
-                            }
-                            if (files.length > 0) vueUpdate(files, directory, 'data');
-  
-                            
-                            var files = fs.readdirSync(`${dir}/vue/methods/${directory}`, 'utf8');
-                   
-                            push[directory] = { 
-                                data: '',
-                                methods: '',
-                            }
-                            if (files.length > 0) vueUpdate(files, directory, 'methods');
-                
-                    
+                }
 
-                });
+                var directory = file.substring(0, file.length - 3);
+                if (!firstRun[directory]) firstRun[directory] = true;
+                let first = false;
 
-            
+
+                var files = fs.readdirSync(`${dir}/vue/data/${directory}`, 'utf8');
+
+                push[directory] = {
+                    data: '',
+                    methods: '',
+                }
+                if (files.length > 0) vueUpdate(files, directory, 'data');
+
+
+                var files = fs.readdirSync(`${dir}/vue/methods/${directory}`, 'utf8');
+
+                push[directory] = {
+                    data: '',
+                    methods: '',
+                }
+                if (files.length > 0) vueUpdate(files, directory, 'methods');
+
+            });
+
         }
         //   awaitArray();
         require('./cssLoad');
@@ -99,7 +91,6 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
     }
 
 });
-
 
 app.listen(config.mgSync.port, () => {
     log('express-started', [ip.address(), config.mgSync.port]);

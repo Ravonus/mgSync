@@ -4,7 +4,8 @@ const express = require('express'),
 
 routes.then((rf) => {
     Object.keys(rf).forEach(r => {
-        router.route(rf[r].path).get(rf[r].route);
+        if(!rf[r].type) rf[r].type = 'get';
+        router.route(rf[r].path)[rf[r].type](rf[r].route);
     });
 
 });

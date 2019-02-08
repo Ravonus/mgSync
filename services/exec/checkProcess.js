@@ -24,7 +24,7 @@ function checkProcess(connect) {
                         if (err.includes('[SQL]')) {
                             let string = err.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                             if (string !== '')
-                                log({ msg: string, type: 'error', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                                log({ msg: string, type: 'error', log: 3, path: './logs/dsp/' }, { process: connect, pid: runningProcess.pid });
                         }
                     }
 
@@ -44,29 +44,29 @@ function checkProcess(connect) {
                     if (terminalContent.includes('[Debug]')) {
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')
-                            log({ msg: string, type: 'warning', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                            log({ msg: string, type: 'warning', log: 3, path: './logs/dsp/' }, { process: connect, pid: runningProcess.pid });
                     }
                     if (terminalContent.includes('[Warning]')) {
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')
-                            log({ msg: string, type: 'warning', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                            log({ msg: string, type: 'warning', log: 3, path: './logs/dsp/' }, { process: connect, pid: runningProcess.pid });
                     }
                     if (terminalContent.includes('[Status]')) {
 
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(\r\n|\n|\r)/gm, '').trim();
                         if (string !== '')
-                            log({ msg: string, type: 'success', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                            log({ msg: string, type: 'success', log: 3, path: './logs/dsp/' }, { process: connect, pid: runningProcess.pid });
 
                     }
                     if (terminalContent.includes('[Lua]')) {
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')
-                            log({ msg: string, type: 'info', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                            log({ msg: string, type: 'info', log: 3, path: './logs/dsp/' }, { process: connect, pid: runningProcess.pid });
                     }
                     if (terminalContent.includes('[Info]')) {
                         let string = terminalContent.replace(/\[(.*?)\]/g, '').replace(/(?:\r\n|\r|\n)/gm, '').trim();
                         if (string !== '')
-                            log({ msg: string, type: 'info', log: 3, path: './logs/dps/' }, { process: connect, pid: runningProcess.pid });
+                            log({ msg: string, type: 'info', log: 3, path: './logs/dsp/' }, { process: connect, pid: runningProcess.pid });
                     }
 
                 });

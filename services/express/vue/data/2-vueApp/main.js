@@ -1,3 +1,3 @@
 object = {
-    main:true
+    logs: {}
 }

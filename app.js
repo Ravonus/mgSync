@@ -25,7 +25,7 @@ Promise.all(require('./config/scripts/config').doneArray).then((data) => {
 
                 global.dspConfFiles = data;
             }).catch(obj => {
-                log('dpsConfNotFound');
+                log('dspConfNotFound');
             });
         }
 
