@@ -37,7 +37,13 @@ function lLGet(url) {
     $.get(url, function (data) {
 
 
-        console.log(data);
+        data.forEach(function (log) {
+            if(log.includes('dsp-')){
+                console.log('DSP', log)
+            } else {
+                console.log('notDSP', log)
+            }
+        });
 
 
 

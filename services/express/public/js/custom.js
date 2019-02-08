@@ -1,1 +1,52 @@
-function lGet(a){$.get(a,function(a){app.logs=JSON.parse(a),$(document).ready(function(){$.fn.dataTable.isDataTable("#dtBasicExample")?($("#dtBasicExample").DataTable().destroy(),$("#dtBasicExample").DataTable({searching:!0}),$(".dataTables_length").addClass("bs-select")):($("#dtBasicExample").DataTable({searching:!0}),$(".dataTables_length").addClass("bs-select"))})})}function lLGet(a){$.get(a,function(a){console.log(a)})}
+function lGet(url) {
+
+    $.get(url, function (data) {
+
+        app.logs = JSON.parse(data);
+
+
+
+        // Basic example
+        $(document).ready(function () {
+            if ($.fn.dataTable.isDataTable('#dtBasicExample')) {
+
+                $('#dtBasicExample').DataTable().destroy()
+                $('#dtBasicExample').DataTable({
+                    "searching": true
+                });
+                $('.dataTables_length').addClass('bs-select');
+
+            } else {
+
+                $('#dtBasicExample').DataTable({
+                    "searching": true
+                });
+                $('.dataTables_length').addClass('bs-select');
+
+            }
+
+        });
+
+    });
+
+}
+
+
+function lLGet(url) {
+
+    $.get(url, function (data) {
+
+
+        data.forEach(function (log) {
+            if(log.includes('dsp-')){
+                console.log('DSP', log)
+            } else {
+                console.log('notDSP', log)
+            }
+        });
+
+
+
+    });
+
+}
