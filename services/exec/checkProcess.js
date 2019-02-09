@@ -84,6 +84,7 @@ function checkProcess(connect) {
                 if (config.dsp.processPollingTime && pids.length === config.dsp.executables.length) {
                     intervalId = setInterval(function () {
                         pidusage(pids, function (err, stats) {
+                            console.log(appNames)
                             dspStats(stats, appNames);
                             if (err) {
                                 clearInterval(intervalId);

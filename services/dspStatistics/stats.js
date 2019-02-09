@@ -5,7 +5,8 @@ let count = '';
 let files = '';
 module.exports = (stats, application) => {
     Object.keys(stats).forEach(async (pid, index) => {
-        let dir = `./${application[index]}/seconds.json`;
+        let dir = path.join(__dirname, `${application[index]}/seconds.json`);
+        
         if (typeof files === 'string') {
             count = {};
             application.forEach((app) => {
@@ -21,12 +22,12 @@ module.exports = (stats, application) => {
             if (count[application[index]] > 60 / (config.dsp.processPollingTime / 1000)) {
 
                 count[application[index]] = 0;
-                await fs.writeFileSync(path.join(__dirname, `/${application[index]}/seconds.json`), JSON.stringify(files, null, 4));
+                await fs.writeFileSync(path.join(__dirname, `${application[index]}/seconds.json`), JSON.stringify(files, null, 4));
             }
         } else {
             files.push(stats[pid]);
 
-            await fs.writeFileSync(path.join(__dirname, `/${application[index]}/seconds.json`), JSON.stringify(files, null, 4));
+            await fs.writeFileSync(path.join(__dirname, `${application[index]}/seconds.json`), JSON.stringify(files, null, 4));
 
         }
 
