@@ -84,7 +84,12 @@ function checkProcess(connect) {
                 if (config.dsp.processPollingTime && pids.length === config.dsp.executables.length) {
                     intervalId = setInterval(function () {
                         pidusage(pids, function (err, stats) {
-                            console.log(appNames)
+                            if(!isWin) {
+                                appNames.forEach( (app, index) => {
+                                    appNames[index] = app.replace(config.dsp['DS-conf'], '');
+                                })
+                                console.log(isWin);
+                            }
                             dspStats(stats, appNames);
                             if (err) {
                                 clearInterval(intervalId);
