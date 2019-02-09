@@ -1,0 +1,35 @@
+<thead>
+    <tr>
+        <th class="th-sm">Character Name
+        </th>
+        <th class="th-sm">Character Id
+        </th>
+        <th class="th-sm">Account Id
+        </th>
+        <th class="th-sm">Nation
+        </th>
+        <th class="th-sm">Mentor
+        </th>
+        <th class="th-sm">Current Position
+        </th>
+        <th class="th-sm">Home Position
+        </th>
+        <th class="th-sm">Play Time
+        </th>
+        <th class="th-sm">GM Level
+        </th>
+    </tr>
+</thead>
+<tbody>
+    <tr v-for="dsp in dspTable">
+        <td>{{dsp.charname}}</td>
+        <td>{{dsp.charid}}</td>
+        <td>{{dsp.accid}}</td>
+        <td>{{dsp.nation}}</td>
+        <td>{{dsp.mentor}}</td>
+        <td>{{dsp.pos_zone}}</td>
+        <td>{{dsp.home_zone}}</td>
+        <td>{{dsp.playtime}}</td>
+        <td>{{dsp.gmlevel}}</td>
+    </tr>
+</tbody>

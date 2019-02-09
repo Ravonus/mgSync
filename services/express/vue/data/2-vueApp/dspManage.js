@@ -1,3 +1,4 @@
 object = {
-    dspTable: {}
+    dspTable: {},
+    dspTableName: ''
 }

@@ -1,7 +1,8 @@
 var app = new Vue({
     el: '#app',
     data: { 
-    dspTable: {}
+    dspTable: {},
+    dspTableName: ''
 ,
     logs: {},
     logList: []
