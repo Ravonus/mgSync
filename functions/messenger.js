@@ -2,7 +2,7 @@ const chalk = require('chalk'),
     objClone = require('./objClone'),
     fs = require('fs'),
     { promisify } = require('util'),
-    messages = require('../config/messages.json');
+    messages = require('../controllers/messages.json');
 
 let color,
     close = false,
