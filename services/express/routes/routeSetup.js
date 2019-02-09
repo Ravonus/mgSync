@@ -12,7 +12,7 @@ module.exports = new Promise(async (resolve) => {
     await files.forEach(async (file) => {
         if (file !== 'routes.js' && file !== 'routeSetup.js') {
             file = file.substring(0, file.length - 3);
-            loadedRoutes[file] = require(`${dir}\\${file}`);
+            loadedRoutes[file] = require(`${dir}/${file}`);
         }
     });
     resolve(loadedRoutes);
