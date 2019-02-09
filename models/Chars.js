@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize'),
-sequelize = require('../controllers/sequelize');
+path = require('path'),
+sequelize = require(path.join(__dirname, '../controllers/sequelize')),
+{ promisify } = require('util');
 
 const Chars = sequelize.define('chars', {
     

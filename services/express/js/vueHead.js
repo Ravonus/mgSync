@@ -6,6 +6,16 @@ var head = new Vue({
     watch: {
     },
     methods: { 
+    dspManage: function (url) {
+
+        $.get(url, function (data) {
+
+            app.dspTable = data;
+
+        });
+
+    }
+,
     pageChange: function(page) {
         this.page = page;
         app.page = page;

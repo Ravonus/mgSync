@@ -1,5 +1,7 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../sequelize');
+const Sequelize = require('sequelize'),
+
+sequelize = require('../controllers/sequelize'),
+{ promisify } = require('util');
 
 const Item_Weapon = sequelize.define('item_weapon', {
     

@@ -13,11 +13,9 @@
         <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button"
             aria-haspopup="true" aria-expanded="false">DSP</a>
         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Accounts&type=read')" href="#">Accounts</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Chars&type=read')" href="#">Characters</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Auction_House&type=read')" href="#">Auctions</a>
         </div>
     </li>
 </ul>

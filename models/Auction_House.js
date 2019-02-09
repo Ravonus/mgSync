@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../sequelize');
-const moment = require('moment');
+path = require('path'),
+sequelize = require(path.join(__dirname, '../controllers/sequelize')),
+moment = require('moment');
 
 
 async function asyncForEach(array, callback) {
@@ -39,7 +40,7 @@ const Auction_House = sequelize.define('auction_house', {
   sale: {
     type: Sequelize.STRING
   },
-  sale_date: {
+  sell_date: {
     type: Sequelize.INTEGER
   }
 }, {timestamps: false, freezeTableName:true});

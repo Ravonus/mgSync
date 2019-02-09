@@ -1,29 +1,16 @@
 function lGet(url) {
-
     $.get(url, function (data) {
-        
+        $('#dtBasicExample').DataTable().destroy()
         app.logs = data;
-
-
-
         // Basic example
         $(document).ready(function () {
-            if ($.fn.dataTable.isDataTable('#dtBasicExample')) {
-
-                $('#dtBasicExample').DataTable().destroy()
-                $('#dtBasicExample').DataTable({
-                    "searching": true
-                });
-                $('.dataTables_length').addClass('bs-select');
-
-            } else {
 
                 $('#dtBasicExample').DataTable({
                     "searching": true
                 });
                 $('.dataTables_length').addClass('bs-select');
 
-            }
+            
 
         });
 
@@ -38,10 +25,18 @@ function lLGet(url) {
 
 
         data.forEach(function (log) {
-            if(log.includes('dsp-')){
-                app.logList.push({folder:'dsp/'+log.slice(4, -5), name:log.slice(0, -5)});
+            var found = false;
+            if (log.includes('dsp-')) {
+
+                app.logList.forEach(function (logL) {
+                    if (logL.name === log.slice(0, -5)) found = true;
+                });
+                if (!found) app.logList.push({ folder: 'dsp/' + log.slice(4, -5), name: log.slice(0, -5) });
             } else {
-                app.logList.push({folder:log.slice(0, -5), name:log.slice(0, -5)});
+                app.logList.forEach(function (logL) {
+                    if (logL.name === log.slice(0, -5)) found = true;
+                });
+                if (!found) app.logList.push({ folder: log.slice(0, -5), name: log.slice(0, -5) });
             }
         });
 

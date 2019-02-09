@@ -1,5 +1,7 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../sequelize');
+const Sequelize = require('sequelize'),
+path = require('path'),
+sequelize = require(path.join(__dirname, '../controllers/sequelize')),
+{ promisify } = require('util');
 
 const Item_Usable = sequelize.define('item_usable', {
     
