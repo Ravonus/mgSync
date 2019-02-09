@@ -1,8 +1,8 @@
 function lGet(url) {
 
     $.get(url, function (data) {
-
-        app.logs = JSON.parse(data);
+        
+        app.logs = data;
 
 
 
@@ -39,9 +39,9 @@ function lLGet(url) {
 
         data.forEach(function (log) {
             if(log.includes('dsp-')){
-                app.logList.push({folder:'dsp/'+log.slice(4, -4), name:log.slice(0, -4)});
+                app.logList.push({folder:'dsp/'+log.slice(4, -5), name:log.slice(0, -5)});
             } else {
-                app.logList.push({folder:log.slice(0, -4), name:log.slice(0, -4)});
+                app.logList.push({folder:log.slice(0, -5), name:log.slice(0, -5)});
             }
         });
 

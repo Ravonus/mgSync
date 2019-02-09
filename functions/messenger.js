@@ -7,6 +7,7 @@ const chalk = require('chalk'),
 let color,
     close = false,
     l = console.log,
+    openedLogs = {},
     c = process.exit;
 
 fs.mkdir = promisify(fs.mkdir);
@@ -70,28 +71,36 @@ let messenger = async (options, values, extras) => {
     }
 
     function fileCheck(path) {
-        if (fs.existsSync(path))  return true;
-            return false;    
+        return fs.existsSync(path);  
     }
-    let fullPath;
 
+    let fullPath;
+    let logName;
     if (options.path) {
         let dir = await fs.readdir(options.path).catch(e => { });
         if (!dir) await fs.mkdir(options.path);
-        fullPath = `${options.path}${options.type}.log`;
+        logName = options.path+options.type;
+        fullPath = `${options.path}${options.type}.json`;
     } else {
         let dir = await fs.readdir('./logs').catch(e => { });
         if (!dir) {
             await fs.mkdir('./logs');
         }
-        fullPath = `./logs/${options.type}.log`;
+        logName = options.type;
+        fullPath = `./logs/${options.type}.json`;
     }
-
+  
     switch (options.log) {
         case 3:
 
-            if (fileCheck(fullPath)) {
-                var file = await fs.readFile(fullPath, 'utf8').catch(e => console.log(e));
+            if (fileCheck( fullPath)) {
+                if(!openedLogs[logName]) {
+                    var file = await fs.readFileSync(fullPath, 'utf8')
+                    openedLogs[logName] = file;
+                } else {
+                    var file = openedLogs[logName];
+                }
+                
 
                 try{
                 file = JSON.parse(file.trim());
@@ -100,7 +109,9 @@ let messenger = async (options, values, extras) => {
                 
                 file = JSON.stringify(file, null, 4);
                 await fs.writeFileSync(fullPath, file);
-                }catch(e) {}
+                }catch(e) {
+                    l(chalk.bold.redBright(`${chalk.grey(`[ ${ts} ]`)} Issue with json log file: ${fullPath} ${e}`));
+                }
                 resolve(true)
             } else {
                 var json = JSON.stringify(obj, null, 4);
