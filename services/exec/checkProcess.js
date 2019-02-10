@@ -1,5 +1,5 @@
 const find = require('find-process'),
-dspStats = require('../dspStatistics/stats');
+    dspStats = require('../dspStatistics/stats');
 pidusage = require('pidusage');
 
 let pids = [];
@@ -84,11 +84,10 @@ function checkProcess(connect) {
                 if (config.dsp.processPollingTime && pids.length === config.dsp.executables.length) {
                     intervalId = setInterval(function () {
                         pidusage(pids, function (err, stats) {
-                            if(!isWin) {
-                                appNames.forEach( (app, index) => {
+                            if (!isWin) {
+                                appNames.forEach((app, index) => {
                                     appNames[index] = app.replace(config.dsp['DS-conf'], '');
-                                })
-                                console.log(isWin);
+                                });
                             }
                             dspStats(stats, appNames);
                             if (err) {

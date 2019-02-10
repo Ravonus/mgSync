@@ -7,3 +7,5 @@ logs/
 config/dsp.json
 config/mgSync.json
 node_modules/
+services/dspStatistics/*
+!services/dspStatistics/*.js
