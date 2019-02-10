@@ -16,10 +16,10 @@ module.exports = (stats, application) => {
             await fs.readdirSync(path.join(__dirname, application))
             try{
                 await fs.readFileSync(path.join(__dirname, application, 'seconds.json'));
-            } catch {
+            } catch(e) {
                 await fs.writeFileSync(path.join(__dirname, application, 'seconds.json'), '[]');
             }
-        } catch{
+        } catch(e) {
             await fs.mkdirSync(path.join(__dirname, application));
             await fs.writeFileSync(path.join(__dirname, application, 'seconds.json'), '[]');
         }
