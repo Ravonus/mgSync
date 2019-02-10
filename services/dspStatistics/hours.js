@@ -7,8 +7,8 @@ module.exports = (application, stats) => {
         let memory = [];
         await Functions.asyncForEach(stats, (stat) => {
 
-            cpu.push(stat.cpu);
-            memory.push(stat.memory);
+            cpu.push(stat.averageCpu);
+            memory.push(stat.averageMemory);
 
         });
 
