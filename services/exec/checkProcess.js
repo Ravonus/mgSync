@@ -78,8 +78,8 @@ function checkProcess(connect) {
                     let terminalContent = terminal.toString();
                 })
                 dspExec.push(runningProcess)
-                pids.push(runningProcess.pid);
                 appNames.push(application)
+                pids.push(runningProcess.pid);
                 log('dspProcess', [connect], { process: connect, pid: runningProcess.pid });
                 if (config.dsp.processPollingTime && pids.length === config.dsp.executables.length) {
                     intervalId = setInterval(function () {

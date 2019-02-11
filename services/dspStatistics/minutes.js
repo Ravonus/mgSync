@@ -42,7 +42,7 @@ module.exports = (application, stats) => {
                     lastHour[application] = push.timestamp;
                     resolve(arr);
                 } else {
-                    if(Date.now() - lastHour[application] > (10 * 1000) ) {
+                    if(Date.now() - lastHour[application] > (3600 * 1000) ) {
                         lastHour[application] = push.timestamp;
                         resolve(arr);
                     } else {

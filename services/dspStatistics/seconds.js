@@ -37,7 +37,7 @@ module.exports = (stats, application) => {
             files[application][count[application]] = stats;
             count[application]++;
 
-            if (count[application] > 1 / (config.dsp.processPollingTime / 1000)) {
+            if (count[application] > 60 / (config.dsp.processPollingTime / 1000)) {
 
                 count[application] = 0;
                 resolve(files[application]);

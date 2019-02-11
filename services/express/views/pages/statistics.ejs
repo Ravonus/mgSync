@@ -1,4 +1,10 @@
 <div class="jumbotron">
-    <h1>Statistics</h1>
-    <p>Statistics show here</p>
+    <select id="statisticsSelect" class="browser-default custom-select" @change="statisticSelect($event)">
+        <option selected disabled>Select DSP executables</option>
+        <option v-if="dspExec.length !== 0" v-for="exec in dspExec" :value="exec">
+            {{exec}}
+        </option>
+    </select>
+
+    <div id="dspStats"></div>
 </div>
