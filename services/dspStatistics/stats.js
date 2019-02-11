@@ -2,7 +2,6 @@ let secondsFunction = require('./seconds');
 let minutesFunction = require('./minutes');
 let hoursFunction = require('./hours');
 module.exports = (stats, application) => {
-    console.log(stats, application)
     Object.keys(stats).forEach(async (pid, index) => {
         secondsFunction(stats[pid], application[index]).then((seconds) => {
             minutesFunction(application[index], seconds).then((minutes) => {

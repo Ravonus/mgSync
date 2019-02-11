@@ -12,6 +12,8 @@ Promise.all(require('./config/scripts/config').doneArray).then((data) => {
         });
     }
 
+    global.config.express = require('./config/express');
+
     global.config.mgSync = data[1];
     global.crud = require('./controllers/crud');
     require('./services/sockets/socket');

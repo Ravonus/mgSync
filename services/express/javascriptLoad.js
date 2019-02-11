@@ -15,9 +15,9 @@ async function awaitArray() {
             newFile = file.replace(/\d+-/, ''),
             newFilePath = `${dir}/public/js/${newFile}`;
 
-        if (config.mgSync.minify) {
+        if (config.express.minify) {
             var promise = compressor.minify({
-                compressor: config.mgSync.minify,
+                compressor: config.express.minify,
                 input: filePath,
                 output: newFilePath
             });

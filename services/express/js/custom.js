@@ -54,7 +54,18 @@ function loadDspGraphs() {
             stepmode: 'todate',
             count: 1,
             label: '1m'
-        }, 
+        },{
+            step: 'minute',
+            stepmode: 'todate',
+            count: 15,
+            label: '15m'
+        },
+        {
+            step: 'minute',
+            stepmode: 'todate',
+            count: 30,
+            label: '30m'
+        },
         {
             step: 'hour',
             stepmode: 'todate',

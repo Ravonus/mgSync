@@ -92,7 +92,7 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
 });
 
-app.listen(config.mgSync.port, () => {
-    log('express-started', [ip.address(), config.mgSync.port]);
+app.listen(config.express.port, () => {
+    log('express-started', [ip.address(), config.express.port]);
 });
 module.exports = app;

@@ -16,6 +16,7 @@
     "express-vue": "^5.8.2",
     "find-process": "^1.2.1",
     "get-ssl-certificate": "^2.3.1",
+    "inquirer": "^6.2.2",
     "ip": "^1.1.5",
     "mysql2": "^1.6.4",
     "node-minify": "^3.6.0",
