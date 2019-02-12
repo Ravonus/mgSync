@@ -8,21 +8,37 @@ function graphDump(dump) {
     app.dspMemory = [];
     let object = JSON.parse(dump);
 
+    console.log(object)
+
     Object.keys(object).forEach( function (stat, index) {
         let cpuStat, memoryStat;
         if(object[stat].averageCpu) {
             cpuStat = object[stat].averageCpu;
-            memoryStat = object[stat].averageMemory;
             cpu.push(object[stat].timestamp + ',' + cpuStat + ',');
-            memory.push(object[stat].timestamp + ',' + memoryStat + ',');
-        } else {
+        } 
+        
+        if(object[stat].cpu) {
 
             cpuStat = object[stat].cpu;
-            memoryStat = object[stat].memory;
             cpu.push(object[stat].timestamp + ',' + cpuStat + ',');
+
+        }
+
+        if(object[stat].memory) {
+
+            memoryStat = object[stat].memory;
             memory.push(object[stat].timestamp + ',' + memoryStat + ',');
 
         }
+
+
+        if(object[stat].averageMemory) {
+
+            memoryStat = object[stat].averageMemory;
+            memory.push(object[stat].timestamp + ',' + memoryStat + ',');
+
+        }
+
 
       //  memory.push(object[stat].timestamp + ',' + memoryStat);
         if(index === Object.keys(object).length - 1) { 
