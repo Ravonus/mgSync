@@ -1,1 +1,59 @@
-function lGet(a){$.get(a,function(a){$("#dtBasicExample").DataTable().destroy(),app.logs=a,$(document).ready(function(){$("#dtBasicExample").DataTable({searching:!0}),$(".dataTables_length").addClass("bs-select")})})}function dLGet(a){$.get(a,function(a){graphDump(a)})}function lLGet(a){$.get(a,function(e){"/logList"===a?e.forEach(function(a){var e=!1;a.includes("dsp-")?(app.logList.forEach(function(t){t.name===a.slice(0,-5)&&(e=!0)}),e||app.logList.push({folder:"dsp/"+a.slice(4,-5),name:a.slice(0,-5)})):(app.logList.forEach(function(t){t.name===a.slice(0,-5)&&(e=!0)}),e||app.logList.push({folder:a.slice(0,-5),name:a.slice(0,-5)}))}):(app.dspExec=[],app.dspExec=e)})}
+function lGet(url) {
+    $.get(url, function (data) {
+        $('#dtBasicExample').DataTable().destroy()
+        app.logs = data;
+        // Basic example
+        $(document).ready(function () {
+
+                $('#dtBasicExample').DataTable({
+                    "searching": true
+                });
+                $('.dataTables_length').addClass('bs-select');
+
+        });
+
+    });
+
+}
+
+function dLGet(url) {
+    $.get(url, function (data) {
+        graphDump(data);
+
+
+    });
+
+}
+
+function lLGet(url) {
+    
+
+    $.get(url, function (data) {
+
+
+        if(url === '/logList') {
+        data.forEach(function (log) {
+            var found = false;
+            if (log.includes('dsp-')) {
+
+                app.logList.forEach(function (logL) {
+                    if (logL.name === log.slice(0, -5)) found = true;
+                });
+                if (!found) app.logList.push({ folder: 'dsp/' + log.slice(4, -5), name: log.slice(0, -5) });
+            } else {
+                app.logList.forEach(function (logL) {
+                    if (logL.name === log.slice(0, -5)) found = true;
+                });
+                if (!found) app.logList.push({ folder: log.slice(0, -5), name: log.slice(0, -5) });
+            }
+        });
+
+    } else {
+
+        app.dspExec = [];
+        app.dspExec = data;
+    }
+
+    });
+
+}
