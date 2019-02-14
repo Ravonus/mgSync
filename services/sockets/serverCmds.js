@@ -12,6 +12,7 @@ socket.on('dspOff', (options) => {
 socket.on('confLoad', async (options) => {
     var stringArray = []
     await Functions.asyncForEach(dspConfFiles, async (file) => {
+        if(file.includes('.conf')) {
         let contents = await fs.readFile(`${config.dsp['conf-dir']}/${file}`, 'utf8').catch(e => log(e));
         let noComment = contents.replace(/#.*$|^\/\/.*$/gm);
         let string = ['breakType:' + file.replace('.conf', '')];
@@ -27,6 +28,7 @@ socket.on('confLoad', async (options) => {
             stringArray = [...stringArray, ...string, ...matches];
         }
 
+    }
     });
 
     log('dspConfFiles', [dspConfFiles], { username: options.username });
