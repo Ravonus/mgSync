@@ -14,10 +14,10 @@ socket.on('confLoad', async (options) => {
     await Functions.asyncForEach(dspConfFiles, async (file) => {
         if(file.includes('.conf')) {
         let contents = await fs.readFile(`${config.dsp['conf-dir']}/${file}`, 'utf8').catch(e => log(e));
-        let noComment = contents.replace(/#.*$|^\/\/.*$/gm);
+        let noComment = contents.replace(/#.*$|^\/\/.*$/gm, '');
         let string = ['breakType:' + file.replace('.conf', '')];
         if (await file.includes('server_message')) {
-            string.push(file.replace('.conf', '') + ': ' + noComment.match(/^(.*?):.*$/gm)[0]);
+            string.push(file.replace('.conf', '') + ': ' + noComment);
             stringArray = [...stringArray, ...string];
         } else {
 

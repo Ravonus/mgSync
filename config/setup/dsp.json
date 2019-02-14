@@ -1,4 +1,5 @@
 {
+    "enabled": true,
     "mysql-host": "localhost",
     "mysql-db" : "dspdb",
     "mysql-user" : "darkstar",
