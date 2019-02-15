@@ -1,0 +1,6 @@
+{
+    "mgServer": "https://mog.garden",
+    "mgSecure": true,
+    "mgToken": "",
+    "mgTimeout": 15000
+}

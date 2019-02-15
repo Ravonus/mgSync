@@ -1,0 +1,12 @@
+{
+    "conf": "",
+    "exec1": "DSSearch-server",
+    "exec2": "DSGame-server",
+    "exec3": "DSConnect-server",
+    "poll": 3000,
+    "push": false,
+    "mysql-host": "localhost",
+    "mysql-db": "dspdb",
+    "mysql-user": "darkstar",
+    "mysql-password": ""
+}
