@@ -1,5 +1,0 @@
-{
-    "expressPort": "1337",
-    "minify": "uglify-es",
-    "cssMinify": "sqwish"
-}
