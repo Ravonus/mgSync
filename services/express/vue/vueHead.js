@@ -7,6 +7,7 @@ var head = new Vue({
     },
     methods: {
     },
+    
     end: {
       
     }

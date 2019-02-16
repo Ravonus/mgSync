@@ -12,15 +12,17 @@ function checkProcess(connect) {
     let application;
 
     if (!isWin) {
-        application = `${config.dsp['DS-conf']}${connect}`;
+        application = `${config.dsp['DS-dir']}${connect}`;
+
     } else {
         application = connect;
+      
     }
     find('name', connect, true)
         .then(function (process) {
             if (process.length === 0) {
                 var spawn = require('child_process').execFile;
-                var runningProcess = spawn(application, { cwd: config.dsp['DS-conf'] }, function (err, stdout, stderr) {
+                var runningProcess = spawn(application, { cwd: config.dsp['DS-dir'] }, function (err, stdout, stderr) {
                     if (err) {
                         err = err.toString();
 
@@ -86,7 +88,7 @@ function checkProcess(connect) {
                         pidusage(pids, function (err, stats) {
                             if (!isWin) {
                                 appNames.forEach((app, index) => {
-                                    appNames[index] = app.replace(config.dsp['DS-conf'], '');
+                                    appNames[index] = app.replace(config.dsp['DS-dir'], '');
                                 });
                             }
                             dspStats(stats, appNames);

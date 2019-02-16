@@ -7,6 +7,13 @@ var app = new Vue({
     },
     methods: {
     },
+    directives: {
+      focus: {
+        inserted (el) {
+          el.focus()
+        }
+      }
+    },
     end: {
       
     }

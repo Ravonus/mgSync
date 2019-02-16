@@ -9,7 +9,7 @@
         "Please enter DSGame.",
         "Please enter DSSearch."
     ],
-    "DS-conf": "Please enter dsp main directory path.",
+    "DS-dir": "Please enter dsp main directory path.",
     "processPollingTime": "Please enter process polling time for DSP statistics(False to disable)",
     "pull": "Please enter if you want Mog Garden to have pull access to application.",
     "push": "Please enter if you want Mog Garden to have push access to application."

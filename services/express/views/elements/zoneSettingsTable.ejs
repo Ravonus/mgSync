@@ -1,0 +1,94 @@
+<thead>
+    <tr>
+        <th class="th-sm">Zone Id
+        </th>
+        <th class="th-sm">Zone Type
+        </th>
+        <th class="th-sm">Zone Ip
+        </th>
+        <th class="th-sm">Zone Port
+        </th>
+        <th class="th-sm">Name
+        </th>
+        <th class="th-sm">Music Day
+        </th>
+        <th class="th-sm">Music Night
+        </th>
+        <th class="th-sm">Battle Solo
+        </th>
+        <th class="th-sm">Battle Multi
+        </th>
+        <th class="th-sm">Restriction
+        </th>
+        <th class="th-sm">Tax
+        </th>
+        <th class="th-sm">Misc
+        </th>
+    </tr>
+</thead>
+<tbody>
+    <tr v-for="dsp in dspTable">
+        <td>{{dsp.zoneid}}</td>
+        <td @click="dsp.watch[1].edit = true; focusOn(dsp.zonetype);">
+            <input v-if="dsp.watch[1].edit" v-model="dsp.zonetype"
+                @blur="focusOut(dsp.watch[1]);"
+                @keyup.enter="focusOut(dsp.watch[1]);" v-focus><a
+                v-else>{{dsp.zonetype}}</a>
+        </td>
+        <td @click="dsp.watch[2].edit = true;  focusOn(dsp.zoneip);">
+            <input v-if="dsp.watch[2].edit" v-model="dsp.zoneip"
+                @blur="focusOut(dsp.watch[2]);"
+                @keyup.enter="focusOut(dsp.watch[2]);" v-focus><a
+                v-else>{{dsp.zoneip}}</a>
+        </td>
+        <td @click="dsp.watch[3].edit = true;  focusOn(dsp.zoneport);">
+            <input v-if="dsp.watch[3].edit" v-model="dsp.zoneport"
+                @blur="focusOut(dsp.watch[3]);"
+                @keyup.enter="focusOut(dsp.watch[3]);" v-focus><a
+                v-else>{{dsp.zoneport}}</a>
+        </td>
+        <td>{{dsp.name}}</td>
+        <td @click="dsp.watch[5].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[5].edit" v-model="dsp.music_day"
+                @blur="focusOut($event, dsp.watch[5]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[5]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.music_day}}</a>
+        </td>
+        <td @click="dsp.watch[6].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[6].edit" v-model="dsp.music_night"
+                @blur="focusOut($event, dsp.watch[6]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[6]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.music_night}}</a>
+        </td>
+        <td @click="dsp.watch[7].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[7].edit" v-model="dsp.battlesolo"
+                @blur="focusOut($event, dsp.watch[7]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[7]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.battlesolo}}</a>
+        </td>
+        <td @click="dsp.watch[8].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[8].edit" v-model="dsp.battlemulti"
+                @blur="focusOut($event, dsp.watch[8]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[8]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.battlemulti}}</a>
+        </td>
+        <td @click="dsp.watch[9].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[9].edit" v-model="dsp.restriction"
+                @blur="focusOut($event, dsp.watch[9]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[9]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.restriction}}</a>
+        </td>
+        <td @click="dsp.watch[10].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[10].edit" v-model="dsp.tax"
+                @blur="focusOut($event, dsp.watch[10]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[10]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.tax}}</a>
+        </td>
+        <td @click="dsp.watch[11].edit = true; $forceUpdate()">
+            <input v-if="dsp.watch[11].edit" v-model="dsp.misc"
+                @blur="focusOut($event, dsp.watch[11]);  $emit('update');"
+                @keyup.enter="focusOut($event, dsp.watch[11]); $emit('update');  $forceUpdate();" v-focus><a
+                v-else>{{dsp.misc}}</a>
+        </td>
+    </tr>
+</tbody>

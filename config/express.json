@@ -1,5 +1,5 @@
 {
     "port": "1337",
-    "minify": "uglify-es",
-    "cssMinify": "sqwish"
+    "minify": false,
+    "cssMinify": false
 }

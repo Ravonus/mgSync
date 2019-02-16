@@ -3,7 +3,6 @@ socket._connectTimer = setTimeout(function () {
 }, config.mgSync.timeout);
 
 socket.on('connected', (data) => {
-    console.log('DATA!!!')
     if (typeof data === 'object' && data.authenticated === true) {
         clearTimeout(socket._connectTimer);
         log(`connectTo`);

@@ -6,7 +6,7 @@ Promise.all(require('./config/scripts/config').doneArray).then((data) => {
 
     global.config.dsp = data[0];
     var checkProcess = require('./services/exec/checkProcess');
-    if (config.dsp.executables && config.dsp['DS-conf']) {
+    if (config.dsp.executables && config.dsp['DS-dir']) {
         config.dsp.executables.forEach(executable => {
             checkProcess(executable);
         });

@@ -5,6 +5,9 @@ var app = new Vue({
     dspExec: [],
     dspTableName: ''
 ,
+    count: 0,
+    lastValue: ''
+,
     logs: {},
     logList: []
 ,
@@ -13,6 +16,20 @@ var app = new Vue({
     watch: {
     },
     methods: { 
+focusOn: ( value) => {
+    app.$forceUpdate();
+    app.lastValue = value;
+
+    
+},
+focusOut: ( watch) => {
+    console.log(app.lastValue)
+    watch.edit = false;
+    app.$forceUpdate();
+
+  }
+
+,
   logSelect: function(log) {
       lGet('/logs?type='+log.target.value);
   }
@@ -22,6 +39,13 @@ var app = new Vue({
     dLGet('/dspstatistics?name='+exec.target.value);
     }
    },
+    directives: {
+      focus: {
+        inserted (el) {
+          el.focus()
+        }
+      }
+    },
     end: {
       
     }
