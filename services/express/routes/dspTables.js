@@ -16,7 +16,7 @@ module.exports = {
                 return res.send(JSON.stringify(err));
             }
             if(data.length !== 0) return res.send(JSON.stringify(data));
-        });      
+        });
     },
     path: '/dspTables'
 }

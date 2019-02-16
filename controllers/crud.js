@@ -13,6 +13,23 @@ module.exports = {
 
     }
 
+  },
+
+  updateCreate: (model) => {
+    return (id, body, _cb) => {
+      eval(model).update(
+        body,
+        {
+        where: id
+      }).then(data => {
+        if (data.length > 0) return _cb(null, data);
+        return _cb({ err: 'Could not update' });
+      }).catch(err => {
+        _cb(err);
+      });
+
+    }
+
   }
 
 }

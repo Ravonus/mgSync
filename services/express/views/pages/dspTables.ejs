@@ -7,19 +7,22 @@
             cellspacing="0" width="100%">
             <% include ../elements/accountsTable %>
         </table>
-         <table v-else-if="dspTableName === 'Chars'" id="dspTable" class="table table-striped table-bordered table-sm"
+        <table v-else-if="dspTableName === 'Chars'" id="dspTable" class="table table-striped table-bordered table-sm"
             cellspacing="0" width="100%">
             <% include ../elements/charsTable %>
-            </table>
+        </table>
 
-            <table v-else-if="dspTableName === 'Zone_Settings'" id="dspTable"
-                class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <div v-else-if="dspTableName === 'Zone_Settings'">
+                <button type="button" class="btn btn-outline-primary waves-effect">Internal Ip</button>
+                <button type="button" class="btn btn-outline-primary waves-effect">External Ip</button>
+            <table id="dspTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+
                 <% include ../elements/zoneSettingsTable %>
             </table>
-
-            <table v-else-if="dspTableName === 'Auction_House'" id="dspTable"
-                class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                <% include ../elements/accountsTable %>
-            </table>
+        </div>
+        <table v-else-if="dspTableName === 'Auction_House'" id="dspTable"
+            class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <% include ../elements/accountsTable %>
+        </table>
     </div>
 </div>

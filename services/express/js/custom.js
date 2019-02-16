@@ -8,8 +8,6 @@ function graphDump(dump) {
     app.dspMemory = [];
     let object = JSON.parse(dump);
 
-    console.log(object)
-
     Object.keys(object).forEach( function (stat, index) {
         let cpuStat, memoryStat;
         if(object[stat].averageCpu) {
@@ -39,7 +37,6 @@ function graphDump(dump) {
 
         }
 
-
       //  memory.push(object[stat].timestamp + ',' + memoryStat);
         if(index === Object.keys(object).length - 1) { 
             app.dspCpu = cpu;
@@ -49,7 +46,6 @@ function graphDump(dump) {
         }
     });
 
-    
 }
 function bytesToSize(bytes) {
     var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -122,7 +118,7 @@ function loadDspGraphs() {
             yaxis: {
                showgrid:false,
                zeroline:false,
-                title: 'CPU Usage'
+               title: 'CPU Usage'
             },
             yaxis2: {
                 autorange:'reversed',

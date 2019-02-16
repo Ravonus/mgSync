@@ -1,5 +1,6 @@
 const express = require('express'),
     expressVue = require("express-vue"),
+    bodyParser = require('body-parser'),
     { promisify } = require('util'),
     fs = require('fs'),
     path = require('path'),
@@ -7,6 +8,10 @@ const express = require('express'),
     app = express(),
     ip = require('ip'),
     dir = __dirname;
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

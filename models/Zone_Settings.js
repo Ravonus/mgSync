@@ -49,6 +49,7 @@ const Zone_Settings = sequelize.define('zone_settings', {
   module.exports = {
 
     Zone_Settings,
-    read:crud.readCreate(Zone_Settings)
+    read:crud.readCreate(Zone_Settings),
+    update:crud.updateCreate(Zone_Settings)
   
   }
