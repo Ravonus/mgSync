@@ -11,7 +11,7 @@ Getting started is pretty simple. If you have never used Node.js. You simply jus
 
 The application has everything you need packaged into it (No extra webserver installs or database installs). Any Authentication extension will use mysql already installed for DSP.
 
-Keep in mind I am developing application with Windows, but it shoukd work with linux as well. For now though Windows will be less buggy. 
+Keep in mind I am developing application with Windows, but it should work with linux as well. For now though Windows will be less buggy. 
 
 
 ### Prerequisites
@@ -24,7 +24,13 @@ Then you must install all the required files with node package manager (Comes wi
 * Run below command
 
 ```
-npm install i
+npm i
+```
+
+or
+
+```
+npm install
 ```
 
 ## Getting application running
@@ -37,7 +43,8 @@ npm install i
 npm run setup
 ```
 
-* After setup is complete simply run app.
+* After setup is complete simply run application script now. If any configuration issues happen. It should print to screen and also log files. Most configuration issues should not crash application, but depending on them can. 
+* App should let you know if it can't reach a critical area of the systems. 
 
 ```
 npm start
@@ -46,22 +53,25 @@ npm start
 Running the application the first time will result in many errors if setup script was not ran. (This is because script is building config files that are left out of project due to security)
 
 (If setup script was ran skip below)
-Once files are created. You must change required configuration files. To find these go into the config folder. You will find two json files.
+Once files are created. You must change required configuration files. To find these go into the config folder. You will find three json files.
 * dsp.json (File for all dark server project configurations)
 * mgSync.json (File for all Mog.Garden configurations)
+* express.json (Config file that lets you configure front end web server)
 
-Also keep in mind you can turn off socket portion, and or the server management part. 
+Also keep in mind you can turn off socket portion, and or the server management part within these configurations. 
 
-* Connecting it to Mog.Garden is simple as well.
+
+* Connecting it to Mog.Garden is simple and secure.
 * You just go to https://Mog.Garden.
-* Sign up.
-* Once this is done you you see an user account dropdown.
-* Go here and go to setup server.
+* Sign up if you have not done so.
+* Once this is done you you see a user account dropdown.
+* Go here and go to setup DSP server.
 * The setup will give you a token key.
 * You use this token key in the configuration file, and or setup for application.
-* Mog.Garden also has a portion that will make sure server connect to correct socket. 
+* Mog.Garden also has a portion that will make sure server connects to correct socket. 
 * Once this is done. Mog.Garden will let you save server.
 * You will now see server in drop down and be able to manage, and extend into it right from Mog.Garden.
+* Your characters will show up under the character database. (This is just a test for now, and will be extended further and be more useful)
 
 ## Current Features
 - Dark Star Project Managment.
