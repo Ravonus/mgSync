@@ -1,28 +1,4 @@
-var app = new Vue({
-    el: '#app',
-    data: { 
-    dspTable: {},
-    dspExec: [],
-    dspTableName: '',
-    firstAsk: true,
-    list: [],
-    confContents: {},
-    curConf: [],
-    confFile: '',
-    swapColor: ['bg-info', 'bg-secondary'],
-    reRun: function(){}
-,
-    count: 0,
-    lastValue: ''
-,
-    logs: {},
-    logList: []
-,
-    page: 'home'
- },
-    watch: {
-    },
-    methods: { 
+object = {
   focusOn: function (value) {
     app.$forceUpdate();
     app.lastValue = value;
@@ -90,15 +66,4 @@ var app = new Vue({
     dLGet('/dspstatistics?name=' + exec.target.value);
   }
 
- },
-    directives: {
-      focus: {
-        inserted (el) {
-          el.focus()
-        }
-      }
-    },
-    end: {
-      
-    }
-  })
+}
