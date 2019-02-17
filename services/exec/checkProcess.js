@@ -13,7 +13,7 @@ function checkProcess(connect) {
 
     if (!isWin) {
 
-        if(config.dsp['DS-dir'].substring(config.dsp['DS-dir'].length -1) !== '/') config.dsp['DS-dir']+'/';
+        if(config.dsp['DS-dir'].substring(config.dsp['DS-dir'].length -1) !== '/') config.dsp['DS-dir'] = config.dsp['DS-dir']+'/';
 
         application = `${config.dsp['DS-dir']}${connect}`;
 
