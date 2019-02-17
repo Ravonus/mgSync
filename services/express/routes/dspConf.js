@@ -19,7 +19,7 @@ module.exports = {
         res.setHeader('Content-Type', 'application/json');
         let stringArray = [];
         await Functions.asyncForEach(confFiles, async (file) => {
-            if(file.includes('.conf')) {
+            if(file.slice(-5) === '.conf') {
             let contents = await fs.readFile(`${config.dsp['conf-dir']}/${file}`, 'utf8').catch(e => log(e));
             let noComment = contents.replace(/#.*$|^\/\/.*$/gm, '');
             let string = ['breakType:' + file.replace('.conf', '')];

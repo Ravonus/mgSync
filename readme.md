@@ -52,6 +52,17 @@ Once files are created. You must change required configuration files. To find th
 
 Also keep in mind you can turn off socket portion, and or the server management part. 
 
+* Connecting it to Mog.Garden is simple as well.
+* You just go to https://Mog.Garden.
+* Sign up.
+* Once this is done you you see an user account dropdown.
+* Go here and go to setup server.
+* The setup will give you a token key.
+* You use this token key in the configuration file, and or setup for application.
+* Mog.Garden also has a portion that will make sure server connect to correct socket. 
+* Once this is done. Mog.Garden will let you save server.
+* You will now see server in drop down and be able to manage, and extend into it right from Mog.Garden.
+
 ## Current Features
 - Dark Star Project Managment.
 * Start all executables.
@@ -126,7 +137,3 @@ See also the list of [contributors](https://github.com/Ravonus/mgSync/contributo
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
