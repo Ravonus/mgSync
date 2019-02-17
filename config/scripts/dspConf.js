@@ -8,7 +8,7 @@ let found = {};
 
 //fs.readDirSync = promisify(fs.readdir);
 try {
-if(config.dsp['conf-dir'].substring(config.dsp['conf-dir'].length -1) !=='/' || config.dsp['conf-dir'].substring(config.dsp['conf-dir'].length -1) !=='\\') config.dsp['conf-dir']+'/';
+if(config.dsp['conf-dir'].substring(config.dsp['conf-dir'].length -1) !=='/' || config.dsp['conf-dir'].substring(config.dsp['conf-dir'].length -1) !=='\\') config.dsp['conf-dir'] = config.dsp['conf-dir']+'/';
 var files = fs.readdirSync(config.dsp['conf-dir']);
 files.forEach((file, index) => {
 
