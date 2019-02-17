@@ -19,7 +19,19 @@ focusOut: function (watch, newValue, target){
 
   externalIp: function () {
 
-    externalPost('/dspPost', {rows:Object.keys(app.dspTable)});
+    ipPost('/dspPost', {rows:Object.keys(app.dspTable), type:'external'});
+
+  },
+
+  internalIp: function () {
+
+    ipPost('/dspPost', {rows:Object.keys(app.dspTable), type:'internal'});
+
+  },
+
+  localHostIp: function () {
+
+    ipPost('/dspPost', {rows:Object.keys(app.dspTable), type:'local'});
 
   }
 

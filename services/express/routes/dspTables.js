@@ -12,7 +12,6 @@ module.exports = {
         if(!req.query.body) req.query.body = {};
         models[req.query.model][req.query.type](req.query.body, (err, data) => {
             if(err) {
-                
                 return res.send(JSON.stringify(err));
             }
             if(data.length !== 0) return res.send(JSON.stringify(data));

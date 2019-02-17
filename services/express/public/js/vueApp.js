@@ -3,7 +3,9 @@ var app = new Vue({
     data: { 
     dspTable: {},
     dspExec: [],
-    dspTableName: ''
+    dspTableName: '',
+    firstAsk: true,
+    reRun: function(){}
 ,
     count: 0,
     lastValue: ''
@@ -36,7 +38,19 @@ focusOut: function (watch, newValue, target){
 
   externalIp: function () {
 
-    externalPost('/dspPost', {rows:Object.keys(app.dspTable)});
+    ipPost('/dspPost', {rows:Object.keys(app.dspTable), type:'external'});
+
+  },
+
+  internalIp: function () {
+
+    ipPost('/dspPost', {rows:Object.keys(app.dspTable), type:'internal'});
+
+  },
+
+  localHostIp: function () {
+
+    ipPost('/dspPost', {rows:Object.keys(app.dspTable), type:'local'});
 
   }
 
@@ -44,6 +58,20 @@ focusOut: function (watch, newValue, target){
   logSelect: function(log) {
       lGet('/logs?type='+log.target.value);
   }
+,
+    remSession: function (value) {
+        if (app.firstAsk) {
+            app.reRun = app.remSession;
+            app.reRunValue = value;
+            app.firstAsk = false;
+            $('#areYouSure').modal('show');
+        } else {
+            deleteItem('/dspDelete', {model: app.dspTableName, where:{accid:app.reRunValue}})
+            $('#areYouSure').modal('hide');
+        }
+
+    }
+
 ,
     statisticSelect: function(exec) {
     //    lGet('/logs?type='+log.target.value);

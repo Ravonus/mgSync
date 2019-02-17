@@ -27,7 +27,7 @@
     </tr>
 </thead>
 <tbody>
-    <tr v-for="dsp in dspTable" :id="'row-'+dsp.zoneid">
+    <tr v-if="dsp.watch && dsp.watch[0] && dsp.watch[0].idName === 'zoneid'" v-for="dsp in dspTable" :id="'row-'+dsp.zoneid">
         <td>{{dsp.zoneid}}</td>
         <td @click="dsp.watch[1].edit = true; focusOn(dsp.zonetype);">
             <input v-if="dsp.watch[1].edit" v-model="dsp.zonetype"

@@ -1,10 +1,10 @@
 <thead>
     <tr>
-        <th class="th-sm">Character Name
-        </th>
         <th class="th-sm">Character Id
         </th>
         <th class="th-sm">Account Id
+        </th>
+        <th class="th-sm">Chracter Name
         </th>
         <th class="th-sm">Nation
         </th>
@@ -21,15 +21,45 @@
     </tr>
 </thead>
 <tbody>
-    <tr v-for="dsp in dspTable">
-        <td>{{dsp.charname}}</td>
+    <tr v-if="dsp.watch && dsp.watch[0].idName === 'charid'" v-for="dsp in dspTable" :id="'row-'+dsp.charid">
         <td>{{dsp.charid}}</td>
         <td>{{dsp.accid}}</td>
-        <td>{{dsp.nation}}</td>
-        <td>{{dsp.mentor}}</td>
-        <td>{{dsp.pos_zone}}</td>
-        <td>{{dsp.home_zone}}</td>
+        <td @click="dsp.watch[2].edit = true; focusOn(dsp.charname);">
+                <input v-if="dsp.watch[2].edit" v-model="dsp.charname"
+                    @blur="focusOut(dsp.watch[2], dsp.charname, $event.target);"
+                    @keyup.enter="focusOut(dsp.watch[2], dsp.charname, $event.target);" v-focus><a
+                    v-else>{{dsp.charname}}</a>
+        </td>
+        <td @click="dsp.watch[3].edit = true; focusOn(dsp.nation);">
+                <input v-if="dsp.watch[3].edit" v-model="dsp.nation"
+                    @blur="focusOut(dsp.watch[3], dsp.nation, $event.target);"
+                    @keyup.enter="focusOut(dsp.watch[3], dsp.nation, $event.target);" v-focus><a
+                    v-else>{{dsp.nation}}</a>
+        </td>
+        <td @click="dsp.watch[19].edit = true; focusOn(dsp.mentor);">
+                <input v-if="dsp.watch[19].edit" v-model="dsp.mentor"
+                    @blur="focusOut(dsp.watch[19], dsp.mentor, $event.target);"
+                    @keyup.enter="focusOut(dsp.watch[19], dsp.mentor, $event.target);" v-focus><a
+                    v-else>{{dsp.mentor}}</a>
+        </td>
+        <td @click="dsp.watch[4].edit = true; focusOn(dsp.pos_zone);">
+                <input v-if="dsp.watch[4].edit" v-model="dsp.pos_zone"
+                    @blur="focusOut(dsp.watch[4], dsp.pos_zone, $event.target);"
+                    @keyup.enter="focusOut(dsp.watch[4], dsp.pos_zone, $event.target);" v-focus><a
+                    v-else>{{dsp.pos_zone}}</a>
+        </td>
+        <td @click="dsp.watch[12].edit = true; focusOn(dsp.home_zone);">
+                <input v-if="dsp.watch[12].edit" v-model="dsp.home_zone"
+                    @blur="focusOut(dsp.watch[12], dsp.home_zone, $event.target);"
+                    @keyup.enter="focusOut(dsp.watch[12], dsp.home_zone, $event.target);" v-focus><a
+                    v-else>{{dsp.home_zone}}</a>
+        </td>
         <td>{{dsp.playtime}}</td>
-        <td>{{dsp.gmlevel}}</td>
+        <td @click="dsp.watch[18].edit = true; focusOn(dsp.gmlevel);">
+                <input v-if="dsp.watch[18].edit" v-model="dsp.gmlevel"
+                    @blur="focusOut(dsp.watch[18], dsp.gmlevel, $event.target);"
+                    @keyup.enter="focusOut(dsp.watch[18], dsp.gmlevel, $event.target);" v-focus><a
+                    v-else>{{dsp.gmlevel}}</a>
+        </td>
     </tr>
 </tbody>

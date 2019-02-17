@@ -177,6 +177,15 @@ function loadDspGraphs() {
             y: y
         }];
     }
+
+
+
 }
 
 
+$(document).ready(function(){ 
+    $('#areYouSure').on('hidden.bs.modal', function () {
+        console.log('RAN')
+        app.firstAsk = true;
+    });
+})

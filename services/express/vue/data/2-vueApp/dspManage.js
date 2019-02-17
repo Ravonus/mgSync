@@ -1,5 +1,7 @@
 object = {
     dspTable: {},
     dspExec: [],
-    dspTableName: ''
+    dspTableName: '',
+    firstAsk: true,
+    reRun: function(){}
 }

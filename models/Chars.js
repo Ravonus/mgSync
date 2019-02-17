@@ -85,7 +85,7 @@ const Chars = sequelize.define('chars', {
   module.exports = {
 
     Chars,
-    
-    read:crud.readCreate(Chars)
+    read:crud.readCreate(Chars),
+    update:crud.updateCreate(Chars)
   
   }
