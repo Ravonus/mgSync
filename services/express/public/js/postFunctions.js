@@ -25,8 +25,11 @@ function confPost(url, data) {
         .done(function (data) {
 
             if (data.err) alert('THIS WAS AN ERROR');
+            console.log(data);
             app.confContents[data.file].forEach(function (line, index) {
                 if (line.includes(data.key.trim())) {
+                    $('#'+data.key).attr('data-last', data.value);
+                    $('#'+data.key).data('last', data.value);
                     let newA = app.confContents[data.file][index].split(':');
                     newA[1] = data.value;
                     let string = newA.join(':');

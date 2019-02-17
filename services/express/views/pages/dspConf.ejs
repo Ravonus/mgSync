@@ -7,7 +7,7 @@
         <div v-for="(conf, index) in curConf" :class="'card text-white my-2 mx-3 '+swapColor[isOdd(index)]" style="max-width: 20rem;">
             <div class="card-header">{{conf.split(':')[0]}}</div>
             <div class="card-body row justify-content-md-center">
-                <input @blur="updateConf($event.target)"
+                <input :id="conf.split(':')[0].trim()" @blur="updateConf($event.target)"
                 @keyup.enter="updateConf($event.target)" type="text" class="form-control" :data-last="conf.split(':')[1].trim().replace(/(\r\n|\n|\r)/gm,'')" :value="conf.split(':')[1].trim().replace(/(\r\n|\n|\r)/gm,'')">
             </div>
         </div>
