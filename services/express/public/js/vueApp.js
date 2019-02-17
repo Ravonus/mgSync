@@ -5,6 +5,11 @@ var app = new Vue({
     dspExec: [],
     dspTableName: '',
     firstAsk: true,
+    list: [],
+    confContents: {},
+    curConf: [],
+    confFile: '',
+    swapColor: ['bg-info', 'bg-secondary'],
     reRun: function(){}
 ,
     count: 0,
@@ -59,6 +64,17 @@ focusOut: function (watch, newValue, target){
       lGet('/logs?type='+log.target.value);
   }
 ,
+    isOdd: function(num) { return num % 2; },
+    updateConf: function(input) {
+     if($(input).data('last').toString() !== input.value.toString()) {
+
+        var obj = {key:$(input).parents()[1].textContent, value:input.value, file:app.confFile};
+        confPost('/dspConfPost', obj)
+
+     }
+       
+    }
+  ,
     remSession: function (value) {
         if (app.firstAsk) {
             app.reRun = app.remSession;

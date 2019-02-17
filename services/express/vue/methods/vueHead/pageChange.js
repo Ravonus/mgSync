@@ -1,19 +1,23 @@
 object = {
-    pageChange: function(page) {
+    pageChange: function (page) {
+
         $('#dtBasicExample').DataTable().destroy()
+        $('#dspTable_wrapper').remove()
         this.page = page;
         app.page = page;
 
-        if(( page) === 'logs' ) {
+        if ((page) === 'logs') {
             lLGet('/logList');
             lGet('/logs?type=success');
         }
 
-        if((page) === 'statistics' ) {
+        if ((page) === 'statistics') {
             lLGet('/dspList');
-  //          dLGet('/dspstatistics?name=DSGame-server');
+        } else {
+
+            $('.plot-container').empty();
         }
     }
 
-    
+
 }

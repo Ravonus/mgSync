@@ -57,3 +57,26 @@ function lLGet(url) {
     });
 
 }
+
+function getDspConf() {
+    $.get('/dspConf?list=true&file=na', function (data) {
+        app.list = [];
+        let breakType;
+        data.contents.forEach( function (content){
+            if(content.includes('breakType')) {
+                var name = content.split(':')[1];
+                breakType = name;
+                app.confContents[name] = [];
+            } else {
+                app.confContents[breakType].push(content);
+            }
+        });
+ //       app.confContents = data.contents;
+        if(data && data.files) {
+            data.files.forEach( function (file, index) { 
+                app.list.push(file.slice(0,-5))
+            });
+        }
+        
+    })
+}

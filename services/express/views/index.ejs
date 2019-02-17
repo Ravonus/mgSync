@@ -26,6 +26,10 @@
             <% include ./pages/dspTables %>
         </main>
 
+        <main  v-else-if="page === 'dspConf'">
+                <% include ./pages/dspConf %>
+            </main>
+
         <main v-else>
             <% include ./pages/home %>
         </main>

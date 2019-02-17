@@ -12,11 +12,9 @@ module.exports = {
     route: async (req, res) => {
         res.setHeader('Content-Type', 'application/json');
 
-        console.log(req.body);
-
         models[req.body.model].delete(req.body.where, (err, data) => {
 
-            if(err) return res.send(JSON.stringify({ err: err }));
+            if (err) return res.send(JSON.stringify({ err: err }));
 
             return res.send(JSON.stringify(req.body.where));
         })

@@ -5,8 +5,7 @@ object = {
         head.pageChange('dspTables');
 
         $.get(url, function (data) {
-
-           
+        
                 app.dspTable = data;
                 if (Array.isArray(app.dspTable)) {
                 app.dspTable.forEach(function (data, index) {
@@ -44,6 +43,10 @@ object = {
 
         });
 
+    },
+    dspConf: function() {
+        head.pageChange('dspConf');
+        getDspConf();
     },
     reverseArray: function (arr) {
         var newArray = [];

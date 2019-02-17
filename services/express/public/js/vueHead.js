@@ -12,8 +12,7 @@ var head = new Vue({
         head.pageChange('dspTables');
 
         $.get(url, function (data) {
-
-           
+        
                 app.dspTable = data;
                 if (Array.isArray(app.dspTable)) {
                 app.dspTable.forEach(function (data, index) {
@@ -52,6 +51,10 @@ var head = new Vue({
         });
 
     },
+    dspConf: function() {
+        head.pageChange('dspConf');
+        getDspConf();
+    },
     reverseArray: function (arr) {
         var newArray = [];
         for (var i = arr.length - 1; i >= 0; i--) {
@@ -70,7 +73,9 @@ var head = new Vue({
     }
 ,
     pageChange: function(page) {
+
         $('#dtBasicExample').DataTable().destroy()
+        $('#dspTable_wrapper').remove()
         this.page = page;
         app.page = page;
 
@@ -82,6 +87,9 @@ var head = new Vue({
         if((page) === 'statistics' ) {
             lLGet('/dspList');
   //          dLGet('/dspstatistics?name=DSGame-server');
+        } else {
+
+        $('.plot-container').empty();
         }
     }
 
