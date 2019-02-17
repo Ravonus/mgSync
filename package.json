@@ -4,8 +4,8 @@
   "description": "Sync program for Mog Garden website.",
   "main": "index.js",
   "scripts": {
-    "start" : "node app.js",
-    "setup" : "node ./config/scripts/setup.js"
+    "start": "node app.js",
+    "setup": "node ./config/scripts/setup.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,10 +14,8 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.2",
     "default-gateway": "^3.1.0",
-    "dirty-json": "^0.7.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "express-vue": "^5.8.2",
     "find-process": "^1.2.1",
     "get-ssl-certificate": "^2.3.1",
     "inquirer": "^6.2.2",

@@ -1,5 +1,4 @@
 const express = require('express'),
-    expressVue = require("express-vue"),
     bodyParser = require('body-parser'),
     { promisify } = require('util'),
     fs = require('fs'),
