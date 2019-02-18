@@ -86,5 +86,10 @@
         "msg": "[val] process has closed.",
         "type": "error",
         "log": 3
+    },
+    "express-started": {
+        "msg": "Express server has started on [val]:[val].",
+        "type": "success",
+        "log": 3
     }
 }

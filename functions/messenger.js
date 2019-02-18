@@ -2,7 +2,7 @@ const chalk = require('chalk'),
     objClone = require('./objClone'),
     fs = require('fs'),
     { promisify } = require('util'),
-    messages = require('../controllers/messages.json');
+    messages = require('../config/messages.json');
 
 let color,
     close = false,
@@ -25,7 +25,6 @@ let messenger = async (options, values, extras) => {
     var ts = dt.toLocaleString()
 
     if (typeof options === 'string') {
-
         options = objClone(messages[options]);
 
         let template = options;

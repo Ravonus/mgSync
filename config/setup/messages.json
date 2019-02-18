@@ -19,7 +19,6 @@
     "serverUnreachable": {
         "msg": "Could not communicate with ${mgSync.server}",
         "type": "error",
-        "close": true,
         "log": 3
     },
     "nonSecure": {
