@@ -1,13 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 
-let models = {};
-
-let dirs = fs.readdirSync(path.join(__dirname, '../../../models'));
-dirs.forEach((dir) => {
-    models[dir.slice(0, -3)] = require(path.join(__dirname, '../../../models', dir));
-});
-
 module.exports = {
     route: async (req, res) => {
         
@@ -34,7 +27,6 @@ module.exports = {
                 }
                 stringArray = [...stringArray, ...string, ...matches];
             }
-    
         }
         });
         return res.send({files:confFiles, contents:stringArray});

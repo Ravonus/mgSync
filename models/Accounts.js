@@ -1,17 +1,11 @@
 const Sequelize = require('sequelize'),
-path = require('path'),
-sequelize = require(path.join(__dirname, '../controllers/sequelize')),
-{ promisify } = require('util');
+  path = require('path'),
+  sequelize = require(path.join(__dirname, '../controllers/sequelize'));
 
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
+const TIMESTAMP = require('sequelize-mysql-timestamp')(sequelize);
 
 const Accounts = sequelize.define('accounts', {
-    
+
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true
@@ -29,10 +23,10 @@ const Accounts = sequelize.define('accounts', {
     type: Sequelize.STRING
   },
   timecreate: {
-    type: Sequelize.DATE
+    type: TIMESTAMP
   },
   timelastmodify: {
-    type: Sequelize.DATE
+    type: TIMESTAMP
   },
   content_ids: {
     type: Sequelize.INTEGER
@@ -50,12 +44,19 @@ const Accounts = sequelize.define('accounts', {
     type: Sequelize.INTEGER
   }
 
-}, {timestamps: false});
+}, { timestamps: false });
 
+Accounts.prototype.toJSON = function () {
+  var values = Object.assign({}, this.get());
+
+  delete values.password;
+  return values;
+}
 
 module.exports = {
 
   Accounts,
-  read:crud.readCreate(Accounts)
-
+  read: crud.readCreate(Accounts),
+  create: crud.createCreate(Accounts),
+  update: crud.updateCreate(Accounts)
 }

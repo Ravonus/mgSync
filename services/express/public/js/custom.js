@@ -1,3 +1,5 @@
+//import { setTimeout } from "timers";
+
 let cpu = []
 let memory = []
 
@@ -181,7 +183,75 @@ function loadDspGraphs() {
 }
 
 $(document).ready(function(){ 
+    
     $('#areYouSure').on('hidden.bs.modal', function () {
         app.firstAsk = true;
     });
+
+    var url = new URL(window.location.href);
+    var search = url.searchParams.get("status");
+
+    if(search === 'finished') {
+        $($('button')[0]).html('<div class="loader justify-content-center"></div>')
+        setTimeout(function(){ window.location = "/"; }, 10000);
+    }
+
+    $("#userLogin").submit(function(e){
+        e.preventDefault();
+
+
+        var paramObj = {};
+        $.each($('#userLogin').serializeArray(), function(_, kv) {
+         paramObj[kv.name] = kv.value;
+       });
+
+        postApi('/auth/login', paramObj);
+    });
+
+
 })
+
+
+
+// function createAdmin(e) {
+
+// var formData = JSON.stringify($("#createAdmin").serializeArray());
+
+// $.ajax({
+//     type: "POST",
+//     url: "/createAdmin",
+//     data: formData,
+//     success: function(){},
+//     dataType: "json",
+//     contentType : "application/json"
+//   });
+
+// }
+
+$("#aPassword").password({
+    eyeClass: "fa",
+    eyeOpenClass: "fa-eye",
+    eyeCloseClass: "fa-eye-slash",
+    message: "keep your password security"
+  });
+
+
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function alert(type, msg, options) {
+    if(options) {
+        toastr.options = options;
+    }
+
+    toastr[type](msg.text, msg.title);
+  }
+
+
+
+  
+

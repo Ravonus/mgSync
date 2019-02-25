@@ -2,5 +2,6 @@
     "port": "1337",
     "minify": false,
     "cssMinify": false,
-    "signUp": true
+    "signUp": true,
+    "jwt" : "1312rFD23#@d!~31dasd"
 }

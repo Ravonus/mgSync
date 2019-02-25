@@ -1,10 +1,10 @@
 const fs = require('fs'),
     path = require('path');
 
-let page = 'index';
+var pathSet = '/';
+let page = '';
 let models = {};
 
-if(config.express.signUp) {
 let dirs = fs.readdirSync(path.join(__dirname, '../../../models/mgSync'));
 async function asyncCheck() {
     await Functions.asyncForEach(dirs, (dir, index) => {
@@ -14,21 +14,15 @@ async function asyncCheck() {
     });
 
     let users = await models.Users.read({}).catch(e => {});
-
     if(users) {
-        page = 'index';
+        page = 'pages/userIndex';
     } else {  
-        page = 'pages/setupAdmin';
-    }
 
-    
+        page = 'pages/setupAdmin';
+        require('../apiRoutes/createAdmin');
+    }
 }
 asyncCheck();
-}
-
-
-
-var pathSet = config.express.signUp ? '/dsp' : '/';
 
 module.exports = {
     route: (req, res) => {

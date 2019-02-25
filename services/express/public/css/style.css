@@ -111,3 +111,45 @@ table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
   bottom: .5em;
 }
+
+form {
+    margin: 10px;
+    width: 300px;
+}
+
+
+.showPassword {
+    position: absolute;
+    right: 1px;
+    bottom: 12px;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #4285f4;
+}
+
+.loader {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid #4285f4;
+    border-top: 5px solid #ffffff;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    position: inherit;
+    left: 50%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -12,6 +12,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.use(bodyParser.json());
+
+require('./middleware/passport');
+const auth = require('./apiRoutes/auth');
+app.use('/auth', auth);
+
+
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', routes);
@@ -25,6 +33,7 @@ var vueFiles = [];
 let push = {};
 let firstRun = {}
 let myContents = {}
+console.log('RAN SERVER')
 Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
     if (vueFile.substr(-3) === '.js') {
@@ -96,7 +105,7 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
 });
 
-app.listen(config.express.port, () => {
+global.server = app.listen(config.express.port, () => {
     log('express-started', [ip.address(), config.express.port]);
 });
 module.exports = app;

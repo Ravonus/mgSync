@@ -3,7 +3,9 @@ let models = {}
 let path = require('path');
 let dirs = fs.readdirSync(path.join(__dirname, '../../../models'));
 dirs.forEach( (dir) => {
+    if(dir.substring(dir.length -3) === '.js') {
     models[dir.slice(0, -3)] = require(path.join(__dirname, '../../../models', dir));
+    }
 });
 
 module.exports = {
