@@ -1,7 +1,0 @@
-{
-  "host" : "smtp.zoho.com",
-  "port": 465,
-  "secure" : true,
-  "user": "ravonus@minepocket.com",
-  "pass": "MyNewPW1!"
-}
