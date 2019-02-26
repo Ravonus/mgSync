@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ./partials/head %>
+</head>
+
+<body class="container col-10">
+
+    <header>
+        <% include ./partials/header %>
+    </header>
+    <div id="app">
+        <main v-if="page === 'about'">
+            <% include ./pages/about %>
+        </main>
+        <main v-else-if="page === 'logs'">
+            <% include ./pages/logs %>
+        </main>
+        <main  v-else-if="page === 'statistics'">
+            <% include ./pages/statistics %>
+            
+        </main>
+
+        <main  v-else-if="page === 'dspTables'">
+            <% include ./pages/dspTables %>
+        </main>
+
+        <main  v-else-if="page === 'dspConf'">
+                <% include ./pages/dspConf %>
+            </main>
+
+        <main v-else>
+            <% include ./pages/home %>
+        </main>
+        <% include ./modals/areYouSure.ejs %>
+    </div>
+    
+    <footer>
+        <% include ./partials/footer %>
+    </footer>
+    <% include ./partials/scripts %>
+
+    
+</body>
+
+</html>

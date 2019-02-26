@@ -1,0 +1,33 @@
+<thead>
+    <tr>
+        <th class="th-sm">Account Id
+        </th>
+        <th class="th-sm">Character Id
+        </th>
+        <th class="th-sm">Server Address
+        </th>
+        <th class="th-sm">Server Port
+        </th>
+        <th class="th-sm">Client Adress
+        </th>
+        <th class="th-sm">Client Port
+        </th>
+        <th class="th-sm">Version Mismatch
+        </th>
+        <th class="th-sm">Delete
+            </th>
+
+    </tr>
+</thead>
+<tbody>
+    <tr v-if="dsp.watch && !dsp.watch.err && dsp.watch[0].idName === 'accid'" v-for="dsp in dspTable" :id="'row-'+dsp.accid">
+        <td>{{dsp.accid}}</td>
+        <td>{{dsp.charid}}</td>
+        <td>{{dsp.server_addr}}</td>
+        <td>{{dsp.server_port}}</td>
+        <td>{{dsp.client_addr}}</td>
+        <td>{{dsp.client_port}}</td>
+        <td>{{dsp.version_mismatch}}</td>
+        <td><div class="row justify-content-center"><button @click="remSession(dsp.accid)" type="button" class="btn btn-sm btn-outline-danger waves-effect px-3"><i class="far fa-trash-alt"></i></button></div</td>
+    </tr>
+</tbody>

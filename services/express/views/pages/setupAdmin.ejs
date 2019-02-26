@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<!-- As a link -->
+<nav class="navbar navbar-dark primary-color">
+    <a class="navbar-brand" href="https://mog.garden" target="_blank">Mog Sync</a>
+</nav>
+
+<br>
+
+<body class="container col-10">
+
+    <!-- Default form register -->
+    <form class="text-center border border-light p-5" action="/createAdmin" method="POST" id="createAdmin">
+
+        <p class="h4 mb-4">Create Admin Account</p>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <!-- Email-->
+                <input type="email" id="aEmail" name="email" class="form-control" placeholder="E-mail">
+            </div>
+            <div class="col">
+                <!-- Account -->
+                <input type="text" id="aAccount" name="username" class="form-control" placeholder="Account">
+            </div>
+        </div>
+
+        <!-- Password -->
+        <input type="password" id="aPassword" name="password" class="form-control" placeholder="Password">
+        <!-- <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+            At least 8 characters and 1 digit
+        </small> -->
+
+        <!-- Phone number -->
+        <!-- <input type="text" id="defaultRegisterPhonePassword" class="form-control" placeholder="Phone number"
+            aria-describedby="defaultRegisterFormPhoneHelpBlock">
+        <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
+            Optional - for two step authentication
+        </small> -->
+
+        <!-- Small button group -->
+
+        <select id="dspAccountSetup" data-toggle="popover" data-placement="top" title="If converting account"
+            data-content="If you are converting an existing account. Please make sure account is exact same as your DSP account. DSP password will be reset to password here."
+            class="browser-default custom-select  mt-4" name="dsp" >
+            <option value="0" selected disabled>Dark Star Project account setup</option>
+            <option value="0">Create new account</option>
+            <option value="1">Convert old account</option>
+        </select>
+
+
+        <!-- Sign up button -->
+        <button class="btn btn-info my-4 btn-block" onClick="createAdmin(event)" type="submit">Setup</button>
+
+        <hr>
+
+        <!-- Terms of service -->
+        <p>Thanks you for trying out MogSync</p>
+
+    </form>
+    <!-- Default form register -->
+    <% include ../partials/scripts %>
+
+    <script>  
+    $('#dspAccountSetup').popover();
+    </script>
+
+</body>
+
+</html>

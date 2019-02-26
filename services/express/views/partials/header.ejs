@@ -1,0 +1,24 @@
+<!-- views/partials/header.ejs -->
+<ul id="head" class="nav md-tabs nav-justified indigo lighten-2 mx-0 mb-0 mt-1">
+    <li class="nav-item" @click="pageChange('home')">
+        <a class="nav-link waves-effect waves-light" href="#!">Main</a>
+    </li>
+    <li class="nav-item" @click="pageChange('logs')">
+        <a class="nav-link waves-effect waves-light" href="#!">Logs</a>
+    </li>
+    <li class="nav-item" @click="pageChange('statistics')">
+        <a class="nav-link waves-effect waves-light" href="#!">Statistics</a>
+    </li>
+    <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">DSP</a>
+        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+            <a class="dropdown-item" @click="dspConf" href="#">Configuration</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Accounts&type=read')" href="#">Accounts</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Chars&type=read')" href="#">Characters</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Zone_Settings&type=read')" href="#">Zone Settings</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Accounts_Sessions&type=read')" href="#">Logged in Sessions</a>
+            <a class="dropdown-item" @click="dspManage('/dspTables?model=Auction_House&type=read')" href="#">Auctions</a>
+        </div>
+    </li>
+</ul>
