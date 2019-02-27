@@ -1,5 +1,5 @@
 {
-    "port": "1337",
+    "port": 1337,
     "minify": false,
     "cssMinify": false,
     "signUp": true,

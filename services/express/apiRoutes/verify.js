@@ -12,70 +12,35 @@ const express = require('express'),
 
 var pathSet = '/verify/:id';
 router.route(pathSet).get(async (req, res) => {
+    let err;
+    let verified = req.params.id;
 
-    const token = req.url.split('/')[2];
+    if(verified) {
+        let accid = req.query.lookup
+       
+        // if(accountT[0].verified === '' || accountT[0].verified === null) {
 
-
-    if(token) {
+        // }
+        let account = await Users.read({accid, verified}).catch(e => {
+            err = true;
+            res.redirect('/?status=unknownToken'); 
+        });
+      
+        if(account) {
+            console.log(account);
+            await Users.update({accid}, {verified:null}).catch(e => {
+                err = true;
+                res.redirect('/?status=unknownError'); 
+            });
+            await Accounts.update({id:accid}, {status:1}).catch(e => {
+                err = true;
+                res.redirect('/?status=unknownError'); 
+            });
+        }
       
     }
 
-    // if (!req.body.dsp || Number(req.body.dsp) === 0) {
-
-    //     let sendObj = createDspAccount(req.body);
-
-    //     let accounts = await Accounts.read({}).catch(e => { });
-
-    //     let ids = [];
-
-    //     await Functions.asyncForEach(accounts, (account) => {
-    //         ids.push(account.id);
-    //     })
-
-    //     ids = ids.sort();
-    //     let id;
-    //     let found = false;
-    //     for (var i = 1; i < ids.length; i++) {
-    //         if (ids[i] - ids[i - 1] != 1) {
-    //             id = ids[i] - 1;
-    //             create();
-    //             i = ids.length;
-    //             found = true;
-    //         }
-    //         if (i === ids.length - 1) {
-    //             create();
-    //         }
-    //     }
-
-    //     async function create() {
-
-    //         if (!found) sendObj.id = ids[ids.length - 1] + 1;
-    //         let create = await Accounts.create(sendObj).catch(e => console.log(e));
-
-    //         userObj.accid = create.id;
-    //         userObj.verified = 1;
-    //         userObj.permissions = 1;
-    //         userObj.groups = 1;
-    //         userObj.status = 1;
-    //         createUser()
-    //     }
-
-    // } else {
-
-    //     let account = await Accounts.read({ login: req.body.username }).catch(e => { });
-    //     if (!account) return res.redirect('/?err=findAccount');
-    //     let sendObj = createDspAccount(req.body);
-    //     await Accounts.update({ id: account[0].id }, sendObj);
-    //     userObj.verified = 1;
-    //     userObj.permissions = 1;
-    //     userObj.groups = 1;
-    //     userObj.status = 1;
-    //     userObj.accid = account[0].id;
-    //     createUser()
-    // }
-
-    res.setHeader('Content-Type', 'application/json');
-    res.redirect('/?status=verified');
+    if(!err) res.redirect('/?status=verified'); 
 
 });
 

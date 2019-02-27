@@ -32,5 +32,6 @@ const Users = sequelize.define('users', {
 module.exports = {
     Users,
     read:crud.readCreate(Users),
-    create:crud.createCreate(Users)
+    create:crud.createCreate(Users),
+    update:crud.updateCreate(Users)
 }

@@ -1,11 +1,15 @@
 const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     passportJWT = require("passport-jwt"),
+    passportCookie = require("passport-cookie"),
     JWTStrategy = passportJWT.Strategy,
+    CookieStrategy = passportCookie.Strategy,
     mysqlPassword = require('mysql-password'),
+    customStrategy = require('./customStrategy'),
     Users = require('../../../models/mgSync/Users'),
     Accounts = require('../../../models/Accounts')
 ExtractJWT = passportJWT.ExtractJwt;
+
 
 passport.use('local-signin', new LocalStrategy({
     usernameField: 'username',
@@ -35,19 +39,31 @@ passport.use('local-signin', new LocalStrategy({
     }
 ));
 
+var cookieExtractor = function(req) {
+    var token = null;
+    if (req && req.cookies) token = req.cookies['jwt'];
+    return token;
+  };
+
 passport.use(new JWTStrategy({
+    
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'your_jwt_secret'
+    secretOrKey: config.express.jwt
 },
     function (jwtPayload, cb) {
-
         //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        return UserModel.findOneById(jwtPayload.id)
-            .then(user => {
-                return cb(null, user);
-            })
-            .catch(err => {
+        return Users.read({accid:jwtPayload.id}).catch(err => {
                 return cb(err);
             });
     }
 ));
+
+passport.use(new customStrategy(
+
+    function (jwtPayload, cb) {
+        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+        return cb(Users.read({accid:jwtPayload.id}).catch(err => {
+                console.log(err);
+            }));
+    }
+  ));
