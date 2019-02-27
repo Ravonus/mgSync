@@ -17,6 +17,7 @@ async function asyncCheck() {
     if(users) {
         page = 'pages/userIndex';
         require('../apiRoutes/registration');
+        require('../apiRoutes/verify');
     } else {  
 
         page = 'pages/setupAdmin';

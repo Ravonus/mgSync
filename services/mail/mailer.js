@@ -1,15 +1,11 @@
 "use strict";
 const nodemailer = require("nodemailer"),
-  base64 = require('node-base64-image'),
-  { promisify } = require('util'),
   asyncForEach = require('../../functions/asyncForEach'),
   fs = require('fs');
 
   let config = {
     mail: require('../../config/mail.json')
   }
-
-  base64.encode = promisify(base64.encode);
 
 // async..await is not allowed in global scope, must use a wrapper
 async function mailer(options, template) {
@@ -78,7 +74,6 @@ async function mailer(options, template) {
 
      });
 
-     //End of base 64. File content should now have all base64 src.
      newTemplate = newContent;
 
     }

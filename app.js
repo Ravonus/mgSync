@@ -3,7 +3,6 @@ global.config = require('./config/scripts/config');
 
 Promise.all(require('./config/scripts/config').doneArray).then((data) => {
 
-
     global.config.dsp = data[0];
     var checkProcess = require('./services/exec/checkProcess');
     if (config.dsp.executables && config.dsp['DS-dir']) {

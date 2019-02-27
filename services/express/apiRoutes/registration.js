@@ -69,13 +69,20 @@ router.route(pathSet).post(async (req, res) => {
 
     async function createUser() {
         let user = await Users.create(userObj).catch(e => {});
-
+        let hostname;
         if(user) {
-            mailer({ subject: "Please verify email address.", from: "chad@technomancyit.com", to: req.body.email }, {
+            
+            if(config.express.port) {
+                hostname = `${config.express.host}:${config.express.port}`
+            } else {
+                hostname = config.express.host;
+            }
+
+            mailer({ subject: "Please verify email address.", from: config.mail.user, to: req.body.email }, {
                 name: 'emailVerification',
                 replace: [
                     {server:"Mog Garden"},
-                    {link:`http://192.168.0.169:1337/auth/verify/${userObj.verified}`},
+                    {link:`${hostname}/auth/verify/${userObj.verified}?lookup=${user.accid}`},
                     {user: req.body.username}
                 ]
             });

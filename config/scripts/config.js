@@ -16,6 +16,17 @@ let dsp = new Promise(async (resolve) => {
   resolve(dsp);
 });
 
+let mail = new Promise(async (resolve) => {
+  let files = await fs.readdir('./config/');
+  if (!files.includes('mail.json')) {
+    mail = require('../../setup/mail.json');
+    fs.writeFileSync('./config/mail.json', JSON.stringify(dsp, null, 4));
+  } else {
+    mail = require('../mail.json');
+  }
+  resolve(mail);
+});
+
 let mgSync = new Promise(async (resolve) => {
   let files = await fs.readdir('./config/');
   if (!files.includes('mgSync.json')) {
@@ -63,6 +74,7 @@ let doneArray = [dsp, mgSync, functionsDone];
 module.exports = {
   dsp,
   mgSync,
+  mail,
   functionsDone,
   doneArray
 }
