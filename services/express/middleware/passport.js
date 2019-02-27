@@ -1,11 +1,9 @@
 const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     passportJWT = require("passport-jwt"),
-    passportCookie = require("passport-cookie"),
     JWTStrategy = passportJWT.Strategy,
-    CookieStrategy = passportCookie.Strategy,
     mysqlPassword = require('mysql-password'),
-    customStrategy = require('./customStrategy'),
+     customStrategy = require('./customStrategy'),
     Users = require('../../../models/mgSync/Users'),
     Accounts = require('../../../models/Accounts')
 ExtractJWT = passportJWT.ExtractJwt;
@@ -51,19 +49,17 @@ passport.use(new JWTStrategy({
     secretOrKey: config.express.jwt
 },
     function (jwtPayload, cb) {
+        return cb(JSON.stringify(jwtPayload));
         //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        return Users.read({accid:jwtPayload.id}).catch(err => {
-                return cb(err);
-            });
+  
     }
 ));
 
-passport.use(new customStrategy(
+passport.use(new customStrategy('jwt',
 
     function (jwtPayload, cb) {
-        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        return cb(Users.read({accid:jwtPayload.id}).catch(err => {
-                console.log(err);
-            }));
+        //need to get JWT info still.
+        return cb(JSON.stringify(jwtPayload));
+
     }
   ));

@@ -31,6 +31,7 @@ var util = require("util");
  * @api public
  */
 function Strategy(options, verify) {
+  console.log('RAN')
   if (typeof options === "function") {
     verify = options;
     options = {};
@@ -41,8 +42,9 @@ function Strategy(options, verify) {
   }
 
   passport.Strategy.call(this);
+  console.log(this);
   this.name = "cookie";
-  this._cookieName = options.cookieName || "token";
+  this._cookieName = options.cookieName || "jwt";
   this._signed = options.signed || false;
   this._verify = verify;
   this._passReqToCallback = options.passReqToCallback;
@@ -60,6 +62,7 @@ util.inherits(Strategy, passport.Strategy);
  * @api protected
  */
 Strategy.prototype.authenticate = function(req) {
+
   if ((!this._signed && !req.cookies) || (this._signed && !req.signedCookies)) {
     throw new TypeError("Maybe you forgot to use cookie-parser?");
   }

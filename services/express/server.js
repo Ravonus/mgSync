@@ -5,7 +5,6 @@ const express = require('express'),
     path = require('path'),
     routes = require('./routes/routes'),
     app = express(),
-    passportCookie = require("passport-cookie"),
     cookieParser = require('cookie-parser'),
     ip = require('ip'),
     dir = __dirname;
@@ -14,7 +13,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(passportCookie);
 app.use(bodyParser.json());
 app.use(cookieParser());
 require('./middleware/passport');

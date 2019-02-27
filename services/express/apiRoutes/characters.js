@@ -13,4 +13,4 @@ router.route(pathSet).get(async (req, res) => {
 });
 
 
-app.use('/auth',  passport.authenticate('cookie', {session: false}), router);
+app.use('/auth',  passport.authenticate(['jwt', 'cookie'], {session: false}), router);
