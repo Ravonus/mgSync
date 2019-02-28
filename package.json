@@ -23,6 +23,8 @@
     "inquirer": "^6.2.2",
     "ip": "^1.1.5",
     "jsonwebtoken": "^8.5.0",
+    "jwt-decode": "^2.2.0",
+    "jwt-simple": "^0.5.5",
     "mysql-password": "0.0.1",
     "mysql2": "^1.6.4",
     "node-base64-image": "^1.0.5",

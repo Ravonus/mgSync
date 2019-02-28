@@ -1,3 +1,8 @@
+
+JWTStrategy = require("passport-jwt").Strategy,
+  jwt = require('jwt-simple');
+
+
 /**
  * Module dependencies.
  */
@@ -31,7 +36,7 @@ var util = require("util");
  * @api public
  */
 function Strategy(options, verify) {
-  console.log('RAN')
+
   if (typeof options === "function") {
     verify = options;
     options = {};
@@ -42,7 +47,7 @@ function Strategy(options, verify) {
   }
 
   passport.Strategy.call(this);
-  console.log(this);
+
   this.name = "cookie";
   this._cookieName = options.cookieName || "jwt";
   this._signed = options.signed || false;
@@ -61,7 +66,7 @@ util.inherits(Strategy, passport.Strategy);
  * @param {Object} req
  * @api protected
  */
-Strategy.prototype.authenticate = function(req) {
+Strategy.prototype.authenticate = function (req) {
 
   if ((!this._signed && !req.cookies) || (this._signed && !req.signedCookies)) {
     throw new TypeError("Maybe you forgot to use cookie-parser?");
@@ -88,14 +93,20 @@ Strategy.prototype.authenticate = function(req) {
     if (!user) {
       return self.fail(401);
     }
-    self.success(user);
+    try {
+      var decoded = jwt.decode(user.slice(1, -1), config.express.jwt);
+      self.success(JSON.stringify(decoded));
+    } catch(e) {
+      return self.fail(401);
+    }
+    
   }
 
   try {
     if (self._passReqToCallback) {
       this._verify(req, token, verified);
     } else {
-      this._verify(token,verified);
+      this._verify(token, verified);
     }
   } catch (ex) {
     return self.error(ex);

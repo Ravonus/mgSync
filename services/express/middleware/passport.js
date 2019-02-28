@@ -49,9 +49,8 @@ passport.use(new JWTStrategy({
     secretOrKey: config.express.jwt
 },
     function (jwtPayload, cb) {
-        return cb(JSON.stringify(jwtPayload));
+        return cb(null, JSON.stringify(jwtPayload));
         //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-  
     }
 ));
 
@@ -59,7 +58,14 @@ passport.use(new customStrategy('jwt',
 
     function (jwtPayload, cb) {
         //need to get JWT info still.
-        return cb(JSON.stringify(jwtPayload));
+
+
+        
+        return cb(null, JSON.stringify(jwtPayload));
+
+
+        
+
 
     }
   ));
