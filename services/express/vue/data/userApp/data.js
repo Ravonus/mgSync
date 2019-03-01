@@ -1,3 +1,5 @@
 object = {
-    me:''
+    me:'',
+    mgSync: {},
+    forgotPassword: false
 }

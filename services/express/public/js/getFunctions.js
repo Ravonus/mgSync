@@ -80,3 +80,42 @@ function getDspConf() {
         
     })
 }
+
+
+function getApi(url, type) {
+
+
+    $.ajaxSetup({
+        statusCode: {
+            401: function(){
+                // Redirec the to the login page.
+                if(location.valueOf().search !== '?login=true') {
+                location.href = "/?login=true";
+                }
+            }
+        }
+    });
+
+    $.ajax
+        ({
+            type: "GET",
+            url: url,
+            contentType: 'application/json',
+            beforeSend: function (x) {
+                if (x && x.overrideMimeType) {
+                    x.overrideMimeType("application/j-son;charset=UTF-8");
+                }
+            },
+            success: function (data, xhr) {
+                if (type === 'me') {
+                    userApp.mgSync = JSON.parse(data);
+                    userHead.mgSync = JSON.parse(data);
+                }
+            },
+            error: function (err) {
+                if(type === 'me') {
+                alert('error', { title: 'Cookie Error', text: 'Please login again' });
+                }
+            }
+        });
+}

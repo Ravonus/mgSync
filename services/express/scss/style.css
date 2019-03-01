@@ -168,3 +168,5 @@ table.dataTable thead .sorting_desc_disabled:before {
     font-weight: 900;
     position: initial;
   }
+
+  [v-cloak] { display: none; }

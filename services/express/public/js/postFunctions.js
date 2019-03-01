@@ -40,7 +40,7 @@ function confPost(url, data) {
 }
 
 var mgSync = {}
-function postApi(url, data) {
+function postApi(url, data, type) {
 
     $.ajax
         ({
@@ -54,17 +54,23 @@ function postApi(url, data) {
                 }
             },
             success: function (data) {
-                mgSync.user = JSON.parse(data);
-                setCookie('jwt', mgSync.user.token, 1);
-                $('#userModal').modal('hide');
-                $('#userLogin').each(function () {
-                    this.reset();
-                });
-                alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
+
+                if (type === 'login') {
+                    userApp.mgSync = JSON.parse(data);
+                    userHead.mgSync = JSON.parse(data);
+                    setCookie('jwt', JSON.parse(data).token, 1);
+                    $('#userModal').modal('hide');
+                    window.history.replaceState({}, document.title, "/" + "");
+                    $('#userLogin').each(function () {
+                        this.reset();
+                    });
+                    alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
+                }
             },
             error: function (err) {
-
-                alert('error', { title: 'Login Error', text: JSON.parse(err.responseText).message });
+                if (type === 'login') {
+                    alert('error', { title: 'Login Error', text: JSON.parse(err.responseText).message });
+                }
             }
         });
 }

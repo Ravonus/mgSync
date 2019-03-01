@@ -35,7 +35,8 @@
 
                 <div class="md-form form-sm mb-4">
                   <i class="fas fa-lock prefix"></i>
-                  <input type="password" name="password" id="lPassword" class="form-control form-control-sm validate viewPassword">
+                  <input type="password" name="password" id="lPassword"
+                    class="form-control form-control-sm validate viewPassword">
                   <label data-error="wrong" data-success="right" for="lPassword">Your password</label>
                 </div>
                 <div class="text-center mt-2">
@@ -46,8 +47,8 @@
             <!--Footer-->
             <div class="modal-footer">
               <div class="options text-center text-md-right mt-1">
-                <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
-                <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                <p>Not a member? <a @click="showTab('panel8')" href="#" class="blue-text">Sign Up</a></p>
+                <p>Forgot <a @click="showTab('forgot')" class="blue-text">Password?</a></p>
               </div>
               <button @click="userLogin($event)" type="button" class="btn btn-outline-info waves-effect ml-auto"
                 data-dismiss="modal">Close</button>
@@ -76,7 +77,8 @@
 
               <div class="md-form form-sm mb-1">
                 <i class="fas fa-lock prefix"></i>
-                <input type="password" id="rPassword" name="password"  class="form-control form-control-sm validate viewPassword">
+                <input type="password" id="rPassword" name="password"
+                  class="form-control form-control-sm validate viewPassword">
                 <label data-error="wrong" data-success="right" for="rPassword">Your password</label>
               </div>
 
@@ -88,13 +90,49 @@
             <!--Footer-->
             <div class="modal-footer">
               <div class="options text-right">
-                <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
+                <p class="pt-1">Already have an account? <a href="#" @click="showTab('panel7')" class="blue-text">Log In</a></p>
               </div>
               <button type="button" class="btn btn-outline-info waves-effect ml-auto"
                 data-dismiss="modal">Close</button>
             </div>
           </div>
           <!--/.Panel 8-->
+
+          <!--Panel forgot-->
+          <div class="tab-pane fade" id="forgot" role="tabpanel">
+
+            <!--Body-->
+            <div class="modal-body">
+              <p>So you forgot your password? No problem. Enter your email and a character name. You will be sent a
+                reset link via email. Once completed you may use new password for website and server.</p>
+              <div class="md-form form-sm mb-5">
+                <i class="fas fa-envelope prefix"></i>
+                <input type="email" id="rEmail" name="email" class="form-control form-control-sm validate">
+                <label data-error="wrong" data-success="right" for="rEmail">Your email</label>
+              </div>
+
+              <div class="md-form form-sm mb-5">
+                <i class="fas fa-envelope prefix"></i>
+                <input type="text" id="rCharacter" name="character" class="form-control form-control-sm validate">
+                <label data-error="wrong" data-success="right" for="rCharacter">Character Name(If none keep
+                  blank)</label>
+              </div>
+
+              <div class="text-center form-sm mt-2">
+                <button class="btn btn-info">Send Email <i class="fas fa-sign-in ml-1"></i></button>
+              </div>
+
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+              <div class="options text-right">
+                <p class="pt-1">Already have an account? <a href="#"  @click="showTab('panel7', true)" class="blue-text">Log In</a></p>
+              </div>
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto"
+                data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!--/.Panel forgot-->
         </div>
 
       </div>

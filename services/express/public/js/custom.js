@@ -10,21 +10,21 @@ function graphDump(dump) {
     app.dspMemory = [];
     let object = JSON.parse(dump);
 
-    Object.keys(object).forEach( function (stat, index) {
+    Object.keys(object).forEach(function (stat, index) {
         let cpuStat, memoryStat;
-        if(object[stat].averageCpu) {
+        if (object[stat].averageCpu) {
             cpuStat = object[stat].averageCpu;
             cpu.push(object[stat].timestamp + ',' + cpuStat + ',');
-        } 
-        
-        if(object[stat].cpu) {
+        }
+
+        if (object[stat].cpu) {
 
             cpuStat = object[stat].cpu;
             cpu.push(object[stat].timestamp + ',' + cpuStat + ',');
 
         }
 
-        if(object[stat].memory) {
+        if (object[stat].memory) {
 
             memoryStat = object[stat].memory;
             memory.push(object[stat].timestamp + ',' + memoryStat + ',');
@@ -32,15 +32,15 @@ function graphDump(dump) {
         }
 
 
-        if(object[stat].averageMemory) {
+        if (object[stat].averageMemory) {
 
             memoryStat = object[stat].averageMemory;
             memory.push(object[stat].timestamp + ',' + memoryStat + ',');
 
         }
 
-      //  memory.push(object[stat].timestamp + ',' + memoryStat);
-        if(index === Object.keys(object).length - 1) { 
+        //  memory.push(object[stat].timestamp + ',' + memoryStat);
+        if (index === Object.keys(object).length - 1) {
             app.dspCpu = cpu;
             app.dspMemory = memory;
             loadDspGraphs()
@@ -54,21 +54,21 @@ function bytesToSize(bytes) {
     if (bytes == 0) return '0 Byte';
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
     return Math.round(bytes / Math.pow(1024, i), 2) + sizes[i];
- };
+};
 
 function loadDspGraphs() {
-    if($('.plot-container.plotly')[0]) {
+    if ($('.plot-container.plotly')[0]) {
         Plotly.purge($('#dspStats')[0]);
     }
-    
-    
+
+
     var selectorOptions = {
         buttons: [{
             step: 'minute',
             stepmode: 'todate',
             count: 1,
             label: '1m'
-        },{
+        }, {
             step: 'minute',
             stepmode: 'todate',
             count: 15,
@@ -85,12 +85,12 @@ function loadDspGraphs() {
             stepmode: 'todate',
             count: 1,
             label: '1h'
-        },        {
+        }, {
             step: 'hour',
             stepmode: 'todate',
             count: 12,
             label: '12h'
-        },{
+        }, {
             step: 'day',
             stepmode: 'todate',
             count: 1,
@@ -109,48 +109,48 @@ function loadDspGraphs() {
             step: 'all',
         }],
     };
-    
-        var data = [prepData(app.dspCpu)[0], prepData2(app.dspMemory)[0]];
-        var layout = {
-            title: 'DPS Executables CPU and Memory Usage.',
-            xaxis: {
-                rangeselector: selectorOptions,
-                rangeslider: {}
-            },
-            yaxis: {
-               showgrid:false,
-               zeroline:false,
-               title: 'CPU Usage'
-            },
-            yaxis2: {
-                autorange:'reversed',
-                showgrid:false,
-                title: 'Memory Usage',
-                titlefont: {color: 'rgb(148, 103, 189)'},
-                line: {color: 'rgb(55, 128, 191)'},
-                overlaying: 'y',
-                side: 'right'
-            }
-        };
-    
-        Plotly.plot($('#dspStats')[0], data, layout, {responsive: true});
- 
-    
+
+    var data = [prepData(app.dspCpu)[0], prepData2(app.dspMemory)[0]];
+    var layout = {
+        title: 'DPS Executables CPU and Memory Usage.',
+        xaxis: {
+            rangeselector: selectorOptions,
+            rangeslider: {}
+        },
+        yaxis: {
+            showgrid: false,
+            zeroline: false,
+            title: 'CPU Usage'
+        },
+        yaxis2: {
+            autorange: 'reversed',
+            showgrid: false,
+            title: 'Memory Usage',
+            titlefont: { color: 'rgb(148, 103, 189)' },
+            line: { color: 'rgb(55, 128, 191)' },
+            overlaying: 'y',
+            side: 'right'
+        }
+    };
+
+    Plotly.plot($('#dspStats')[0], data, layout, { responsive: true });
+
+
     function prepData(rawData) {
         var x = [];
         var y = [];
-    
-        rawData.forEach(function(datum, i) {
+
+        rawData.forEach(function (datum, i) {
             let xy = datum.split(',');
             let dx = xy[0];
             let dy = xy[1];
-           
-            if(dx && dy) {
-            x.push(new Date(Number(dx)));
-            y.push(dy);
+
+            if (dx && dy) {
+                x.push(new Date(Number(dx)));
+                y.push(dy);
             }
         });
-    
+
         return [{
             type: 'scatter',
             x: x,
@@ -161,17 +161,17 @@ function loadDspGraphs() {
     function prepData2(rawData) {
         var x = [];
         var y = [];
-    
-        rawData.forEach(function(datum, i) {
+
+        rawData.forEach(function (datum, i) {
             let xy = datum.split(',');
             let dx = xy[0];
             let dy = xy[1];
-            if(dx && dy) {
-            x.push(new Date(Number(dx)));
-            y.push(bytesToSize(dy));
+            if (dx && dy) {
+                x.push(new Date(Number(dx)));
+                y.push(bytesToSize(dy));
             }
         });
-    
+
         return [{
             type: 'scatter',
             yaxis: 'y2',
@@ -182,69 +182,110 @@ function loadDspGraphs() {
 
 }
 
-$(document).ready(function(){ 
+function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    }
+    else {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+            end = dc.length;
+        }
+    }
+    // because unescape has been deprecated, replaced with decodeURI
+    //return unescape(dc.substring(begin + prefix.length, end));
+    return decodeURI(dc.substring(begin + prefix.length, end));
+}
+
+function doSomething() {
+    var myCookie = getCookie("MyCookie");
+
+    if (myCookie == null) {
+        // do cookie doesn't exist stuff;
+    }
+    else {
+        // do cookie exists stuff
+    }
+}
+
+$(document).ready(function () {
+
+    if (location.valueOf().search === '?login=true') {
+        $('#userModal').modal('show');
+    }
+
+    if (getCookie('jwt')) {
+
+        getApi('/api/me', 'me');
+
+    }
 
     (($) => {
 
         class Toggle {
-      
-          constructor(element, options) {
-      
-            this.defaults = {
-              icon: 'fa-eye'
+
+            constructor(element, options) {
+
+                this.defaults = {
+                    icon: 'fa-eye'
+                };
+
+                this.options = this.assignOptions(options);
+
+                this.$element = element;
+                this.$button = $(`<button class="btn-toggle-pass" type="button" ><i class="fa ${this.options.icon}"></i></button>`);
+
+                this.init();
             };
-      
-            this.options = this.assignOptions(options);
-      
-            this.$element = element;
-            this.$button = $(`<button class="btn-toggle-pass" type="button" ><i class="fa ${this.options.icon}"></i></button>`);
-      
-            this.init();
-          };
-      
-          assignOptions(options) {
-      
-            return $.extend({}, this.defaults, options);
-          }
-      
-          init() {
-      
-            this._appendButton();
-            this.bindEvents();
-          }
-      
-          _appendButton() {
-            this.$element.after(this.$button);
-          }
-      
-          bindEvents() {
-      
-            this.$button.on('click touchstart', this.handleClick.bind(this));
-          }
-      
-          handleClick() {
-      
-            let type = this.$element.attr('type');
-      
-            type = type === 'password' ? 'text' : 'password';
-      
-            this.$element.attr('type', type);
-            this.$button.toggleClass('active');
-          }
+
+            assignOptions(options) {
+
+                return $.extend({}, this.defaults, options);
+            }
+
+            init() {
+
+                this._appendButton();
+                this.bindEvents();
+            }
+
+            _appendButton() {
+                this.$element.after(this.$button);
+            }
+
+            bindEvents() {
+
+                this.$button.on('click touchstart', this.handleClick.bind(this));
+            }
+
+            handleClick() {
+
+                let type = this.$element.attr('type');
+
+                type = type === 'password' ? 'text' : 'password';
+
+                this.$element.attr('type', type);
+                this.$button.toggleClass('active');
+            }
         }
-      
+
         $.fn.togglePassword = function (options) {
-          return this.each(function () {
-            new Toggle($(this), options);
-          });
+            return this.each(function () {
+                new Toggle($(this), options);
+            });
         }
-      
-      })(jQuery);
-      
-      $(document).ready(function() {
+
+    })(jQuery);
+
+    $(document).ready(function () {
         $('.viewPassword').togglePassword();
-      })
-    
+    })
+
     $('#areYouSure').on('hidden.bs.modal', function () {
         app.firstAsk = true;
     });
@@ -252,21 +293,21 @@ $(document).ready(function(){
     var url = new URL(window.location.href);
     var search = url.searchParams.get("status");
 
-    if(search === 'finished') {
+    if (search === 'finished') {
         $($('button')[0]).html('<div class="loader justify-content-center"></div>')
-        setTimeout(function(){ window.location = "/"; }, 10000);
+        setTimeout(function () { window.location = "/"; }, 10000);
     }
 
-    $("#userLogin").submit(function(e){
+    $("#userLogin").submit(function (e) {
         e.preventDefault();
 
 
         var paramObj = {};
-        $.each($('#userLogin').serializeArray(), function(_, kv) {
-         paramObj[kv.name] = kv.value;
-       });
+        $.each($('#userLogin').serializeArray(), function (_, kv) {
+            paramObj[kv.name] = kv.value;
+        });
 
-        postApi('/auth/login', paramObj);
+        postApi('/auth/login', paramObj, 'login');
     });
 
 
@@ -294,25 +335,22 @@ $("#aPassword").password({
     eyeOpenClass: "fa-eye",
     eyeCloseClass: "fa-eye-slash",
     message: "keep your password security"
-  });
+});
 
 
-  function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
+    var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
+}
 
-  function alert(type, msg, options) {
-    if(options) {
+function alert(type, msg, options) {
+    if (options) {
         toastr.options = options;
     }
 
     toastr[type](msg.text, msg.title);
-  }
+}
 
-
-
-  
 

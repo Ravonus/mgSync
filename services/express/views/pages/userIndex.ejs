@@ -6,17 +6,19 @@
 </head>
 
 <body class="container col-10">
-
-    <header>
-        <% include ../partials/userHeader %>
-    </header>
+    <div id="userHead" v-cloak>
+        <header>
+            <% include ../partials/userHeader %>
+        </header>
+    </div>
     <div id="userApp">
 
+        <% include ../modals/userModal %>
     </div>
 
     <footer>
         <% include ../partials/footer %>
-        <% include ../modals/userModal %>
+
     </footer>
     <% include ../partials/scripts %>
 

@@ -19,6 +19,7 @@ async function asyncCheck() {
         require('../apiRoutes/registration');
         require('../apiRoutes/verify');
         require('../apiRoutes/characters');
+        require('../apiRoutes/me');
     } else {  
 
         page = 'pages/setupAdmin';
