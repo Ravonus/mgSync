@@ -1,8 +1,16 @@
 object = {
     userLogin: function (event) {
-        console.log(event)
         event.preventDefault();
-        console.log(JSON.stringify($("#userLogin").serializeArray()))
+        JSON.stringify($("#userLogin").serializeArray())
+    },
+    userRegistration: function (event) {
+        event.preventDefault();
+        var paramObj = {};
+        $.each($('#userRegistration').serializeArray(), function (_, kv) {
+            paramObj[kv.name] = kv.value;
+        });
+        postApi('/auth/registration', paramObj, 'login');
+
     },
     showTab: function (id, forget) {
         $('#'+id).addClass('active show');
@@ -20,5 +28,8 @@ object = {
             }
         });
 
+    },
+    resetPW: function () {
+        postApi('/auth/forgotPasswordReset', {password:$('#resetPassword').val(), jwt:userApp.mgSync.resetToken}, 'rp');
     }
 }

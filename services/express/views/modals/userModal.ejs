@@ -50,7 +50,7 @@
                 <p>Not a member? <a @click="showTab('panel8')" href="#" class="blue-text">Sign Up</a></p>
                 <p>Forgot <a @click="showTab('forgot')" class="blue-text">Password?</a></p>
               </div>
-              <button @click="userLogin($event)" type="button" class="btn btn-outline-info waves-effect ml-auto"
+              <button type="button" class="btn btn-outline-info waves-effect ml-auto"
                 data-dismiss="modal">Close</button>
             </div>
 
@@ -62,6 +62,7 @@
 
             <!--Body-->
             <div class="modal-body">
+                <form id="userRegistration">
               <div class="md-form form-sm mb-5">
                 <i class="fas fa-envelope prefix"></i>
                 <input type="email" id="rEmail" name="email" class="form-control form-control-sm validate">
@@ -83,9 +84,9 @@
               </div>
 
               <div class="text-center form-sm mt-2">
-                <button class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                <button @click="userRegistration($event)" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
               </div>
-
+            </form>
             </div>
             <!--Footer-->
             <div class="modal-footer">

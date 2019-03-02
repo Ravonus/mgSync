@@ -3,9 +3,9 @@ const nodemailer = require("nodemailer"),
   asyncForEach = require('../../functions/asyncForEach'),
   fs = require('fs');
 
-  let config = {
-    mail: require('../../config/mail.json')
-  }
+let config = {
+  mail: require('../../config/mail.json')
+}
 
 // async..await is not allowed in global scope, must use a wrapper
 async function mailer(options, template) {
@@ -15,7 +15,7 @@ async function mailer(options, template) {
   let templateName;
   if (template) {
 
-    if(typeof template === "string") {
+    if (typeof template === "string") {
       templateName = template;
     } else {
       templateName = template.name;
@@ -24,15 +24,15 @@ async function mailer(options, template) {
     contents = await fs.readFileSync(`${__dirname}/templates/${templateName}/template.html`, "utf8");
     let regEx = [];
     let replaceValues = {};
-    if(typeof template === "object") {
+    if (typeof template === "object") {
       await asyncForEach(template.replace, (obj, index) => {
-          regEx.push(`{{${Object.keys(obj)}}}`);
-          replaceValues[`{{${Object.keys(obj)}}}`] = obj[Object.keys(obj)]
+        regEx.push(`{{${Object.keys(obj)}}}`);
+        replaceValues[`{{${Object.keys(obj)}}}`] = obj[Object.keys(obj)]
       });
     }
 
     contents = await contents.replace(new RegExp(regEx.join('|'), 'g'), (matched) => {
-        return replaceValues[matched];
+      return replaceValues[matched];
     });
 
     //Grab img tags and convert into base64. Plan to eventually check base64 variable and let people decide between hosting and or base64. (This way will send much more data via email.);
@@ -53,28 +53,34 @@ async function mailer(options, template) {
       });
       let array = [];
       await asyncForEach(matches, async (img, index) => {
-        
-        matches[index].cid = matches[index].tag.replace(/src=[\"|\'](?!https?:\/\/)([^\/].+?)[\"|\']/, `src="cid:email-${index}"`);
-        attachments.push( {
-            filename: matches[index].filename,
-            path: matches[index].path,
-            cid: `email-${index}`
+
+        matches[index].cid = img.tag.replace(/src=[\"|\'](?!https?:\/\/)([^\/].+?)[\"|\']/, `src="cid:email-${index}"`);
+        attachments.push({
+          filename: matches[index].filename,
+          path: matches[index].path,
+          cid: `email-${index}`
         });
 
-        
         array.push(matches[index].cid);
 
+      });
 
-     //   contents = contents.replace(/(<img \S([^>]+)>)/, getReplace(matches[index]));
+      let mapObj = {};
+      let mapArr = contents.match(/(<img \S([^>]+)>)/g);
 
-     });
- 
-     let newContent = contents.replace(/(<img \S([^>]+)>)/g, array);
-     await asyncForEach(matches, async (img, index) => {
+      await Functions.asyncForEach(array, (value, index) => {
+        mapObj[mapArr[index]] = value;
+      });
 
-     });
+      let newContent = contents.replace(/(<img \S([^>]+)>)/g, (matched) => {
+        return mapObj[matched];
+      });
 
-     newTemplate = newContent;
+      await asyncForEach(matches, async (img, index) => {
+
+      });
+
+      newTemplate = newContent;
 
     }
 
@@ -82,10 +88,10 @@ async function mailer(options, template) {
 
   // create reusable transporter object using the default SMTP transport
   let auth;
-  if(config.mail.user) {
-   auth = {
-      user: config.mail.user, 
-      pass: config.mail.pass 
+  if (config.mail.user) {
+    auth = {
+      user: config.mail.user,
+      pass: config.mail.pass
     }
   }
   let transporter = nodemailer.createTransport({

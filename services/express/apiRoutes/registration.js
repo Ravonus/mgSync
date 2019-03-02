@@ -15,6 +15,8 @@ var pathSet = '/registration';
 
 router.route(pathSet).post(async (req, res) => {
 
+
+
     function createDspAccount(obj) {
 
         return sendObj = {
@@ -23,6 +25,7 @@ router.route(pathSet).post(async (req, res) => {
             email: obj.username,
             email2: 0,
             timelastmodify: Date.now(),
+            status: 0,
             timecreate: Date.now()
         }
 
@@ -65,12 +68,53 @@ router.route(pathSet).post(async (req, res) => {
         return res.redirect('/?err=dspPassword');
 
     } else {
+        let sendObj = createDspAccount(req.body);
+        let accounts = await Accounts.read({}).catch(e => { });
+
+        let ids = [];
+
+        await Functions.asyncForEach(accounts, (account) => {
+            ids.push(account.id);
+        })
+
+        ids = ids.sort();
+        let id;
+        let found = false;
+        for (var i = 1; i < ids.length; i++) {
+            if (ids[i] - ids[i - 1] != 1) {
+                id = ids[i] - 1;
+                sendObj.id = id;
+                account = await Accounts.create(sendObj).catch(e => {console.log(e)});
+                i = ids.length;
+                found = true;
+            }
+            if (i === ids.length - 1) {
+                sendObj.id = ids.length - 1;
+
+                account = await Accounts.create(sendObj).catch(e => {console.log(e)});
+            }
+        }
+
+
+        
+
+        if(account) {
+        userObj.accid = account.id;
+        userObj.permissions = 2;
+        userObj.groups = 2;
+        userObj.status = 1;
+        userObj.verified = randomstring.generate(32);
+        createUser();
+
+        }
         
     }
 
 
     async function createUser() {
-        let user = await Users.create(userObj).catch(e => {});
+        console.log('ob', userObj)
+
+        let user = await Users.create(userObj).catch(e => {console.log(e)});
         let hostname;
         if(user) {
             

@@ -215,6 +215,13 @@ function doSomething() {
 
 $(document).ready(function () {
 
+    if (location.valueOf().search.includes('?rp=')) {
+        let jwt = location.valueOf().search.substring(4);
+        console.log(jwt);
+        postApi('/auth/forgotPW', {jwt:jwt}, "rp")
+        
+    }
+
     if (location.valueOf().search === '?login=true') {
         $('#userModal').modal('show');
     }

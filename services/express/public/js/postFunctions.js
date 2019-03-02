@@ -66,10 +66,38 @@ function postApi(url, data, type) {
                     });
                     alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
                 }
+
+                if (type === 'rp') {
+                    let obj = JSON.parse(data);
+                    if (obj.success) {
+                        window.history.replaceState({}, document.title, "/" + "");
+                        if(obj.success !== 'Reset password successfully') {
+                            userApp.mgSync.resetToken = obj.success;
+                            $('#resetPW').modal('show');
+                        } else {
+                            $('#resetPW').modal('hide');
+                            $('#userModal').modal('show')
+
+                            alert('info', { title: 'Password reset successful', text: obj.success });
+                        }
+                        
+                        
+                    }
+
+                }
             },
             error: function (err) {
                 if (type === 'login') {
                     alert('error', { title: 'Login Error', text: JSON.parse(err.responseText).message });
+                }
+
+                if (type === 'rp') {
+
+                    if (err) {
+                        let obj = JSON.parse(err.responseText);
+                        window.history.replaceState({}, document.title, "/" + "");
+                        alert('error', { title: 'Reset password error', text: obj.err });
+                    }
                 }
             }
         });
