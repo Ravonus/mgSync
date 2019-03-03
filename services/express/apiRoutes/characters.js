@@ -1,8 +1,10 @@
 const express = require('express'),
     app = require('../server'),
     passport = require('passport'),
-    Chars = require('../../../models/Chars')
-router = express.Router();
+    permissions = require('../middleware/permissions'),
+    loadPolicies = require('../middleware/loadPolicies'),
+    Chars = require('../../../models/Chars'),
+    router = express.Router();
 require('../middleware/passport');
 
 var pathSet = '/characters/:character';
@@ -28,4 +30,4 @@ router.route(pathSet).get(async (req, res) => {
 
 });
 
-app.use('/api', passport.authenticate(['jwt', 'cookie'], { session: false }), router);
+app.use('/api', passport.authenticate(['jwt', 'cookie'], { session: false }), permissions(3), loadPolicies('all'), router);
