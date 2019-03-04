@@ -26,6 +26,8 @@ module.exports = {
         res.send(req.body);
     },
     path: '/dspConfPost',
-    type: 'post'
+    type: 'post',
+    permissions: 1,
+    groups: ['administrators']
 
 }

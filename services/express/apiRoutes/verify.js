@@ -1,48 +1,64 @@
 const express = require('express'),
     app = require('../server'),
-    mysqlPassword = require('mysql-password'),
     mailer = require('../../mail/mailer'),
-    fs = require('fs'),
     Accounts = require('../../../models/Accounts'),
-    path = require('path'),
-    routes = require('../routes/routes'),
-    randomstring = require("randomstring"),
+    cookie = require('cookie'),
+    jwt = require('jsonwebtoken'),
     Users = require('../../../models/mgSync/Users'),
     router = express.Router();
 
 var pathSet = '/verify/:id';
 router.route(pathSet).get(async (req, res) => {
+    let cookies = {}
+    if (req.headers.cookie) cookies = cookie.parse(req.headers.cookie);
     let err;
     let verified = req.params.id;
 
-    if(verified) {
+    if (verified) {
         let accid = req.query.lookup
-       
+
         // if(accountT[0].verified === '' || accountT[0].verified === null) {
 
         // }
-        let account = await Users.read({accid, verified}).catch(e => {
+        let account = await Users.read({ accid, verified }).catch(e => {
             err = true;
-            res.redirect('/?status=unknownToken'); 
+            res.status(401).send({ "err": "uknown1" });
         });
-      
-        if(account) {
-            console.log(account);
-            await Users.update({accid}, {verified:null}).catch(e => {
+
+        let dspAccount = await Accounts.read({ id: accid }).catch(e => {
+            err = true;
+            res.status(401).send({ "err": "uknown2" });
+        });
+
+        if (account) {
+            await Users.update({ accid }, { verified: null }).catch(e => {
                 err = true;
-                res.redirect('/?status=unknownError'); 
+                res.status(401).send({ "err": "uknown3" });
             });
-            await Accounts.update({id:accid}, {status:1}).catch(e => {
+            await Accounts.update({ id: accid }, { status: 1 }).catch(e => {
                 err = true;
-                res.redirect('/?status=unknownError'); 
+                res.status(401).send({ "err": "uknown4" });
             });
+
+            let objSend = {
+                user: account,
+                account: dspAccount
+            }
+
+            objSend.user[0].dataValues.verified = '';
+
+            objSend
+            if (cookies.jwt) {
+
+                objSend.cookie = jwt.sign(objSend, config.express.jwt);
+            }
+
+            if (!err) res.status(200).send(JSON.stringify(objSend));
+
+        } else {
+            res.redirect('/?status=unknownError');
         }
-      
     }
-
-    if(!err) res.redirect('/?status=verified'); 
-
 });
 
-console.log('RAN')
 app.use('/auth', router);

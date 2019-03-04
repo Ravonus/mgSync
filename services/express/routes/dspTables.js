@@ -19,5 +19,7 @@ module.exports = {
             if(data.length !== 0) return res.send(JSON.stringify(data));
         });
     },
-    path: '/dspTables'
+    path: '/dspTables',
+    permissions: 1,
+    groups: ['administrators']
 }

@@ -17,5 +17,7 @@ module.exports = {
         res.send(JSON.stringify([...logList, ...logList2]));
     },
     path: '/logList',
-    type: 'get'
+    type: 'get',
+    permissions: 1,
+    groups: ['administrators']
 }

@@ -55,5 +55,7 @@ module.exports = {
 
     },
     path: '/dspPost',
-    type: 'post'
+    type: 'post',
+    permissions: 1,
+    groups: ['administrators']
 }

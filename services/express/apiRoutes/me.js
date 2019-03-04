@@ -1,6 +1,8 @@
 const express = require('express'),
     app = require('../server'),
     passport = require('passport'),
+    permissions = require('../middleware/permissions'),
+    groups = require('../middleware/groups'),
     router = express.Router();
 require('../middleware/passport');
 
@@ -14,4 +16,4 @@ router.route(pathSet).get(async (req, res) => {
 
 });
 
-app.use('/api', passport.authenticate(['jwt', 'cookie'], { session: false }), router);
+app.use('/api', passport.authenticate(['jwt', 'cookie'], { session: false }),  permissions(3), groups(['administrators', 'moderators', 'users']), router);

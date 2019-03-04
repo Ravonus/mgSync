@@ -1,6 +1,7 @@
 const express = require('express'),
     app = require('../server'),
     mysqlPassword = require('mysql-password'),
+    jwt = require('jsonwebtoken'),
     mailer = require('../../mail/mailer'),
     config = require('../../../config/scripts/config'),
     fs = require('fs'),
@@ -15,7 +16,7 @@ var pathSet = '/registration';
 
 router.route(pathSet).post(async (req, res) => {
 
-
+    res.setHeader('Content-Type', 'application/json');
 
     function createDspAccount(obj) {
 
@@ -32,11 +33,11 @@ router.route(pathSet).post(async (req, res) => {
     }
 
     if (req.body.username === '') {
-        return res.redirect('/?err=noAccount');
+        return res.status(401).send('{"err":"noAccount"}');
     }
 
     if (req.body.password === '') {
-        return res.redirect('/?err=noPassword');
+        return res.status(401).send('{"err":"noPassword"}');
     }
 
     let userObj = req.body;
@@ -49,7 +50,7 @@ router.route(pathSet).post(async (req, res) => {
 
         let emailExist = await Users.read({email:req.body.email}).catch(e => { });
 
-        if(emailExist) return res.send(404,'{"err":"Mog Sync email already exists."}');
+        if(emailExist) return res.status(401).send('{"err":"Mog Sync email already exists."}');
 
         let sendObj = createDspAccount(req.body);
         sendObj.status = 0;
@@ -65,7 +66,7 @@ router.route(pathSet).post(async (req, res) => {
 
     } else if(accountExist && !passwordVerify ) {
 
-        return res.redirect('/?err=dspPassword');
+        return res.status(401).send('{"err":"dspPassword"}');
 
     } else {
         let sendObj = createDspAccount(req.body);
@@ -78,25 +79,21 @@ router.route(pathSet).post(async (req, res) => {
         })
 
         ids = ids.sort();
-        let id;
         let found = false;
         for (var i = 1; i < ids.length; i++) {
             if (ids[i] - ids[i - 1] != 1) {
-                id = ids[i] - 1;
+                let id = ids[i] - 1;
                 sendObj.id = id;
                 account = await Accounts.create(sendObj).catch(e => {console.log(e)});
                 i = ids.length;
                 found = true;
             }
             if (i === ids.length - 1) {
-                sendObj.id = ids.length - 1;
+                sendObj.id = ids[ids.length - 1] + 1;
 
                 account = await Accounts.create(sendObj).catch(e => {console.log(e)});
             }
         }
-
-
-        
 
         if(account) {
         userObj.accid = account.id;
@@ -110,9 +107,7 @@ router.route(pathSet).post(async (req, res) => {
         
     }
 
-
     async function createUser() {
-        console.log('ob', userObj)
 
         let user = await Users.create(userObj).catch(e => {console.log(e)});
         let hostname;
@@ -128,16 +123,21 @@ router.route(pathSet).post(async (req, res) => {
                 name: 'emailVerification',
                 replace: [
                     {server:"Mog Garden"},
-                    {link:`${hostname}/auth/verify/${userObj.verified}?lookup=${user.accid}`},
+                    {link:`${hostname}?verify=${userObj.verified}&lookup=${user.accid}`},
                     {user: req.body.username}
                 ]
             });
         }
     }
+    
+    let accountSend = accountExist ?  accountExist : account.dataValues;
 
-
-    res.setHeader('Content-Type', 'application/json');
-    res.redirect('/?status=finished');
+    let objString = {user:[userObj], account:accountSend, registration:true};
+    
+    let token = jwt.sign(objString, config.express.jwt);
+    objString.token = token;
+    objString = JSON.stringify(objString);
+    res.status(200).send(objString);
 
 });
 

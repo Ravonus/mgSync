@@ -202,21 +202,11 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end));
 }
 
-function doSomething() {
-    var myCookie = getCookie("MyCookie");
-
-    if (myCookie == null) {
-        // do cookie doesn't exist stuff;
-    }
-    else {
-        // do cookie exists stuff
-    }
-}
 
 $(document).ready(function () {
 
     if (location.valueOf().search.includes('?rp=')) {
-        let jwt = location.valueOf().search.substring(4);
+        var jwt = location.valueOf().search.substring(4);
         console.log(jwt);
         postApi('/auth/forgotPW', {jwt:jwt}, "rp")
         
@@ -225,6 +215,16 @@ $(document).ready(function () {
     if (location.valueOf().search === '?login=true') {
         $('#userModal').modal('show');
     }
+
+    if (location.valueOf().search.includes('?verify=')) {
+
+        var urlValues = location.valueOf().search.split('=');
+        var jwt = urlValues[1].split('&')[0];
+        var lookup = urlValues[2];
+        
+        getApi('/auth/verify/'+jwt+'?lookup='+lookup, 'verify');
+
+    };
 
     if (getCookie('jwt')) {
 
@@ -359,5 +359,8 @@ function alert(type, msg, options) {
 
     toastr[type](msg.text, msg.title);
 }
+
+
+
 
 

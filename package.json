@@ -13,6 +13,7 @@
     "babel-minify": "^0.5.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.2",
+    "cookie": "^0.3.1",
     "cookie-parser": "^1.4.4",
     "cookieparser": "^0.1.0",
     "default-gateway": "^3.1.0",

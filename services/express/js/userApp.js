@@ -3,6 +3,7 @@ var userApp = new Vue({
     data: { 
     me:'',
     mgSync: {},
+    alerts: [],
     forgotPassword: false
  },
     watch: {

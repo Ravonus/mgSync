@@ -6,5 +6,7 @@ module.exports = {
         res.sendFile(dir);
     },
     path: '/logs',
-    type: 'get'
+    type: 'get',
+    permissions: 1,
+    groups: ['administrators']
 }

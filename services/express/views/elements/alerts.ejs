@@ -1,0 +1,6 @@
+<div v-for="alert in alerts" :class="'alert ' + alert.type +' '+ alert.close + ' fade' + ' show'" role="alert">
+    <strong>{{alert.title}}</strong> {{alert.text}}
+    <button v-if="alert.close" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>

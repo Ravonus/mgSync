@@ -23,5 +23,7 @@ module.exports = {
 
     },
     path: '/dspDelete',
-    type: 'delete'
+    type: 'delete',
+    permissions: 1,
+    groups: ['administrators']
 }

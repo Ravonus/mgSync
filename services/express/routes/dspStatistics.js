@@ -14,5 +14,7 @@ module.exports = {
         res.send(JSON.stringify(stats));
     },
     path: '/dspstatistics',
-    type: 'get'
+    type: 'get',
+    permissions: 1,
+    groups: ['administrators']
 }

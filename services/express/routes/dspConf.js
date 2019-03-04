@@ -32,5 +32,7 @@ module.exports = {
         return res.send({files:confFiles, contents:stringArray});
     },
     path: '/dspConf',
-    type: 'get'
+    type: 'get',
+    permissions: 1,
+    groups: ['administrators']
 }

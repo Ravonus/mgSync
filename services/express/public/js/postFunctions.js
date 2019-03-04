@@ -64,14 +64,22 @@ function postApi(url, data, type) {
                     $('#userLogin').each(function () {
                         this.reset();
                     });
-                    alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
+                    if (userApp.mgSync.registration) {
+                        alert('success', { title: 'Registration Successful', text: 'Please check email for registration.' });
+                    } else {
+                        alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
+                        if(userApp.mgSync.user[0].verified && userApp.mgSync.user[0].verified !== '') {
+                            userApp.alerts.push({type:'alert-danger', title:'Email registration ', text:'You must register your email before playing.', close:'alert-dismissible'})
+                        }
+                    }
+
                 }
 
                 if (type === 'rp') {
                     let obj = JSON.parse(data);
                     if (obj.success) {
                         window.history.replaceState({}, document.title, "/" + "");
-                        if(obj.success !== 'Reset password successfully') {
+                        if (obj.success !== 'Reset password successfully') {
                             userApp.mgSync.resetToken = obj.success;
                             $('#resetPW').modal('show');
                         } else {
@@ -80,8 +88,8 @@ function postApi(url, data, type) {
 
                             alert('info', { title: 'Password reset successful', text: obj.success });
                         }
-                        
-                        
+
+
                     }
 
                 }
