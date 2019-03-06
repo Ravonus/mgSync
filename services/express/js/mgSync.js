@@ -320,23 +320,6 @@ $(document).ready(function () {
 
 })
 
-
-
-// function createAdmin(e) {
-
-// var formData = JSON.stringify($("#createAdmin").serializeArray());
-
-// $.ajax({
-//     type: "POST",
-//     url: "/createAdmin",
-//     data: formData,
-//     success: function(){},
-//     dataType: "json",
-//     contentType : "application/json"
-//   });
-
-// }
-
 $("#aPassword").password({
     eyeClass: "fa",
     eyeOpenClass: "fa-eye",

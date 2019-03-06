@@ -55,10 +55,16 @@ function postApi(url, data, type) {
             },
             success: function (data) {
 
+                data = JSON.parse(data);
+
+                if(data.alert) {
+                    alert(data.alert.type, { title: data.alert.title, text: data.alert.text });
+                }
+
                 if (type === 'login') {
-                    userApp.mgSync = JSON.parse(data);
-                    userHead.mgSync = JSON.parse(data);
-                    setCookie('jwt', JSON.parse(data).token, 1);
+                    userApp.mgSync = data;
+                    userHead.mgSync = data;
+                    setCookie('jwt', data.token, 1);
                     $('#userModal').modal('hide');
                     window.history.replaceState({}, document.title, "/" + "");
                     $('#userLogin').each(function () {
@@ -69,14 +75,19 @@ function postApi(url, data, type) {
                     } else {
                         alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
                         if(userApp.mgSync.user[0].verified && userApp.mgSync.user[0].verified !== '') {
-                            userApp.alerts.push({type:'alert-danger', title:'Email registration ', text:'You must register your email before playing.', close:'alert-dismissible'})
+                            userApp.alerts.push({ type:'alert-danger', title: 'Email registration ', text: 'You must register your email before playing.', close: 'alert-dismissible', vue:"resendEmail",
+                            link:{ 
+                                href:"#",
+                                text:"Resend registration email"
+                            }
+                        });
                         }
                     }
 
                 }
 
                 if (type === 'rp') {
-                    let obj = JSON.parse(data);
+                    let obj = data;
                     if (obj.success) {
                         window.history.replaceState({}, document.title, "/" + "");
                         if (obj.success !== 'Reset password successfully') {

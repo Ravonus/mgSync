@@ -31,5 +31,15 @@ object = {
     },
     resetPW: function () {
         postApi('/auth/forgotPasswordReset', {password:$('#resetPassword').val(), jwt:userApp.mgSync.resetToken}, 'rp');
+    },
+    alertFunctions: function (event) {
+        var functions =  {
+            resendEmail: function () {
+                console.log('TEST')
+                postApi('auth/registration', {resend:true});
+            }
+        }
+
+        functions[event.target.className]();
     }
 }

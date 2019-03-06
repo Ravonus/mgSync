@@ -170,3 +170,8 @@ table.dataTable thead .sorting_desc_disabled:before {
   }
 
   [v-cloak] { display: none; }
+
+
+  a {
+    color: #007bff !important;
+}

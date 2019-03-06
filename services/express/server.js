@@ -34,7 +34,6 @@ var vueFiles = [];
 let push = {};
 let firstRun = {}
 let myContents = {}
-console.log('RAN SERVER')
 Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
     if (vueFile.substr(-3) === '.js') {
@@ -106,7 +105,7 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
 });
 
-global.server = app.listen(config.express.port, () => {
+app.listen(config.express.port, () => {
     log('express-started', [ip.address(), config.express.port]);
 });
 module.exports = app;
