@@ -1,5 +1,5 @@
 const express = require('express'),
-    app = require('../server'),
+    server = require('../server'),
     mailer = require('../../mail/mailer'),
     Accounts = require('../../../models/Accounts'),
     cookie = require('cookie'),
@@ -61,4 +61,4 @@ router.route(pathSet).get(async (req, res) => {
     }
 });
 
-app.use('/auth', router);
+server.use('/auth', router);

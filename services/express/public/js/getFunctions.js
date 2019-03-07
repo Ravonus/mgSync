@@ -117,7 +117,7 @@ function getApi(url, type) {
                     userHead.mgSync = JSON.parse(data);
 
                     if (userApp.mgSync.user[0].verified && userApp.mgSync.user[0].verified !== '') {
-                        userApp.alerts.push({ type: 'alert-danger', title: 'Email registration ', text: 'You must register your email before playing.', close: 'alert-dismissible', vue:"resendEmail",
+                        userApp.alerts.push({ type:'alert-danger', title: 'Email registration ', text: 'You must register your email before playing.', close: 'alert-dismissible', vue:"resendEmail",
                         link:{ 
                             href:"#",
                             text:"Resend registration email"

@@ -58,5 +58,6 @@ module.exports = {
   Accounts,
   read: crud.readCreate(Accounts),
   create: crud.createCreate(Accounts),
-  update: crud.updateCreate(Accounts)
+  update: crud.updateCreate(Accounts),
+  delete:crud.deleteCreate(Accounts)
 }

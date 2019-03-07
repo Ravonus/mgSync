@@ -1,5 +1,5 @@
 const express = require('express'),
-    app = require('../server'),
+    server = require('../server'),
     Accounts = require('../../../models/Accounts'),
     Users = require('../../../models/mgSync/Users'),
     jwt = require('jsonwebtoken'),
@@ -12,10 +12,11 @@ var pathSet = '/forgot';
 router.route(pathSet).post(async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
-    if (!req.body.login) return res.status(400).send({ err: "Need account name in order to send reset link." });
+    if (!req.body.login) return res.status(400).send({ alert: { title: "Password reset", type: "error", text: "Need account name in order to send reset link." } });
+
 
     let Account = await Accounts.read({ login: req.body.login }).catch(e => {
-        return res.status(400).send({ err: "Could not find account or character" });
+        return res.status(400).send({ alert: { title: "Password reset", type: "error", text: "Could not find account or character" } });
     });
 
     if (Account[0]) {
@@ -30,32 +31,19 @@ router.route(pathSet).post(async (req, res) => {
 
         if (!req.body.character && !Character) {
         } else if (!req.body.character && Character) {
-            return res.status(400).send({ err: "Could not find account or character" });
+            return res.status(400).send({ alert: { title: "Password reset", type: "error", text: "Could not find account or character" } });
         } else if (Character) {
 
-            //     let email = await Users.read({accid:charLookup.accid}).catch(e => { });
-
-
-
         } else {
-            return res.status(400).send({ err: "Could not find account or character" });
+            return res.status(400).send({ alert: { title: "Password reset", type: "error", text: "Could not find account or character" } });
         }
-
-        // mailer({ subject: "Password request link", from: config.mail.user, to: req.body.email }, {
-        //     name: 'emailVerification',
-        //     replace: [
-        //         {server:"Mog Garden"},
-        //         {link:`${hostname}/auth/verify/${userObj.verified}?lookup=${user.accid}`},
-        //         {user: req.body.username}
-        //     ]
-        // });
 
         let email = await Users.read({ accid: Account[0].id }).catch(e => { });
 
         if (email) {
 
             let hostname;
-            if(config.express.port) {
+            if (config.express.port) {
                 hostname = `${config.express.hostname}:${config.express.port}`
             } else {
                 hostname = config.express.hostname;
@@ -77,10 +65,9 @@ router.route(pathSet).post(async (req, res) => {
             });
         }
 
-        return res.status(200).send({ status: "Sent password reset to registered email address" });
-
+        return res.status(200).send({ alert: { title: "Password reset", type: "success", text: "Sent password reset to registered email address" } });
     }
 
 });
 
-app.use('/auth', router);
+server.use('/auth', server.recaptcha(), router);

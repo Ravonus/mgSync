@@ -10,22 +10,27 @@ const express = require('express'),
     dir = __dirname;
 
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
+
+app.recaptcha = require('./middleware/googleRecaptcha');
+app.permissions = require('./middleware/permissions');
+app.groups = require('./middleware/groups')
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 require('./middleware/passport');
 const auth = require('./apiRoutes/auth');
 app.use('/auth', auth);
-
-
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', routes);
 app.use(express.static(dir + '/shared'));
 app.use(express.static(dir + '/public'));
+
+//load user vue script (This will add recaptcha to vue if its in config)
+
+
 
 fs.readFile = promisify(fs.readFile);
 
@@ -34,6 +39,15 @@ var vueFiles = [];
 let push = {};
 let firstRun = {}
 let myContents = {}
+
+
+
+
+async function recaptchSiteKey(contents) {
+    return contents.replace('recaptchSiteKey: recaptchSiteKey', `recaptchSiteKey: "${config.express.recaptchSiteKey}"`);
+
+}
+
 Functions.asyncForEach(checkVue, async (vueFile, index) => {
 
     if (vueFile.substr(-3) === '.js') {
@@ -53,6 +67,10 @@ Functions.asyncForEach(checkVue, async (vueFile, index) => {
                         let contents = await fs.readFile(`${dir}/vue/${type}/${directory}/${fileSecond}`, 'utf8');
 
                         let objects = contents.match(/{([^]+)/);
+                        if (config.express.recaptchSiteKey && file == 'userApp.js' && fileSecond === 'data.js') {
+
+                            objects[0] = await recaptchSiteKey(objects[0]);
+                        }
 
                         if (index !== files.length - 1) {
                             push[directory][type] += objects[0].substr(1).slice(0, -1) + ',';

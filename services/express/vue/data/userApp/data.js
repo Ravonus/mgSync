@@ -2,5 +2,6 @@ object = {
     me:'',
     mgSync: {},
     alerts: [],
-    forgotPassword: false
+    forgotPassword: false,
+    recaptchSiteKey: recaptchSiteKey
 }

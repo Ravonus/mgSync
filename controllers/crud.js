@@ -30,7 +30,7 @@ module.exports = {
   createCreate: (model) => {
     return (obj, _cb, type) => {
       if (!_cb || typeof _cb === 'string') {
-        if(!_cb) _cb = 'create';
+        if (!_cb) _cb = 'create';
         return new Promise((resolve, reject) => {
           eval(model)[_cb](
             obj
@@ -41,7 +41,7 @@ module.exports = {
           });
         })
       } else {
-        if(!type) type = 'create';
+        if (!type) type = 'create';
         eval(model)[type]({
           obj
         }).then(account => {
@@ -89,16 +89,33 @@ module.exports = {
 
   deleteCreate: (model) => {
     return (id, _cb) => {
-      eval(model).destroy(
-        {
-          where: id
-        }).then(data => {
-
-          if (data > 0) return _cb(null, data);
-          return _cb({ err: 'Could not delete' });
-        }).catch(err => {
-          _cb(err);
+      if (!_cb) {
+        return new Promise((resolve, reject) => {
+          eval(model).destroy(
+            {
+              where: id
+            }).then(data => {
+              if (data > 0) return resolve(data);
+              return reject({ err: 'Could not delete' });
+            }).catch(err => {
+              reject(err);
+            });
         });
+
+      } else {
+
+        eval(model).destroy(
+          {
+            where: id
+          }).then(data => {
+
+            if (data > 0) return _cb(null, data);
+            return _cb({ err: 'Could not delete' });
+          }).catch(err => {
+            _cb(err);
+          });
+
+      }
 
     }
 

@@ -1,15 +1,11 @@
 const express = require('express'),
-    app = require('../server'),
+    server = require('../server'),
     mysqlPassword = require('mysql-password'),
     jwt = require('jsonwebtoken'),
     cookie = require('cookie'),
     mailer = require('../../mail/mailer'),
     config = require('../../../config/scripts/config'),
-    passport = require('passport'),
-    fs = require('fs'),
     Accounts = require('../../../models/Accounts'),
-    path = require('path'),
-    routes = require('../routes/routes'),
     randomstring = require("randomstring"),
     Users = require('../../../models/mgSync/Users'),
     router = express.Router();
@@ -41,9 +37,9 @@ router.route(pathSet).post(async (req, res, next) => {
 
             let newRegistrationToken = randomstring.generate(32);
 
-           await Users.update({ accid: user.user[0].accid }, {verified:newRegistrationToken});
+            await Users.update({ accid: user.user[0].accid }, { verified: newRegistrationToken });
 
-           await mailer({ subject: "Please verify email address.", from: config.mail.user, to: user.user[0].email }, {
+            await mailer({ subject: "Please verify email address.", from: config.mail.user, to: user.user[0].email }, {
                 name: 'emailVerification',
                 replace: [
                     { server: "Mog Garden" },
@@ -52,14 +48,16 @@ router.route(pathSet).post(async (req, res, next) => {
                 ]
             });
 
-            res.status(200).send(JSON.stringify({alert:{
-                type:"success",
-                title:"Registration email",
-                text:`Email was sent successfully to ${user.user[0].email}`
-            }}));
+            res.status(200).send(JSON.stringify({
+                alert: {
+                    type: "success",
+                    title: "Registration email",
+                    text: `Email was sent successfully to ${user.user[0].email}`
+                }
+            }));
 
         } else {
-            res.status(401).send({err:'Invalid cookie'});
+            res.status(401).send({ err: 'Invalid cookie' });
         }
 
     } else {
@@ -94,13 +92,29 @@ router.route(pathSet).post(async (req, res, next) => {
 
         if (accountExist && passwordVerify) {
 
+            let err = {
+                status:"error",
+                type: "alert",
+                title: "Registration error"
+            }
+
             let emailExist = await Users.read({ email: req.body.email }).catch(e => { });
 
-            if (emailExist) return res.status(401).send('{"err":"Mog Sync email already exists."}');
+            if (emailExist) {
+                err.errorMsg = 'Mog Sync email already exists.';
+               return res.status(401).send(JSON.stringify(err))
+            };
+
+            let myAccountExist = await Users.read({ username: req.body.username }).catch(e => { });
+
+            if (myAccountExist) {
+                err.errorMsg = 'Mog Sync account already exists.';
+            return res.status(401).send(JSON.stringify(err));
+            }
 
             let sendObj = createDspAccount(req.body);
             sendObj.status = 0;
-            await Accounts.update({ id: accountExist[0].id }, sendObj);
+            await Accounts.update({ id: accountExist[0].id }, sendObj).catch(e => console.log(e));
 
             userObj.permissions = 2;
             userObj.groups = 2;
@@ -147,7 +161,16 @@ router.route(pathSet).post(async (req, res, next) => {
                 userObj.groups = 2;
                 userObj.status = 1;
                 userObj.verified = randomstring.generate(32);
-                createUser();
+            //    createUser();
+                let createdUser = await createUser();
+
+                 if(createdUser.errorMsg) {
+                    createdUser.type = "alert";
+                    createdUser.title = "Registration error";
+                    createdUser.status = 'error';
+                    Accounts.delete({id:userObj.accid});
+                     return res.status(401).send(JSON.stringify(createdUser));
+                 }
 
             }
 
@@ -155,9 +178,13 @@ router.route(pathSet).post(async (req, res, next) => {
 
         async function createUser() {
 
-            let user = await Users.create(userObj).catch(e => { console.log(e) });
+            let user = await Users.create(userObj).catch(e => { 
+                return {errorMsg:e.original.sqlMessage};
+            });
             let hostname;
-            if (user) {
+            if (user && !user.errorMsg) {
+
+                console.log(user);
 
                 if (config.express.port) {
                     hostname = `${config.express.hostname}:${config.express.port}`
@@ -165,7 +192,7 @@ router.route(pathSet).post(async (req, res, next) => {
                     hostname = config.express.hostname;
                 }
 
-                mailer({ subject: "Please verify email address.", from: config.mail.user, to: req.body.email }, {
+               await mailer({ subject: "Please verify email address.", from: config.mail.user, to: req.body.email }, {
                     name: 'emailVerification',
                     replace: [
                         { server: "Mog Garden" },
@@ -173,6 +200,10 @@ router.route(pathSet).post(async (req, res, next) => {
                         { user: req.body.username }
                     ]
                 });
+
+                return user;
+            } else {
+                return user;
             }
         }
 
@@ -189,4 +220,4 @@ router.route(pathSet).post(async (req, res, next) => {
 
 });
 
-app.use('/auth', router);
+server.use('/auth', router);

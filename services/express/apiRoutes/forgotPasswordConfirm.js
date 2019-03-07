@@ -1,10 +1,7 @@
 const express = require('express'),
-    app = require('../server'),
-    Accounts = require('../../../models/Accounts'),
-    Users = require('../../../models/mgSync/Users'),
+    server = require('../server'),
     jwt = require('jsonwebtoken'),
     mailer = require('../../mail/mailer'),
-    Chars = require('../../../models/Chars'),
     { promisify } = require('util'),
     router = express.Router();
 
@@ -21,4 +18,4 @@ router.route(pathSet).post(async (req, res) => {
     if (decoded.data) return res.status(200).send({ success: req.body.jwt });
 });
 
-app.use('/auth', router);
+server.use('/auth', router);

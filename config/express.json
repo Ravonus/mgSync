@@ -1,8 +1,0 @@
-{
-    "port": 1337,
-    "minify": false,
-    "cssMinify": false,
-    "signUp": true,
-    "hostname" : "http://192.168.0.169",
-    "jwt" : "1312rFD23#@d!~31dasd"
-}

@@ -1,5 +1,5 @@
 const express = require('express'),
-    app = require('../server'),
+    server = require('../server'),
     mysqlPassword = require('mysql-password'),
     fs = require('fs'),
     Accounts = require('../../../models/Accounts'),
@@ -95,8 +95,8 @@ router.route(pathSet).post(async (req, res) => {
 
             global.server.close( async () => {
                 delete global.server;
-                delete app;
-                delete global.app;
+                delete server;
+                delete global.server;
                 delete require.cache[require.resolve('../server')];
 
                 let dir = fs.readdirSync(path.join(__dirname, '../routes') );
@@ -111,4 +111,4 @@ router.route(pathSet).post(async (req, res) => {
         }
 });
 
-app.use('/', router);
+server.use('/', router);

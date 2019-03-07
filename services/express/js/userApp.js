@@ -4,7 +4,8 @@ var userApp = new Vue({
     me:'',
     mgSync: {},
     alerts: [],
-    forgotPassword: false
+    forgotPassword: false,
+    recaptchSiteKey: "6LfBBZYUAAAAAEfdHor9VmKw7zBAPs9ou45lfoCq"
  },
     watch: {
     },
@@ -37,6 +38,16 @@ var userApp = new Vue({
                 $('#'+panel).removeClass('active show' );
             }
         });
+
+    },
+    resetPWRequest: function (event) {
+
+        event.preventDefault();
+        var paramObj = {};
+        $.each($('#passwordResetRequest').serializeArray(), function (_, kv) {
+            paramObj[kv.name] = kv.value;
+        });
+        postApi('/auth/forgot', paramObj, 'rp');
 
     },
     resetPW: function () {

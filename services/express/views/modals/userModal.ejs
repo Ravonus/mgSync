@@ -62,36 +62,39 @@
 
             <!--Body-->
             <div class="modal-body">
-                <form id="userRegistration">
-              <div class="md-form form-sm mb-5">
-                <i class="fas fa-envelope prefix"></i>
-                <input type="email" id="rEmail" name="email" class="form-control form-control-sm validate">
-                <label data-error="wrong" data-success="right" for="rEmail">Your email</label>
-              </div>
+              <form id="userRegistration">
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <input type="email" id="rEmail" name="email" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="rEmail">Your email</label>
+                </div>
 
-              <div class="md-form form-sm mb-5">
-                <i class="fas fa-envelope prefix"></i>
-                <input type="text" id="rUsername" name="username" class="form-control form-control-sm validate">
-                <label data-error="wrong" data-success="right" for="rUsername">Your email</label>
-              </div>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <input type="text" id="rUsername" name="username" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="rUsername">Account name</label>
+                </div>
 
+                <div class="md-form form-sm mb-1">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" id="rPassword" name="password"
+                    class="form-control form-control-sm validate viewPassword">
+                  <label data-error="wrong" data-success="right" for="rPassword">Your password</label>
+                </div>
 
-              <div class="md-form form-sm mb-1">
-                <i class="fas fa-lock prefix"></i>
-                <input type="password" id="rPassword" name="password"
-                  class="form-control form-control-sm validate viewPassword">
-                <label data-error="wrong" data-success="right" for="rPassword">Your password</label>
-              </div>
+                <div v-if="recaptchSiteKey" class="g-recaptcha" :data-sitekey="recaptchSiteKey"></div><br>
 
-              <div class="text-center form-sm mt-2">
-                <button @click="userRegistration($event)" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
-              </div>
-            </form>
+                <div class="text-center form-sm mt-2">
+                  <button @click="userRegistration($event)" class="btn btn-info">Sign up <i
+                      class="fas fa-sign-in ml-1"></i></button>
+                </div>
+              </form>
             </div>
             <!--Footer-->
             <div class="modal-footer">
               <div class="options text-right">
-                <p class="pt-1">Already have an account? <a href="#" @click="showTab('panel7')" class="blue-text">Log In</a></p>
+                <p class="pt-1">Already have an account? <a href="#" @click="showTab('panel7')" class="blue-text">Log
+                    In</a></p>
               </div>
               <button type="button" class="btn btn-outline-info waves-effect ml-auto"
                 data-dismiss="modal">Close</button>
@@ -104,30 +107,35 @@
 
             <!--Body-->
             <div class="modal-body">
-              <p>So you forgot your password? No problem. Enter your email and a character name. You will be sent a
-                reset link via email. Once completed you may use new password for website and server.</p>
-              <div class="md-form form-sm mb-5">
-                <i class="fas fa-envelope prefix"></i>
-                <input type="email" id="rEmail" name="email" class="form-control form-control-sm validate">
-                <label data-error="wrong" data-success="right" for="rEmail">Your email</label>
-              </div>
+              <form id="passwordResetRequest">
+                <p>So you forgot your password? No problem. Enter your email and a character name. You will be sent a
+                  reset link via email. Once completed you may use new password for website and server.</p>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <input type="text" id="rLogin" name="login" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="rLogin">Your account name?</label>
+                </div>
 
-              <div class="md-form form-sm mb-5">
-                <i class="fas fa-envelope prefix"></i>
-                <input type="text" id="rCharacter" name="character" class="form-control form-control-sm validate">
-                <label data-error="wrong" data-success="right" for="rCharacter">Character Name(If none keep
-                  blank)</label>
-              </div>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <input type="text" id="rCharacter" name="character" class="form-control form-control-sm validate">
+                  <label data-error="wrong" data-success="right" for="rCharacter">Character Name(If none keep
+                    blank)</label>
+                </div>
+                
+                <div v-if="recaptchSiteKey" class="g-recaptcha" :data-sitekey="recaptchSiteKey"></div><br>
 
-              <div class="text-center form-sm mt-2">
-                <button class="btn btn-info">Send Email <i class="fas fa-sign-in ml-1"></i></button>
-              </div>
+                <div class="text-center form-sm mt-2">
+                  <button @click="resetPWRequest($event)" class="btn btn-info">Send Email <i class="fas fa-sign-in ml-1"></i></button>
+                </div>
+              </form>
 
             </div>
             <!--Footer-->
             <div class="modal-footer">
               <div class="options text-right">
-                <p class="pt-1">Already have an account? <a href="#"  @click="showTab('panel7', true)" class="blue-text">Log In</a></p>
+                <p class="pt-1">Already have an account? <a href="#" @click="showTab('panel7', true)"
+                    class="blue-text">Log In</a></p>
               </div>
               <button type="button" class="btn btn-outline-info waves-effect ml-auto"
                 data-dismiss="modal">Close</button>

@@ -57,8 +57,15 @@ function postApi(url, data, type) {
 
                 data = JSON.parse(data);
 
-                if(data.alert) {
+                if (data.alert) {
                     alert(data.alert.type, { title: data.alert.title, text: data.alert.text });
+                    console.log(type, 'a')
+                    if (type === 'rp') {
+
+                        window.history.replaceState({}, document.title, "/" + "");
+                        userApp.showTab('panel7', true);
+                        $('#userModal').modal('hide');
+                    }
                 }
 
                 if (type === 'login') {
@@ -74,13 +81,14 @@ function postApi(url, data, type) {
                         alert('success', { title: 'Registration Successful', text: 'Please check email for registration.' });
                     } else {
                         alert('info', { title: 'Login Successful', text: 'Logged in successfully.' });
-                        if(userApp.mgSync.user[0].verified && userApp.mgSync.user[0].verified !== '') {
-                            userApp.alerts.push({ type:'alert-danger', title: 'Email registration ', text: 'You must register your email before playing.', close: 'alert-dismissible', vue:"resendEmail",
-                            link:{ 
-                                href:"#",
-                                text:"Resend registration email"
-                            }
-                        });
+                        if (userApp.mgSync.user[0].verified && userApp.mgSync.user[0].verified !== '') {
+                            userApp.alerts.push({
+                                type: 'alert-danger', title: 'Email registration ', text: 'You must register your email before playing.', close: 'alert-dismissible', vue: "resendEmail",
+                                link: {
+                                    href: "#",
+                                    text: "Resend registration email"
+                                }
+                            });
                         }
                     }
 
@@ -106,18 +114,27 @@ function postApi(url, data, type) {
                 }
             },
             error: function (err) {
-                if (type === 'login') {
-                    alert('error', { title: 'Login Error', text: JSON.parse(err.responseText).message });
-                }
+                err = err.responseText ? JSON.parse(err.responseText) : JSON.parse(err);
+                if (err.alert) {
 
-                if (type === 'rp') {
+                    alert(err.alert.type, { title: err.alert.title, text: err.alert.text });
 
-                    if (err) {
-                        let obj = JSON.parse(err.responseText);
-                        window.history.replaceState({}, document.title, "/" + "");
-                        alert('error', { title: 'Reset password error', text: obj.err });
+                } else {
+
+                    if (type === 'login') {
+                        alert('error', { title: 'Login Error', text: err.errorMsg });
+                    }
+
+                    if (type === 'rp') {
+
+                        if (err) {
+                            let obj = err.errorMsg;
+                            window.history.replaceState({}, document.title, "/" + "");
+                            alert('error', { title: 'Reset password error', text: obj.err });
+                        }
                     }
                 }
+
             }
         });
 }

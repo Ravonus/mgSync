@@ -29,6 +29,16 @@ object = {
         });
 
     },
+    resetPWRequest: function (event) {
+
+        event.preventDefault();
+        var paramObj = {};
+        $.each($('#passwordResetRequest').serializeArray(), function (_, kv) {
+            paramObj[kv.name] = kv.value;
+        });
+        postApi('/auth/forgot', paramObj, 'rp');
+
+    },
     resetPW: function () {
         postApi('/auth/forgotPasswordReset', {password:$('#resetPassword').val(), jwt:userApp.mgSync.resetToken}, 'rp');
     },

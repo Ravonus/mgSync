@@ -1,11 +1,9 @@
 const express = require('express'),
-    app = require('../server'),
+    server = require('../server'),
     Accounts = require('../../../models/Accounts'),
     mysqlPassword = require('mysql-password'),
-    Users = require('../../../models/mgSync/Users'),
     jwt = require('jsonwebtoken'),
     mailer = require('../../mail/mailer'),
-    Chars = require('../../../models/Chars'),
     { promisify } = require('util'),
     router = express.Router();
 
@@ -26,4 +24,4 @@ router.route(pathSet).post(async (req, res) => {
 
 });
 
-app.use('/auth', router);
+server.use('/auth', router);
